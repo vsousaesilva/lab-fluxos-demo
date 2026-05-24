@@ -327,17 +327,24 @@ export async function extractElsFromFlowsAction(): Promise<
 
     const allCodes = [...agg.keys()];
 
-    // 2) Descobre quais ELs já existem (uma SELECT só)
-    const existing = await db
-      .select({
-        id: schema.expressionLanguage.id,
-        code: schema.expressionLanguage.code,
-      })
-      .from(schema.expressionLanguage)
-      .where(inArray(schema.expressionLanguage.code, allCodes));
-
+    // 2) Descobre quais ELs já existem.
+    //    D1/SQLite tem ~100 binds por query, então chunkamos o IN (...).
     const idByCode = new Map<string, string>();
-    for (const e of existing) idByCode.set(e.code, e.id);
+    const existingCodes: { id: string; code: string }[] = [];
+    for (let i = 0; i < allCodes.length; i += CHUNK) {
+      const slice = allCodes.slice(i, i + CHUNK);
+      const found = await db
+        .select({
+          id: schema.expressionLanguage.id,
+          code: schema.expressionLanguage.code,
+        })
+        .from(schema.expressionLanguage)
+        .where(inArray(schema.expressionLanguage.code, slice));
+      for (const f of found) {
+        idByCode.set(f.code, f.id);
+        existingCodes.push(f);
+      }
+    }
 
     // 3) Insert das novas em chunks
     let createdEls = 0;
@@ -364,7 +371,7 @@ export async function extractElsFromFlowsAction(): Promise<
 
     // 4) Update occurrenceCount das existentes (uma por uma — ok, são poucas)
     let updatedEls = 0;
-    for (const e of existing) {
+    for (const e of existingCodes) {
       const a = agg.get(e.code);
       if (!a) continue;
       await db
