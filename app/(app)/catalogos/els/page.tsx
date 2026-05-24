@@ -9,6 +9,7 @@ import { ElsFilters } from "./filters";
 import { ElForm } from "./el-form";
 import { ExtractButton } from "./extract-button";
 import { DescribeButton } from "./describe-button";
+import { BatchDescribeButton } from "./batch-describe-button";
 
 const STATUS_META: Record<
   ElStatus,
@@ -40,6 +41,9 @@ export default async function ElsPage({
   };
 
   const [els, metrics] = await Promise.all([listEls(filter, 200), getElMetrics()]);
+  const pendingDescribeIds = els
+    .filter((e) => !e.objective || e.objective.trim() === "")
+    .map((e) => e.id);
 
   return (
     <>
@@ -47,8 +51,11 @@ export default async function ElsPage({
         title="Catálogo de ELs"
         description="Catálogo de Expression Languages usadas nos fluxos jPDL/BPMN do PJe. Documenta semântica de cada #{...} para reuso, evitar duplicação e marcar deprecações."
         actions={
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <ExtractButton />
+            {pendingDescribeIds.length > 0 ? (
+              <BatchDescribeButton pendingIds={pendingDescribeIds} />
+            ) : null}
             <ElForm />
           </div>
         }

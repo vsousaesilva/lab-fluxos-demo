@@ -545,3 +545,43 @@ export async function describeElAction(
     return { ok: false, error: message };
   }
 }
+
+// ============================================================
+// Descrever lote de ELs em paralelo (até 5 por call, pra caber
+// no CPU time do Worker). O frontend chunka a lista total.
+// ============================================================
+
+const batchSchema = z.object({
+  ids: z.array(z.string().uuid()).min(1).max(5),
+});
+
+export async function describeElsBatchAction(
+  input: z.infer<typeof batchSchema>
+): Promise<
+  ActionResult<{ ok: number; failed: number; errors: string[] }>
+> {
+  const parsed = batchSchema.safeParse(input);
+  if (!parsed.success) {
+    return { ok: false, error: "Lote inválido (1–5 ids por chamada)." };
+  }
+
+  const settled = await Promise.allSettled(
+    parsed.data.ids.map((id) => describeElAction({ id }))
+  );
+
+  let okCount = 0;
+  let failCount = 0;
+  const errors: string[] = [];
+
+  for (const r of settled) {
+    if (r.status === "fulfilled" && r.value.ok) {
+      okCount++;
+    } else {
+      failCount++;
+      if (r.status === "fulfilled") errors.push(r.value.error);
+      else errors.push(String(r.reason));
+    }
+  }
+
+  return { ok: true, data: { ok: okCount, failed: failCount, errors } };
+}

@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import type { CoreMessage } from "ai";
 import { getDb, schema } from "@/lib/db/client";
 import { runStreamingAgent } from "@/lib/ai";
 import {
@@ -6,6 +7,7 @@ import {
   buildDemandAnalystUserPrompt,
 } from "./prompt";
 import { demandAnalystOutputSchema } from "./schema";
+import { loadDemandAttachmentParts } from "./attachments";
 
 export type RunDemandAnalystInput = {
   demandId: string;
@@ -30,19 +32,32 @@ export async function runDemandAnalyst(input: RunDemandAnalystInput) {
     );
   }
 
-  const userPrompt = buildDemandAnalystUserPrompt({
+  const textPrompt = buildDemandAnalystUserPrompt({
     title: demand.title,
     description: demand.description,
     additionalContext: input.additionalContext,
   });
 
-  const inputSummary = `Demanda ${demand.id.slice(0, 8)} — ${demand.title.slice(0, 80)}${input.replaceAnalysisId ? " (regenerar)" : ""}`;
+  // Anexos: vira mensagem multimodal (image/file/text parts).
+  const attachments = await loadDemandAttachmentParts(demand.id);
+
+  const messages: CoreMessage[] = [
+    {
+      role: "user",
+      content:
+        attachments.contentParts.length === 0
+          ? textPrompt
+          : [{ type: "text", text: textPrompt }, ...attachments.contentParts],
+    },
+  ];
+
+  const inputSummary = `Demanda ${demand.id.slice(0, 8)} — ${demand.title.slice(0, 60)}${input.replaceAnalysisId ? " (regenerar)" : ""}${attachments.attachmentCount > 0 ? ` · ${attachments.attachmentCount} anexo(s)` : ""}`;
 
   return runStreamingAgent({
     agentType: "DEMAND_ANALYST",
     schema: demandAnalystOutputSchema,
     systemPrompt: DEMAND_ANALYST_SYSTEM_PROMPT,
-    userPrompt,
+    messages,
     inputSummary,
     userId: input.userId,
     temperature: 0.3,

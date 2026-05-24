@@ -593,6 +593,29 @@ export const jiraSyncOperation = sqliteTable(
 );
 
 // ============================================================
+// Demand attachment — arquivo anexado a uma demanda (imagem, PDF,
+// texto ou planilha/doc Office). Armazenado em R2 (DEMAND_ATTACHMENTS).
+// Consumido pela IA do Demand Analyst no momento da análise.
+// ============================================================
+export const demandAttachment = sqliteTable(
+  "demand_attachment",
+  {
+    id: uuid("id").primaryKey(),
+    demandId: text("demand_id")
+      .notNull()
+      .references(() => demand.id, { onDelete: "cascade" }),
+    fileName: text("file_name").notNull(),
+    mimeType: text("mime_type").notNull(),
+    size: integer("size").notNull(),
+    r2Key: text("r2_key").notNull().unique(),
+    ...timestamps,
+  },
+  (t) => ({
+    demandIdx: index("idx_demand_attachment_demand").on(t.demandId),
+  })
+);
+
+// ============================================================
 // 15. ExpressionLanguage (EL) — catálogo de Expression Languages
 // usadas nos fluxos jPDL/BPMN do PJe (formato #{...} ou ${...}).
 // Catálogo cresce sob demanda (cadastro manual ou extração automática).
@@ -676,3 +699,5 @@ export type ExpressionLanguage = typeof expressionLanguage.$inferSelect;
 export type NewExpressionLanguage = typeof expressionLanguage.$inferInsert;
 export type ExpressionLanguageOccurrence =
   typeof expressionLanguageOccurrence.$inferSelect;
+export type DemandAttachment = typeof demandAttachment.$inferSelect;
+export type NewDemandAttachment = typeof demandAttachment.$inferInsert;

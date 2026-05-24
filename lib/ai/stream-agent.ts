@@ -1,4 +1,4 @@
-import { streamObject } from "ai";
+import { streamObject, type CoreMessage } from "ai";
 import { z } from "zod";
 import {
   getGeminiModel,
@@ -15,7 +15,10 @@ export type RunStreamingAgentOptions<S extends z.ZodType> = {
   agentType: AgentType;
   modelKey?: GeminiModelKey;
   systemPrompt: string;
-  userPrompt: string;
+  /** String simples (caso comum). Use `messages` em vez disso quando precisar multimodal. */
+  userPrompt?: string;
+  /** Mensagens completas (multimodal: text + image + file parts). Se setado, `userPrompt` é ignorado. */
+  messages?: CoreMessage[];
   schema: S;
   inputSummary?: string;
   userId?: string;
@@ -53,48 +56,76 @@ export async function runStreamingAgent<S extends z.ZodType>(
     `[runStreamingAgent] start job=${job.id} agentType=${opts.agentType} model=${modelId}`
   );
 
-  const result = streamObject({
-    model,
-    schema: opts.schema,
-    system: opts.systemPrompt,
-    prompt: opts.userPrompt,
-    temperature: opts.temperature ?? 0.3,
-    onError: async ({ error }) => {
-      const message = error instanceof Error ? error.message : String(error);
-      console.error(`[runStreamingAgent.onError] job=${job.id}`, error);
-      await failAgentJob(job.id, `streamObject.onError: ${message}`);
-    },
-    onFinish: async ({ object, usage, error }) => {
-      console.log(
-        `[runStreamingAgent.onFinish] job=${job.id} hasObject=${!!object} hasError=${!!error} tokens=${usage?.promptTokens ?? 0}/${usage?.completionTokens ?? 0}`
-      );
-      try {
-        if (error || !object) {
-          const message =
-            error instanceof Error ? error.message : "Sem objeto retornado";
-          await failAgentJob(job.id, message, {
-            promptTokens: usage?.promptTokens,
-            completionTokens: usage?.completionTokens,
-          });
-          return;
-        }
+  if (!opts.messages && !opts.userPrompt) {
+    throw new Error(
+      "runStreamingAgent: informe `messages` ou `userPrompt`."
+    );
+  }
 
-        await completeAgentJob(job.id, {
-          outputSummary: summarizeObject(object),
-          promptTokens: usage?.promptTokens ?? 0,
-          completionTokens: usage?.completionTokens ?? 0,
+  const onError = async ({ error }: { error: unknown }) => {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`[runStreamingAgent.onError] job=${job.id}`, error);
+    await failAgentJob(job.id, `streamObject.onError: ${message}`);
+  };
+
+  const onFinish = async ({
+    object,
+    usage,
+    error,
+  }: {
+    object: unknown;
+    usage?: { promptTokens?: number; completionTokens?: number };
+    error?: unknown;
+  }) => {
+    console.log(
+      `[runStreamingAgent.onFinish] job=${job.id} hasObject=${!!object} hasError=${!!error} tokens=${usage?.promptTokens ?? 0}/${usage?.completionTokens ?? 0}`
+    );
+    try {
+      if (error || !object) {
+        const message =
+          error instanceof Error ? error.message : "Sem objeto retornado";
+        await failAgentJob(job.id, message, {
+          promptTokens: usage?.promptTokens,
+          completionTokens: usage?.completionTokens,
         });
-
-        if (opts.onComplete) {
-          await opts.onComplete(object as z.infer<S>, job);
-        }
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "Erro pós-stream";
-        console.error("[runStreamingAgent.onFinish]", err);
-        await failAgentJob(job.id, message);
+        return;
       }
-    },
-  });
+
+      await completeAgentJob(job.id, {
+        outputSummary: summarizeObject(object),
+        promptTokens: usage?.promptTokens ?? 0,
+        completionTokens: usage?.completionTokens ?? 0,
+      });
+
+      if (opts.onComplete) {
+        await opts.onComplete(object as z.infer<S>, job);
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Erro pós-stream";
+      console.error("[runStreamingAgent.onFinish]", err);
+      await failAgentJob(job.id, message);
+    }
+  };
+
+  const result = opts.messages
+    ? streamObject({
+        model,
+        schema: opts.schema,
+        system: opts.systemPrompt,
+        messages: opts.messages,
+        temperature: opts.temperature ?? 0.3,
+        onError,
+        onFinish,
+      })
+    : streamObject({
+        model,
+        schema: opts.schema,
+        system: opts.systemPrompt,
+        prompt: opts.userPrompt!,
+        temperature: opts.temperature ?? 0.3,
+        onError,
+        onFinish,
+      });
 
   return { job, result };
 }

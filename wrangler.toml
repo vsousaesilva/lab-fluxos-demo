@@ -47,6 +47,14 @@ binding = "XML_STORAGE"
 bucket_name = "lab-fluxos-xmls"
 
 # ============================================================
+# R2 — anexos das demandas (imagens, PDFs, texto, Office)
+# Criar bucket: wrangler r2 bucket create lab-fluxos-demand-attachments
+# ============================================================
+[[r2_buckets]]
+binding = "DEMAND_ATTACHMENTS"
+bucket_name = "lab-fluxos-demand-attachments"
+
+# ============================================================
 # KV — sessões better-auth e cache de embeddings
 # ============================================================
 [[kv_namespaces]]

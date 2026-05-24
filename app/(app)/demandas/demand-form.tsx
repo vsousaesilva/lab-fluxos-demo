@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createDemandAction, updateDemandAction } from "./actions";
 import { createDemandSchema } from "@/lib/validators/demand";
 import type { Demand } from "@/lib/db/schema";
+import { AttachmentsField } from "./attachments-field";
 
 type Props = {
   /** Se informado, o form opera em modo edição (UPDATE). */
@@ -35,6 +36,8 @@ export function DemandForm({ initial, trigger }: Props) {
   const [requesterName, setRequesterName] = useState(
     initial?.requesterName ?? ""
   );
+  const [pendingFiles, setPendingFiles] = useState<File[]>([]);
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pending, startTransition] = useTransition();
 
@@ -42,7 +45,41 @@ export function DemandForm({ initial, trigger }: Props) {
     setTitle(initial?.title ?? "");
     setDescription(initial?.description ?? "");
     setRequesterName(initial?.requesterName ?? "");
+    setPendingFiles([]);
+    setUploadingIndex(null);
     setErrors({});
+  }
+
+  async function uploadPendingFiles(demandId: string): Promise<{
+    uploaded: number;
+    failed: string[];
+  }> {
+    let uploaded = 0;
+    const failed: string[] = [];
+    for (let i = 0; i < pendingFiles.length; i++) {
+      const f = pendingFiles[i];
+      setUploadingIndex(i);
+      const fd = new FormData();
+      fd.append("file", f);
+      try {
+        const res = await fetch(
+          `/api/demand-attachments/upload?demandId=${encodeURIComponent(demandId)}`,
+          { method: "POST", body: fd }
+        );
+        if (!res.ok) {
+          const data = (await res.json().catch(() => ({}))) as { error?: string };
+          failed.push(`${f.name}: ${data.error ?? `HTTP ${res.status}`}`);
+        } else {
+          uploaded++;
+        }
+      } catch (err) {
+        failed.push(
+          `${f.name}: ${err instanceof Error ? err.message : "erro de rede"}`
+        );
+      }
+    }
+    setUploadingIndex(null);
+    return { uploaded, failed };
   }
 
   function onSubmit(e: React.FormEvent) {
@@ -70,7 +107,27 @@ export function DemandForm({ initial, trigger }: Props) {
         toast.error(result.error);
         return;
       }
-      toast.success(isEdit ? "Demanda atualizada" : "Demanda registrada");
+      const demandId = result.data.id;
+
+      // Sobe anexos pendentes (se houver) já com o demandId
+      if (pendingFiles.length > 0) {
+        const upload = await uploadPendingFiles(demandId);
+        if (upload.failed.length > 0) {
+          for (const f of upload.failed.slice(0, 3)) toast.error(f);
+          if (upload.uploaded > 0) {
+            toast.success(
+              `${upload.uploaded} anexo(s) enviados, ${upload.failed.length} falharam`
+            );
+          }
+        } else {
+          toast.success(
+            `${isEdit ? "Demanda atualizada" : "Demanda registrada"} com ${upload.uploaded} anexo(s)`
+          );
+        }
+      } else {
+        toast.success(isEdit ? "Demanda atualizada" : "Demanda registrada");
+      }
+
       reset();
       setOpen(false);
     });
@@ -152,6 +209,13 @@ export function DemandForm({ initial, trigger }: Props) {
               <p className="text-xs text-destructive">{errors.description}</p>
             ) : null}
           </div>
+
+          <AttachmentsField
+            demandId={initial?.id}
+            pending={pendingFiles}
+            onPendingChange={setPendingFiles}
+          />
+
           <DialogFooter className="gap-2">
             <Button
               type="button"
@@ -162,7 +226,13 @@ export function DemandForm({ initial, trigger }: Props) {
               Cancelar
             </Button>
             <Button type="submit" disabled={pending}>
-              {pending ? "Salvando…" : isEdit ? "Salvar" : "Registrar"}
+              {pending
+                ? uploadingIndex !== null
+                  ? `Enviando ${uploadingIndex + 1}/${pendingFiles.length}…`
+                  : "Salvando…"
+                : isEdit
+                  ? "Salvar"
+                  : "Registrar"}
             </Button>
           </DialogFooter>
         </form>
