@@ -38,6 +38,7 @@ const AGENT_LABEL: Record<AgentType, string> = {
   RITES_SCRIBE: "Rites Scribe",
   JIRA_SYNCHRONIZER: "Jira Synchronizer",
   XML_VALIDATOR: "XML Validator",
+  EL_DESCRIBER: "EL Describer",
 };
 
 function formatDateTime(d: Date | null): string {

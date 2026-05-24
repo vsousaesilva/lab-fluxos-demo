@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ElStatus } from "@/lib/db/schema";
 import { getEl } from "../actions";
+import { DescribeButton } from "../describe-button";
 import { EditElForm } from "./edit-form";
 
 const STATUS_META: Record<
@@ -38,6 +39,12 @@ export default async function ElDetailPage({
             <Badge variant={status.variant} className="text-[10px]">
               {status.label}
             </Badge>
+            <DescribeButton
+              elId={el.id}
+              size="default"
+              variant="outline"
+              label={el.objective ? "Re-descrever com IA" : "Descrever com IA"}
+            />
             <Link
               href="/catalogos/els"
               className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-accent"
@@ -66,7 +73,8 @@ export default async function ElDetailPage({
               </h3>
               {flows.length === 0 ? (
                 <p className="text-xs text-muted-foreground">
-                  Nenhuma ocorrência registrada ainda. Quando a auto-extração rodar (próximo release), os fluxos contendo esta EL aparecerão aqui.
+                  Nenhuma ocorrência registrada. Rode <strong>Extrair de fluxos</strong>
+                  {" "}na listagem pra varrer os XMLs e popular ocorrências.
                 </p>
               ) : (
                 <ul className="space-y-2">

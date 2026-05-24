@@ -8,6 +8,7 @@ import { getElMetrics, listEls } from "./actions";
 import { ElsFilters } from "./filters";
 import { ElForm } from "./el-form";
 import { ExtractButton } from "./extract-button";
+import { DescribeButton } from "./describe-button";
 
 const STATUS_META: Record<
   ElStatus,
@@ -92,7 +93,8 @@ export default async function ElsPage({
             <div className="space-y-2 py-12 text-center text-sm text-muted-foreground">
               <p>Nenhuma EL cadastrada ainda.</p>
               <p className="text-xs">
-                Use <strong>Nova EL</strong> para cadastrar manualmente, ou aguarde a auto-extração com IA (próximo release).
+                Use <strong>Extrair de fluxos</strong> para popular automaticamente
+                a partir dos 212 XMLs em R2, ou <strong>Nova EL</strong> para cadastrar manualmente.
               </p>
             </div>
           ) : (
@@ -106,6 +108,7 @@ export default async function ElsPage({
                     <th className="px-3 py-2 font-medium">Tags</th>
                     <th className="px-3 py-2 text-right font-medium">Ocorrências</th>
                     <th className="px-3 py-2 font-medium">Status</th>
+                    <th className="px-3 py-2 text-right font-medium">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -164,6 +167,15 @@ export default async function ElsPage({
                           <Badge variant={status.variant} className="text-[10px]">
                             {status.label}
                           </Badge>
+                        </td>
+                        <td className="px-3 py-2 text-right">
+                          {el.objective ? (
+                            <span className="text-[10px] text-muted-foreground">
+                              descrita
+                            </span>
+                          ) : (
+                            <DescribeButton elId={el.id} size="sm" />
+                          )}
                         </td>
                       </tr>
                     );

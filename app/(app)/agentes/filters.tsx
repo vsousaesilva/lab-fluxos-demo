@@ -23,6 +23,7 @@ const AGENT_TYPES = [
   { value: "RITES_SCRIBE", label: "Escriba de ritos" },
   { value: "XML_VALIDATOR", label: "Validador XML" },
   { value: "JIRA_SYNCHRONIZER", label: "Sincronizador Jira" },
+  { value: "EL_DESCRIBER", label: "Descritor de EL" },
 ];
 
 export function JobsFilters() {

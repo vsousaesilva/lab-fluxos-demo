@@ -1,8 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { and, desc, eq, like, or, sql } from "drizzle-orm";
+import { and, desc, eq, inArray, like, or, sql } from "drizzle-orm";
 import { z } from "zod";
+import { generateObject } from "ai";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getDb, schema } from "@/lib/db/client";
 import type {
   ElCategory,
@@ -10,6 +12,21 @@ import type {
   ExpressionLanguage,
   FlowSource,
 } from "@/lib/db/schema";
+import { getGeminiModel } from "@/lib/ai/gemini";
+import {
+  completeAgentJob,
+  failAgentJob,
+  startAgentJob,
+} from "@/lib/ai/agent-job";
+import {
+  extractElsFromXml,
+  getElSnippets,
+} from "@/lib/agents/el-describer/extractor";
+import {
+  EL_DESCRIBER_SYSTEM_PROMPT,
+  buildElDescriberUserPrompt,
+} from "@/lib/agents/el-describer/prompt";
+import { elDescriberOutputSchema } from "@/lib/agents/el-describer/schema";
 
 type ActionResult<T = unknown> =
   | { ok: true; data: T }
@@ -231,11 +248,300 @@ export async function deleteElAction(
   }
 }
 
-// Stub: extração automática + IA virá no próximo release.
-export async function extractElsFromFlowsAction(): Promise<ActionResult<{ status: string }>> {
-  return {
-    ok: false,
-    error:
-      "Em breve: auto-extração dos 212 XMLs + descrição via Gemini. Por enquanto, cadastre manualmente com 'Nova EL'.",
-  };
+// ============================================================
+// Auto-extração: lê XMLs do R2, regex pra encontrar ELs, popula
+// expression_language + expression_language_occurrence.
+// Não usa LLM (rápido, sem custo). IA fica no describeElAction.
+// ============================================================
+
+export type ExtractElsResult = {
+  processedFlows: number;
+  skippedFlows: number;
+  uniqueEls: number;
+  createdEls: number;
+  updatedEls: number;
+  totalOccurrences: number;
+  durationMs: number;
+};
+
+const CHUNK = 50;
+
+export async function extractElsFromFlowsAction(): Promise<
+  ActionResult<ExtractElsResult>
+> {
+  const t0 = Date.now();
+  try {
+    const { env } = await getCloudflareContext({ async: true });
+    const r2 = env.XML_STORAGE;
+    if (!r2) {
+      return { ok: false, error: "Bucket R2 XML_STORAGE não configurado." };
+    }
+
+    const db = await getDb();
+    const flows = await db.select().from(schema.flowSource);
+
+    // 1) Lê todos os XMLs e agrega ELs em memória
+    type Agg = { total: number; perFlow: Map<string, number> };
+    const agg = new Map<string, Agg>();
+    let processedFlows = 0;
+    let skippedFlows = 0;
+
+    for (const f of flows) {
+      if (!f.r2Key) {
+        skippedFlows++;
+        continue;
+      }
+      const obj = await r2.get(f.r2Key);
+      if (!obj) {
+        skippedFlows++;
+        continue;
+      }
+      const xml = await obj.text();
+      const els = extractElsFromXml(xml);
+      for (const el of els) {
+        let a = agg.get(el.code);
+        if (!a) {
+          a = { total: 0, perFlow: new Map() };
+          agg.set(el.code, a);
+        }
+        a.total += el.count;
+        a.perFlow.set(f.id, el.count);
+      }
+      processedFlows++;
+    }
+
+    if (agg.size === 0) {
+      return {
+        ok: true,
+        data: {
+          processedFlows,
+          skippedFlows,
+          uniqueEls: 0,
+          createdEls: 0,
+          updatedEls: 0,
+          totalOccurrences: 0,
+          durationMs: Date.now() - t0,
+        },
+      };
+    }
+
+    const allCodes = [...agg.keys()];
+
+    // 2) Descobre quais ELs já existem (uma SELECT só)
+    const existing = await db
+      .select({
+        id: schema.expressionLanguage.id,
+        code: schema.expressionLanguage.code,
+      })
+      .from(schema.expressionLanguage)
+      .where(inArray(schema.expressionLanguage.code, allCodes));
+
+    const idByCode = new Map<string, string>();
+    for (const e of existing) idByCode.set(e.code, e.id);
+
+    // 3) Insert das novas em chunks
+    let createdEls = 0;
+    const newCodes = allCodes.filter((c) => !idByCode.has(c));
+    for (let i = 0; i < newCodes.length; i += CHUNK) {
+      const slice = newCodes.slice(i, i + CHUNK);
+      const inserted = await db
+        .insert(schema.expressionLanguage)
+        .values(
+          slice.map((code) => ({
+            code,
+            occurrenceCount: agg.get(code)!.total,
+          }))
+        )
+        .returning({
+          id: schema.expressionLanguage.id,
+          code: schema.expressionLanguage.code,
+        });
+      for (const row of inserted) {
+        idByCode.set(row.code, row.id);
+        createdEls++;
+      }
+    }
+
+    // 4) Update occurrenceCount das existentes (uma por uma — ok, são poucas)
+    let updatedEls = 0;
+    for (const e of existing) {
+      const a = agg.get(e.code);
+      if (!a) continue;
+      await db
+        .update(schema.expressionLanguage)
+        .set({ occurrenceCount: a.total, updatedAt: new Date() })
+        .where(eq(schema.expressionLanguage.id, e.id));
+      updatedEls++;
+    }
+
+    // 5) Replace ocorrências: deleta as existentes pras ELs envolvidas,
+    //    depois insere as novas em chunks.
+    const allElIds = [...idByCode.values()];
+    for (let i = 0; i < allElIds.length; i += CHUNK) {
+      const slice = allElIds.slice(i, i + CHUNK);
+      await db
+        .delete(schema.expressionLanguageOccurrence)
+        .where(
+          inArray(
+            schema.expressionLanguageOccurrence.expressionLanguageId,
+            slice
+          )
+        );
+    }
+
+    type OccRow = {
+      expressionLanguageId: string;
+      flowSourceId: string;
+      count: number;
+    };
+    const occRows: OccRow[] = [];
+    for (const [code, a] of agg.entries()) {
+      const elId = idByCode.get(code);
+      if (!elId) continue;
+      for (const [flowId, count] of a.perFlow.entries()) {
+        occRows.push({
+          expressionLanguageId: elId,
+          flowSourceId: flowId,
+          count,
+        });
+      }
+    }
+
+    for (let i = 0; i < occRows.length; i += CHUNK) {
+      const slice = occRows.slice(i, i + CHUNK);
+      await db.insert(schema.expressionLanguageOccurrence).values(slice);
+    }
+
+    revalidatePath("/catalogos/els");
+
+    return {
+      ok: true,
+      data: {
+        processedFlows,
+        skippedFlows,
+        uniqueEls: agg.size,
+        createdEls,
+        updatedEls,
+        totalOccurrences: occRows.length,
+        durationMs: Date.now() - t0,
+      },
+    };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Erro na extração";
+    console.error("[extractElsFromFlowsAction]", err);
+    return { ok: false, error: message };
+  }
+}
+
+// ============================================================
+// Descrever 1 EL com IA — busca snippets dos XMLs onde aparece,
+// chama Gemini Flash e salva objective/category/tags.
+// Cada chamada gera um AgentJob com tokens pra auditoria.
+// ============================================================
+
+export async function describeElAction(
+  input: z.infer<typeof idSchema>
+): Promise<ActionResult<ExpressionLanguage>> {
+  const parsed = idSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "ID inválido" };
+
+  const db = await getDb();
+  const el = await db.query.expressionLanguage.findFirst({
+    where: eq(schema.expressionLanguage.id, parsed.data.id),
+  });
+  if (!el) return { ok: false, error: "EL não encontrada" };
+
+  const { env } = await getCloudflareContext({ async: true });
+  const r2 = env.XML_STORAGE;
+
+  // Busca os fluxos onde aparece + nomes + alguns snippets (até 3 fluxos amostrados)
+  const occs = await db
+    .select({
+      flowSourceId: schema.expressionLanguageOccurrence.flowSourceId,
+      r2Key: schema.flowSource.r2Key,
+      processName: schema.flowSource.processName,
+      count: schema.expressionLanguageOccurrence.count,
+    })
+    .from(schema.expressionLanguageOccurrence)
+    .innerJoin(
+      schema.flowSource,
+      eq(
+        schema.flowSource.id,
+        schema.expressionLanguageOccurrence.flowSourceId
+      )
+    )
+    .where(
+      eq(schema.expressionLanguageOccurrence.expressionLanguageId, el.id)
+    )
+    .orderBy(desc(schema.expressionLanguageOccurrence.count));
+
+  const processNames = occs.map((o) => o.processName);
+  const totalOccurrences = occs.reduce((s, o) => s + o.count, 0);
+
+  // Pega snippets dos 3 fluxos com mais ocorrências
+  const snippets: string[] = [];
+  if (r2) {
+    for (const o of occs.slice(0, 3)) {
+      if (!o.r2Key) continue;
+      try {
+        const obj = await r2.get(o.r2Key);
+        if (!obj) continue;
+        const xml = await obj.text();
+        snippets.push(...getElSnippets(xml, el.code, 2));
+        if (snippets.length >= 6) break;
+      } catch (err) {
+        console.warn("[describeElAction] falha ao ler R2", o.r2Key, err);
+      }
+    }
+  }
+
+  const { model, modelId } = await getGeminiModel("flash");
+  const job = await startAgentJob({
+    agentType: "EL_DESCRIBER",
+    inputSummary: `${el.code.slice(0, 60)} — ${processNames.length} fluxos`,
+    llmProvider: "google",
+    llmModel: modelId,
+  });
+
+  try {
+    const result = await generateObject({
+      model,
+      schema: elDescriberOutputSchema,
+      system: EL_DESCRIBER_SYSTEM_PROMPT,
+      prompt: buildElDescriberUserPrompt({
+        code: el.code,
+        snippets,
+        processNames,
+        totalOccurrences,
+      }),
+      temperature: 0.2,
+    });
+
+    const now = new Date();
+    const [updated] = await db
+      .update(schema.expressionLanguage)
+      .set({
+        objective: result.object.objective,
+        category: result.object.category,
+        tags: result.object.tags,
+        updatedAt: now,
+      })
+      .where(eq(schema.expressionLanguage.id, el.id))
+      .returning();
+
+    await completeAgentJob(job.id, {
+      outputSummary: `${result.object.category} — ${result.object.objective.slice(0, 80)}`,
+      promptTokens: result.usage?.promptTokens ?? 0,
+      completionTokens: result.usage?.completionTokens ?? 0,
+    });
+
+    revalidatePath("/catalogos/els");
+    revalidatePath(`/catalogos/els/${el.id}`);
+    return { ok: true, data: updated };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Erro na descrição";
+    await failAgentJob(job.id, message);
+    console.error("[describeElAction]", err);
+    return { ok: false, error: message };
+  }
 }

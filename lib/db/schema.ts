@@ -148,7 +148,8 @@ export type AgentType =
   | "FLOW_CONSULTANT"
   | "RITES_SCRIBE"
   | "JIRA_SYNCHRONIZER"
-  | "XML_VALIDATOR";
+  | "XML_VALIDATOR"
+  | "EL_DESCRIBER";
 
 export const agentJob = sqliteTable(
   "agent_job",
