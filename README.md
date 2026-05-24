@@ -3,8 +3,9 @@
 Plataforma multi-agente para governança de fluxos PJe (jBPM jPDL 3.2 + BPMN 2.0).
 Reescrita do `lab-fluxos` institucional (Spring Boot + Angular) para uma stack **leve, edge-native e deployada na Cloudflare**.
 
-> **Status:** em produção — <https://labdefluxos.com.br>
+> **Status:** em **operação real** desde 2026-05-24 — <https://labdefluxos.com.br>
 > **Versão atual:** ver `package.json` (`version`) ou releases em <https://github.com/vsousaesilva/lab-fluxos-demo/releases>
+> **Dados:** 212 XMLs PJe indexados (RAG) · 2.7k Expression Languages catalogadas com IA · 217 agent_jobs auditados
 
 ---
 
@@ -36,11 +37,18 @@ Reescrita do `lab-fluxos` institucional (Spring Boot + Angular) para uma stack *
 - **Revisão** — fila global de aprovação (análises DRAFT + HUs DRAFT + sprints PROPOSED)
 
 ### Fluxos PJe
-- **Designer BPMN** — agente IA gera BPMN 2.0 a partir de HU
+- **Designer BPMN** — agente IA gera BPMN 2.0 a partir de HU (compatível com Bizagi Modeler)
 - **Gerador XML jPDL** — agente IA gera XML jPDL 3.2 com RAG nos 212 fluxos indexados
 - **Validador XML** — 6 LintRules deterministas portadas do Java (PJE-EL incluída)
 - **Consultor de Fluxos** — chat RAG streaming nos XMLs (Vectorize + Gemini)
-- **Catálogo de ELs** — documenta Expression Languages (`#{...}` / `${...}`) usadas nos fluxos
+- **Catálogo de ELs** — 2.713 Expression Languages (`#{...}` / `${...}`) extraídas dos 212 XMLs e descritas com IA (agente `EL_DESCRIBER` Gemini Flash). Suporta extração automática, descrição individual ou em batch, paginação real (100/página), busca por código/objetivo.
+
+### Anexos em demandas (v0.5+)
+- Drag-and-drop no formulário: até 10 arquivos × 10 MB × 100 MB total por demanda
+- Imagens (JPG/PNG/WEBP/GIF) e PDF lidos pelo **Demand Analyst** via Gemini multimodal
+- Texto (TXT/MD/CSV) injetado inline no prompt
+- Office (XLSX/DOCX) armazenado mas não consumido pela IA ainda
+- R2 dedicado `lab-fluxos-demand-attachments`
 
 ### Integração + Governança
 - **Jira** — outbox de cards (criação + transição)
@@ -50,7 +58,8 @@ Reescrita do `lab-fluxos` institucional (Spring Boot + Angular) para uma stack *
 ### UX cross-cutting
 - Toda saída IA gera card com **Aprovar / Rejeitar / Editar / Regenerar com IA**
 - Formulários de edição completos para 7 entidades (campo a campo, com arrays editáveis)
-- Reset de pipeline preservando users, agent_jobs (histórico de custo) e RAG (212 XMLs)
+- **Responsivo** (v0.12): sidebar vira drawer com hamburger em mobile (< 768px), layout adapta padding/espaçamento, PageHeader empilha
+- Reset de pipeline (`_go-live.cmd` / `_db-reset-cards.cmd`) preservando users, agent_jobs (histórico de custo), RAG (212 XMLs) e catálogo de ELs
 
 ---
 
@@ -81,8 +90,9 @@ Todos os scripts são `.cmd` — duplo-clique ou execução no cmd.exe / PowerSh
 | 5 | `_db-migrate-remote.cmd` | aplica schema no D1 remoto (prod) |
 | 6 | `_secrets.cmd` | cadastra `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `GOOGLE_GENERATIVE_AI_API_KEY`, secrets Jira |
 | 7 | `_secret-admin-emails.cmd` | cadastra `ADMIN_EMAILS` (whitelist de admins, separados por vírgula) |
-| 8 | `_ingest-flows.cmd` | indexa os 212 XMLs PJe no Vectorize (uma vez só) |
-| 9 | `_git-init-push.cmd` | inicializa repo, configura remote e faz primeiro push pro GitHub |
+| 8 | `_cf-create-attachments-bucket.cmd` | cria bucket R2 `lab-fluxos-demand-attachments` |
+| 9 | `_ingest-flows.cmd` | indexa os 212 XMLs PJe no Vectorize (uma vez só) |
+| 10 | `_git-init-push.cmd` | inicializa repo, configura remote e faz primeiro push pro GitHub |
 
 Para desenvolvimento local: copie `.dev.vars.example` para `.dev.vars` e preencha as chaves.
 
@@ -98,7 +108,10 @@ Para desenvolvimento local: copie `.dev.vars.example` para `.dev.vars` e preench
 | `_kill-port-3000.cmd` | mata processo travado na 3000 |
 | `_clean-next.cmd` | limpa `.next/`, `.open-next/`, `.wrangler/` |
 | `_db-inspect-jobs.cmd` | inspeciona AgentJob no D1 (histórico LLM) |
-| `_db-reset-cards.cmd` | zera pipeline (preserva users, jobs e RAG) — pede confirmação dupla |
+| `_db-counts.cmd` | mostra contagens de todas as tabelas no D1 remoto |
+| `_db-reset-cards.cmd` | zera pipeline (preserva users, jobs, RAG, ELs) — pede confirmação dupla |
+| `_go-live.cmd` | reset completo pra início de operação real: backup D1 + limpa R2 demand-attachments + executa reset SQL + valida contagens |
+| `_bump-and-tag.cmd <bump>` | aplica só o passo 4/4 do release (`npm version` + push tag) — útil quando deploy passou mas tag não saiu |
 
 ---
 
@@ -116,12 +129,16 @@ _release.cmd patch "fix: contador do painel bate com /revisao"
 _release.cmd minor "feat: catalogo de ELs + sistema de convites"
 ```
 
-O que `_release.cmd` faz (via `_release.ps1`):
+O que `_release.cmd` faz (via `_release.ps1`) — **fluxo deploy-first (v0.8.0+)**:
 1. Valida portáteis em `C:\Portatil\` + branch é `main` + nenhum arquivo sensível no staging
 2. `git add . && git commit -m "<msg>"` (se houver mudanças pendentes)
-3. `npm version <bump>` → atualiza `package.json` + commit `release: vX.Y.Z` + tag `vX.Y.Z`
-4. `git push origin main --follow-tags`
-5. `opennextjs-cloudflare build && deploy`
+3. `git push origin main` — sobe o commit do código **sem tag ainda**
+4. `opennextjs-cloudflare build && deploy` — teste de fogo
+5. **Só se deploy passar**: `npm version <bump>` → bump + commit `release: vX.Y.Z` + tag → `git push --follow-tags`
+
+Se deploy falhar, **nenhum bump é feito**. Corrige o código, roda de novo. Cada tag `vX.Y.Z` no GitHub corresponde a um deploy real em produção.
+
+> ℹ️ Tags `v0.5.0..v0.7.0` no histórico do GitHub são órfãs — vieram de uma versão antiga do script que bumpava antes do deploy. Desconsidere essas; a primeira tag real do fluxo novo é `v0.8.0`.
 
 Para invocar via Claude Code: peça **"atualizar lab-fluxos"** — a skill `atualizar-lab-fluxos` em `.claude/skills/` orquestra perguntando bump + mensagem.
 
@@ -145,13 +162,14 @@ lab-fluxos-demo/
 │   │   ├── gerador-xml/          # agente PJe XML Generator (RAG)
 │   │   ├── validador/            # 6 LintRules deterministas
 │   │   ├── consultor/            # chat RAG streaming
-│   │   ├── catalogos/els/        # catálogo de Expression Languages
+│   │   ├── catalogos/els/        # catálogo de Expression Languages + auto-extração + describe IA
 │   │   ├── jira/                 # outbox Jira
 │   │   ├── agentes/              # auditoria de jobs LLM + custo R$
 │   │   └── admin/convites/       # admin: gera/revoga códigos de convite
 │   └── api/
 │       ├── auth/[...all]/        # better-auth handler
-│       └── signup-invite/        # endpoint custom: valida invite antes de criar conta
+│       ├── signup-invite/        # endpoint custom: valida invite antes de criar conta
+│       └── demand-attachments/   # upload + download de anexos de demanda (R2)
 ├── components/
 │   ├── ui/                       # shadcn (Button, Card, Input, Dialog, etc.)
 │   ├── forms/                    # editores reutilizáveis (StringArrayField, etc.)
@@ -159,18 +177,23 @@ lab-fluxos-demo/
 │   └── page-header.tsx
 ├── lib/
 │   ├── auth/                     # better-auth + invite + admin whitelist
-│   ├── ai/                       # pricing (USD→BRL), prompts, modelos Gemini 3
-│   ├── agents/                   # 9 agentes (prompts, schemas, runners)
+│   ├── ai/                       # pricing (USD→BRL), prompts, modelos Gemini 3, stream-agent multimodal
+│   ├── agents/                   # 10 agentes (incluindo el-describer)
+│   ├── attachments/              # config + actions + validação de anexos de demanda
+│   ├── text/                     # mojibake fix (planejado)
 │   ├── db/
-│   │   ├── schema.ts             # Drizzle (15 tabelas + 4 do better-auth)
+│   │   ├── schema.ts             # Drizzle (17 tabelas + 4 do better-auth)
 │   │   └── client.ts
 │   └── validator/                # 6 LintRules + parser jPDL
 ├── drizzle/
-│   └── migrations/
-│       ├── 0000_init.sql
-│       ├── 0001_regenerate_inputs.sql
-│       ├── 0002_invites.sql
-│       └── 0003_expression_language.sql
+│   ├── migrations/
+│   │   ├── 0000_init.sql
+│   │   ├── 0001_regenerate_inputs.sql
+│   │   ├── 0002_invites.sql
+│   │   ├── 0003_expression_language.sql
+│   │   └── 0004_demand_attachments.sql
+│   └── queries/
+│       └── reset_pipeline.sql    # SQL idempotente usado pelo _go-live.cmd
 ├── seed/                         # ingest-pje-flows.ts (212 XMLs → Vectorize)
 ├── .claude/skills/               # skills Claude Code
 │   └── atualizar-lab-fluxos/     # release end-to-end
