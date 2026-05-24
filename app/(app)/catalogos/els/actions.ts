@@ -264,7 +264,13 @@ export type ExtractElsResult = {
   durationMs: number;
 };
 
-const CHUNK = 50;
+// D1/SQLite limita ~100 binds por query. Dimensionamos por op:
+//   - SELECT/DELETE com `IN (...)`: 1 bind por valor → CHUNK 80
+//   - INSERT expression_language: 6 binds por linha → CHUNK 15 (90 binds)
+//   - INSERT expression_language_occurrence: 5 binds por linha → CHUNK 18 (90 binds)
+const CHUNK_LOOKUP = 80;
+const CHUNK_INSERT_EL = 15;
+const CHUNK_INSERT_OCC = 18;
 
 export async function extractElsFromFlowsAction(): Promise<
   ActionResult<ExtractElsResult>
@@ -331,8 +337,8 @@ export async function extractElsFromFlowsAction(): Promise<
     //    D1/SQLite tem ~100 binds por query, então chunkamos o IN (...).
     const idByCode = new Map<string, string>();
     const existingCodes: { id: string; code: string }[] = [];
-    for (let i = 0; i < allCodes.length; i += CHUNK) {
-      const slice = allCodes.slice(i, i + CHUNK);
+    for (let i = 0; i < allCodes.length; i += CHUNK_LOOKUP) {
+      const slice = allCodes.slice(i, i + CHUNK_LOOKUP);
       const found = await db
         .select({
           id: schema.expressionLanguage.id,
@@ -349,8 +355,8 @@ export async function extractElsFromFlowsAction(): Promise<
     // 3) Insert das novas em chunks
     let createdEls = 0;
     const newCodes = allCodes.filter((c) => !idByCode.has(c));
-    for (let i = 0; i < newCodes.length; i += CHUNK) {
-      const slice = newCodes.slice(i, i + CHUNK);
+    for (let i = 0; i < newCodes.length; i += CHUNK_INSERT_EL) {
+      const slice = newCodes.slice(i, i + CHUNK_INSERT_EL);
       const inserted = await db
         .insert(schema.expressionLanguage)
         .values(
@@ -384,8 +390,8 @@ export async function extractElsFromFlowsAction(): Promise<
     // 5) Replace ocorrências: deleta as existentes pras ELs envolvidas,
     //    depois insere as novas em chunks.
     const allElIds = [...idByCode.values()];
-    for (let i = 0; i < allElIds.length; i += CHUNK) {
-      const slice = allElIds.slice(i, i + CHUNK);
+    for (let i = 0; i < allElIds.length; i += CHUNK_LOOKUP) {
+      const slice = allElIds.slice(i, i + CHUNK_LOOKUP);
       await db
         .delete(schema.expressionLanguageOccurrence)
         .where(
@@ -414,8 +420,8 @@ export async function extractElsFromFlowsAction(): Promise<
       }
     }
 
-    for (let i = 0; i < occRows.length; i += CHUNK) {
-      const slice = occRows.slice(i, i + CHUNK);
+    for (let i = 0; i < occRows.length; i += CHUNK_INSERT_OCC) {
+      const slice = occRows.slice(i, i + CHUNK_INSERT_OCC);
       await db.insert(schema.expressionLanguageOccurrence).values(slice);
     }
 
