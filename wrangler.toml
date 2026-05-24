@@ -1,0 +1,81 @@
+name = "lab-fluxos-demo"
+main = ".open-next/worker.js"
+compatibility_date = "2025-03-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ============================================================
+# Domínio customizado
+# Pré-requisito: labdefluxos.com.br precisa estar com os
+# nameservers da Cloudflare ativos. O DNS é gerenciado pela CF.
+# ============================================================
+[[routes]]
+pattern = "labdefluxos.com.br"
+custom_domain = true
+
+[[routes]]
+pattern = "www.labdefluxos.com.br"
+custom_domain = true
+
+[assets]
+binding = "ASSETS"
+directory = ".open-next/assets"
+
+# ============================================================
+# D1 — banco relacional (SQLite serverless)
+# ============================================================
+[[d1_databases]]
+binding = "DB"
+database_name = "lab-fluxos"
+database_id = "27e1e2a7-53a3-4639-977f-4886d7b77950"
+migrations_dir = "drizzle/migrations"
+remote = true
+
+# ============================================================
+# Vectorize — índice vetorial para RAG (Consultor de Fluxos)
+# Gemini text-embedding-004 → 768 dimensões, métrica cosine
+# ============================================================
+[[vectorize]]
+binding = "FLOW_VECTORS"
+index_name = "lab-fluxos-flows"
+remote = true
+
+# ============================================================
+# R2 — storage dos XMLs jPDL originais
+# ============================================================
+[[r2_buckets]]
+binding = "XML_STORAGE"
+bucket_name = "lab-fluxos-xmls"
+
+# ============================================================
+# KV — sessões better-auth e cache de embeddings
+# ============================================================
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "ab5f8e5eca1240e3a9f75d01247840ba"
+
+# ============================================================
+# Queues — ingestão batch (Fase 4)
+# Mantemos só o producer (binding INGEST_QUEUE). O consumer está
+# comentado porque exige `queue()` handler exportado no Worker;
+# como a ingestão atual roda local via REST (não via Workers),
+# não precisamos do consumer ainda. Reative quando implementar o handler.
+# ============================================================
+[[queues.producers]]
+binding = "INGEST_QUEUE"
+queue = "lab-fluxos-ingest"
+
+# [[queues.consumers]]
+# queue = "lab-fluxos-ingest"
+# max_batch_size = 10
+# max_batch_timeout = 30
+# max_retries = 3
+
+# ============================================================
+# Observabilidade
+# ============================================================
+[observability]
+enabled = true
+
+[vars]
+APP_ENV = "production"
+APP_TIMEZONE = "America/Fortaleza"

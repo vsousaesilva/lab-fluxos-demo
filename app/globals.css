@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /*
+   * Paleta derivada da logo "Laboratório de Fluxos":
+   * - Azul profundo  #0F5A8C → primary
+   * - Azul claro     #2EA0E5 → info / secondary accent
+   * - Laranja        #FF6B1B → accent / warning highlight
+   * - Laranja claro  #FFA040 → warning suave
+   */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 208 70% 14%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 208 70% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 208 70% 14%;
+
+    /* Azul profundo da logo */
+    --primary: 205 81% 30%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Azul muito claro como fundo de destaque */
+    --secondary: 205 60% 96%;
+    --secondary-foreground: 205 81% 30%;
+
+    --muted: 205 30% 96%;
+    --muted-foreground: 208 25% 40%;
+
+    /* Laranja vibrante da logo */
+    --accent: 18 100% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 60% 38%;
+    --success-foreground: 0 0% 100%;
+
+    /* Warning usa o tom laranja-âmbar da logo */
+    --warning: 28 95% 55%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Info reaproveita o azul-claro turquesa */
+    --info: 200 78% 54%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 205 30% 88%;
+    --input: 205 30% 88%;
+    --ring: 205 81% 30%;
+
+    --radius: 0.65rem;
+  }
+
+  .dark {
+    --background: 208 50% 7%;
+    --foreground: 205 30% 96%;
+
+    --card: 208 45% 10%;
+    --card-foreground: 205 30% 96%;
+
+    --popover: 208 45% 10%;
+    --popover-foreground: 205 30% 96%;
+
+    --primary: 200 78% 54%;
+    --primary-foreground: 208 50% 7%;
+
+    --secondary: 208 35% 16%;
+    --secondary-foreground: 205 30% 96%;
+
+    --muted: 208 35% 16%;
+    --muted-foreground: 205 20% 65%;
+
+    --accent: 18 100% 60%;
+    --accent-foreground: 208 50% 7%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 60% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 28 95% 55%;
+    --warning-foreground: 0 0% 0%;
+
+    --info: 200 78% 54%;
+    --info-foreground: 0 0% 0%;
+
+    --border: 208 35% 16%;
+    --input: 208 35% 16%;
+    --ring: 200 78% 54%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Scrollbar refinado */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border rounded;
+  }
+}
+
+/* ============================================================
+ * Print styles — usados pelas rotas /print/*
+ * "Salvar como PDF" do navegador respeita @media print.
+ * ============================================================ */
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm 1.8cm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 11pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Esconde tudo que tiver data-print="hide" */
+  [data-print="hide"],
+  nav[aria-label="Sidebar"],
+  button {
+    display: none !important;
+  }
+
+  /* Containers de print */
+  .print-page {
+    background: #fff !important;
+    color: #111 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .print-page a {
+    color: #0f5a8c;
+    text-decoration: none;
+  }
+
+  .print-section {
+    page-break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  /* Tabelas e blocos de código quebram bem */
+  pre,
+  table {
+    page-break-inside: auto;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}

@@ -1,0 +1,15 @@
+# Copie para `.dev.vars` (sem `.example`) para uso com `wrangler dev`.
+# Em produção, use `wrangler secret put NOME` para cada chave abaixo.
+
+# better-auth — gere com: openssl rand -base64 32
+BETTER_AUTH_SECRET="troque-isto-em-producao"
+BETTER_AUTH_URL="http://localhost:8787"
+
+# Google Gemini — https://aistudio.google.com/app/apikey
+GOOGLE_GENERATIVE_AI_API_KEY=""
+
+# Jira (Fase 5 — opcional)
+JIRA_BASE_URL=""
+JIRA_EMAIL=""
+JIRA_API_TOKEN=""
+JIRA_PROJECT_KEY=""
