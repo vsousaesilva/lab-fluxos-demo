@@ -5,7 +5,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { revalidatePath } from "next/cache";
 import { getDb, schema } from "@/lib/db/client";
 import type { DemandAttachment } from "@/lib/db/schema";
-import { ATTACHMENT_LIMITS, classifyMime } from "./config";
+import { ATTACHMENT_LIMITS } from "./config";
 
 type ActionResult<T = unknown> =
   | { ok: true; data: T }
@@ -70,14 +70,3 @@ export async function getAttachmentsTotalSize(demandId: string): Promise<{
   };
 }
 
-/** Server action helper que valida MIME + tamanho contra os limites. */
-export function validateAttachment(file: { type: string; size: number }): string | null {
-  const category = classifyMime(file.type);
-  if (category === "unknown") {
-    return `Tipo "${file.type}" não suportado. Aceitos: imagens, PDF, TXT/MD/CSV, XLSX/DOCX.`;
-  }
-  if (file.size > ATTACHMENT_LIMITS.maxFileBytes) {
-    return `Arquivo excede o limite de ${ATTACHMENT_LIMITS.maxFileBytes / 1024 / 1024} MB por arquivo.`;
-  }
-  return null;
-}
