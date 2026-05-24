@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   title: "Lab Fluxos — Laboratório de Fluxos PJe",
   description:
     "Plataforma multi-agente para governança de fluxos PJe (jBPM jPDL 3.2 + BPMN 2.0).",
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: ["/favicon.png"],
+    apple: ["/favicon.png"],
+  },
 };
 
 export default function RootLayout({
