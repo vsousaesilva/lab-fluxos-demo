@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { ArrowLeft, FileCode2 } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ElStatus } from "@/lib/db/schema";
+import { getAuth } from "@/lib/auth";
+import { isAdminEmail } from "@/lib/auth/admin";
 import { getEl } from "../actions";
 import { DescribeButton } from "../describe-button";
 import { EditElForm } from "./edit-form";
@@ -27,6 +30,10 @@ export default async function ElDetailPage({
   const { el, flows } = await getEl(id);
   if (!el) notFound();
 
+  const auth = await getAuth();
+  const session = await auth.api.getSession({ headers: await headers() });
+  const isAdmin = session ? await isAdminEmail(session.user.email) : false;
+
   const status = STATUS_META[el.status];
 
   return (
@@ -39,12 +46,14 @@ export default async function ElDetailPage({
             <Badge variant={status.variant} className="text-[10px]">
               {status.label}
             </Badge>
-            <DescribeButton
-              elId={el.id}
-              size="default"
-              variant="outline"
-              label={el.objective ? "Re-descrever com IA" : "Descrever com IA"}
-            />
+            {isAdmin ? (
+              <DescribeButton
+                elId={el.id}
+                size="default"
+                variant="outline"
+                label={el.objective ? "Re-descrever com IA" : "Descrever com IA"}
+              />
+            ) : null}
             <Link
               href="/catalogos/els"
               className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-accent"

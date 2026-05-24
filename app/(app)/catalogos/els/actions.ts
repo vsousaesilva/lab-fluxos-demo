@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { and, desc, eq, inArray, like, or, sql } from "drizzle-orm";
 import { z } from "zod";
 import { generateObject } from "ai";
@@ -12,12 +13,25 @@ import type {
   ExpressionLanguage,
   FlowSource,
 } from "@/lib/db/schema";
+import { getAuth } from "@/lib/auth";
+import { isAdminEmail } from "@/lib/auth/admin";
 import { getGeminiModel } from "@/lib/ai/gemini";
 import {
   completeAgentJob,
   failAgentJob,
   startAgentJob,
 } from "@/lib/ai/agent-job";
+
+async function isCurrentUserAdmin(): Promise<boolean> {
+  try {
+    const auth = await getAuth();
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) return false;
+    return await isAdminEmail(session.user.email);
+  } catch {
+    return false;
+  }
+}
 import {
   extractElsFromXml,
   getElSnippets,
@@ -511,6 +525,12 @@ export async function extractElsFromFlowsAction(): Promise<
 export async function describeElAction(
   input: z.infer<typeof idSchema>
 ): Promise<ActionResult<ExpressionLanguage>> {
+  if (!(await isCurrentUserAdmin())) {
+    return {
+      ok: false,
+      error: "Apenas administradores podem disparar IA no catálogo de ELs.",
+    };
+  }
   const parsed = idSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "ID inválido" };
 
@@ -629,6 +649,12 @@ export async function describeElsBatchAction(
 ): Promise<
   ActionResult<{ ok: number; failed: number; errors: string[] }>
 > {
+  if (!(await isCurrentUserAdmin())) {
+    return {
+      ok: false,
+      error: "Apenas administradores podem disparar IA no catálogo de ELs.",
+    };
+  }
   const parsed = batchSchema.safeParse(input);
   if (!parsed.success) {
     return { ok: false, error: "Lote inválido (1–5 ids por chamada)." };

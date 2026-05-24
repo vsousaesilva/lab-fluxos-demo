@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Trash2 } from "lucide-react";
+import { Trash2, Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,6 +33,18 @@ export function EditElForm({ el }: { el: ExpressionLanguage }) {
   const [status, setStatus] = useState<string>(el.status);
   const [pending, startTransition] = useTransition();
   const [deleting, startDelete] = useTransition();
+  const [copied, setCopied] = useState(false);
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(el.code);
+      setCopied(true);
+      toast.success("Código copiado");
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      toast.error("Falha ao copiar (clipboard bloqueado)");
+    }
+  }
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -73,7 +85,28 @@ export function EditElForm({ el }: { el: ExpressionLanguage }) {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="space-y-1.5">
-        <Label htmlFor="code">Código (imutável)</Label>
+        <div className="flex items-center gap-2">
+          <Label htmlFor="code">Código (imutável)</Label>
+          <button
+            type="button"
+            onClick={copyCode}
+            className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+            title="Copiar código"
+            aria-label="Copiar código"
+          >
+            {copied ? (
+              <>
+                <Check className="h-3 w-3 text-success" />
+                copiado
+              </>
+            ) : (
+              <>
+                <Copy className="h-3 w-3" />
+                copiar
+              </>
+            )}
+          </button>
+        </div>
         <Input
           id="code"
           value={el.code}

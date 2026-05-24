@@ -1,9 +1,12 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { BookText, AlertCircle, CheckCircle2, FlaskConical, Archive } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ElCategory, ElStatus } from "@/lib/db/schema";
+import { getAuth } from "@/lib/auth";
+import { isAdminEmail } from "@/lib/auth/admin";
 import { getElMetrics, listEls, listElIdsWithoutObjective } from "./actions";
 import { ElsFilters } from "./filters";
 import { ElForm } from "./el-form";
@@ -49,6 +52,10 @@ export default async function ElsPage({
 
   // `listEls` agora retorna paginado; `listElIdsWithoutObjective` traz todos
   // os IDs pendentes (não só da página) pra alimentar o batch describe.
+  const auth = await getAuth();
+  const session = await auth.api.getSession({ headers: await headers() });
+  const isAdmin = session ? await isAdminEmail(session.user.email) : false;
+
   const [pageResult, metrics, pendingDescribeIds] = await Promise.all([
     listEls(filter, pageNum),
     getElMetrics(),
@@ -64,7 +71,7 @@ export default async function ElsPage({
         actions={
           <div className="flex flex-wrap gap-2">
             <ExtractButton />
-            {pendingDescribeIds.length > 0 ? (
+            {isAdmin && pendingDescribeIds.length > 0 ? (
               <BatchDescribeButton pendingIds={pendingDescribeIds} />
             ) : null}
             <ElForm />
@@ -181,9 +188,9 @@ export default async function ElsPage({
                           ? `${el.occurrenceCount}×`
                           : "—"}
                       </span>
-                      {hasObjective ? null : (
+                      {!hasObjective && isAdmin ? (
                         <DescribeButton elId={el.id} size="sm" />
-                      )}
+                      ) : null}
                     </div>
                   </li>
                 );
