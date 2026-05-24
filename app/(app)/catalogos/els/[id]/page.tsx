@@ -32,11 +32,7 @@ export default async function ElDetailPage({
     <>
       <PageHeader
         title="Expression Language"
-        description={
-          <span className="font-mono text-xs">
-            {el.code}
-          </span>
-        }
+        description={el.code}
         actions={
           <div className="flex items-center gap-2">
             <Badge variant={status.variant} className="text-[10px]">
