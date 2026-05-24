@@ -21,10 +21,12 @@ export default async function AppLayout({
   const isAdmin = await isAdminEmail(session.user.email);
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="min-h-screen bg-background">
       <Sidebar isAdmin={isAdmin} />
-      <main className="flex-1 overflow-x-hidden">
-        <div className="mx-auto max-w-7xl space-y-6 px-8 py-8">{children}</div>
+      <main className="overflow-x-hidden pt-14 md:pl-64 md:pt-0 print:!pl-0 print:!pt-0">
+        <div className="mx-auto max-w-7xl space-y-4 px-4 py-4 sm:space-y-6 sm:px-6 sm:py-6 md:px-8 md:py-8">
+          {children}
+        </div>
       </main>
     </div>
   );

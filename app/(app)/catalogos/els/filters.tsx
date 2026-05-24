@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -23,13 +23,16 @@ const CATEGORIES = [
 ];
 
 export function ElsFilters() {
+  const router = useRouter();
   const params = useSearchParams();
   const status = params.get("status") ?? "";
   const category = params.get("category") ?? "";
   const initialQ = params.get("q") ?? "";
   const [q, setQ] = useState(initialQ);
 
-  // sync local search input to URL after debounce
+  // Sincroniza a busca local com a URL após debounce.
+  // Precisa usar router.replace (não history.replaceState) pra invalidar
+  // o cache do Server Component e re-rodar a query no D1.
   useEffect(() => {
     const t = setTimeout(() => {
       if (q === initialQ) return;
@@ -37,12 +40,13 @@ export function ElsFilters() {
       if (status) qs.set("status", status);
       if (category) qs.set("category", category);
       if (q.trim()) qs.set("q", q.trim());
+      // page reset implícito: não incluímos `page` ao mudar busca
       const search = qs.toString();
       const url = search ? `/catalogos/els?${search}` : "/catalogos/els";
-      window.history.replaceState(null, "", url);
-    }, 300);
+      router.replace(url, { scroll: false });
+    }, 350);
     return () => clearTimeout(t);
-  }, [q, status, category, initialQ]);
+  }, [q, status, category, initialQ, router]);
 
   function buildHref(next: { status?: string; category?: string }) {
     const s = next.status ?? status;

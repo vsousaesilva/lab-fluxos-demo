@@ -38,11 +38,7 @@ export type ElsFilter = {
   q?: string;
 };
 
-export async function listEls(
-  filter: ElsFilter = {},
-  limit = 200
-): Promise<ExpressionLanguage[]> {
-  const db = await getDb();
+function buildElsWhere(filter: ElsFilter) {
   const conditions = [];
   if (filter.status) conditions.push(eq(schema.expressionLanguage.status, filter.status));
   if (filter.category)
@@ -56,9 +52,36 @@ export async function listEls(
       )!
     );
   }
-  const where = conditions.length > 0 ? and(...conditions) : undefined;
+  return conditions.length > 0 ? and(...conditions) : undefined;
+}
 
-  return db
+export const DEFAULT_PAGE_SIZE = 100;
+
+export type ListElsPage = {
+  rows: ExpressionLanguage[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+};
+
+export async function listEls(
+  filter: ElsFilter = {},
+  page = 1,
+  pageSize = DEFAULT_PAGE_SIZE
+): Promise<ListElsPage> {
+  const db = await getDb();
+  const where = buildElsWhere(filter);
+  const safePage = Math.max(1, Math.floor(page));
+  const safeSize = Math.min(500, Math.max(10, Math.floor(pageSize)));
+
+  const [countRow] = await db
+    .select({ n: sql<number>`count(*)` })
+    .from(schema.expressionLanguage)
+    .where(where);
+  const total = Number(countRow?.n ?? 0);
+
+  const rows = await db
     .select()
     .from(schema.expressionLanguage)
     .where(where)
@@ -66,7 +89,42 @@ export async function listEls(
       desc(schema.expressionLanguage.occurrenceCount),
       desc(schema.expressionLanguage.updatedAt)
     )
-    .limit(limit);
+    .limit(safeSize)
+    .offset((safePage - 1) * safeSize);
+
+  return {
+    rows,
+    total,
+    page: safePage,
+    pageSize: safeSize,
+    totalPages: Math.max(1, Math.ceil(total / safeSize)),
+  };
+}
+
+/** Retorna todos os IDs de ELs sem objective (respeitando filtros). Usado pelo Batch Describe. */
+export async function listElIdsWithoutObjective(
+  filter: ElsFilter = {}
+): Promise<string[]> {
+  const db = await getDb();
+  const where = buildElsWhere(filter);
+  const rows = await db
+    .select({ id: schema.expressionLanguage.id })
+    .from(schema.expressionLanguage)
+    .where(
+      where
+        ? and(
+            where,
+            or(
+              sql`${schema.expressionLanguage.objective} is null`,
+              sql`trim(${schema.expressionLanguage.objective}) = ''`
+            )!
+          )
+        : or(
+            sql`${schema.expressionLanguage.objective} is null`,
+            sql`trim(${schema.expressionLanguage.objective}) = ''`
+          )
+    );
+  return rows.map((r) => r.id);
 }
 
 export type ElMetrics = {

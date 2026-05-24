@@ -4,12 +4,13 @@ import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ElCategory, ElStatus } from "@/lib/db/schema";
-import { getElMetrics, listEls } from "./actions";
+import { getElMetrics, listEls, listElIdsWithoutObjective } from "./actions";
 import { ElsFilters } from "./filters";
 import { ElForm } from "./el-form";
 import { ExtractButton } from "./extract-button";
 import { DescribeButton } from "./describe-button";
 import { BatchDescribeButton } from "./batch-describe-button";
+import { Pagination } from "./pagination";
 
 const STATUS_META: Record<
   ElStatus,
@@ -31,7 +32,12 @@ const CATEGORY_LABEL: Record<ElCategory, string> = {
 export default async function ElsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; category?: string; q?: string }>;
+  searchParams: Promise<{
+    status?: string;
+    category?: string;
+    q?: string;
+    page?: string;
+  }>;
 }) {
   const params = await searchParams;
   const filter = {
@@ -39,11 +45,16 @@ export default async function ElsPage({
     category: params.category as ElCategory | undefined,
     q: params.q,
   };
+  const pageNum = Math.max(1, Number.parseInt(params.page ?? "1", 10) || 1);
 
-  const [els, metrics] = await Promise.all([listEls(filter, 200), getElMetrics()]);
-  const pendingDescribeIds = els
-    .filter((e) => !e.objective || e.objective.trim() === "")
-    .map((e) => e.id);
+  // `listEls` agora retorna paginado; `listElIdsWithoutObjective` traz todos
+  // os IDs pendentes (não só da página) pra alimentar o batch describe.
+  const [pageResult, metrics, pendingDescribeIds] = await Promise.all([
+    listEls(filter, pageNum),
+    getElMetrics(),
+    listElIdsWithoutObjective(filter),
+  ]);
+  const { rows: els, total, totalPages, page, pageSize } = pageResult;
 
   return (
     <>
@@ -179,6 +190,15 @@ export default async function ElsPage({
               })}
             </ul>
           )}
+          {els.length > 0 ? (
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              total={total}
+              pageSize={pageSize}
+              searchParams={params}
+            />
+          ) : null}
         </CardContent>
       </Card>
     </>
