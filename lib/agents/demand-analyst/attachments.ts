@@ -13,9 +13,14 @@ import type { CoreUserMessage } from "ai";
 import { getDb, schema } from "@/lib/db/client";
 import { classifyMime } from "@/lib/attachments/config";
 
+// `CoreUserMessage["content"]` é `string | Array<TextPart|ImagePart|FilePart>`.
+// Aqui sempre devolvemos array — extraímos o tipo do elemento pra eliminar
+// a variante `string` da assinatura.
+type UserContentArray = Exclude<CoreUserMessage["content"], string>;
+
 export type AttachmentParts = {
-  contentParts: CoreUserMessage["content"];
-  summary: string; // texto curto pra inputSummary do AgentJob
+  contentParts: UserContentArray;
+  summary: string;
   attachmentCount: number;
 };
 
@@ -49,7 +54,7 @@ export async function loadDemandAttachmentParts(
     };
   }
 
-  const parts: CoreUserMessage["content"] = [];
+  const parts: UserContentArray = [];
   const summaryItems: string[] = [];
 
   // Cabeçalho explicando à IA que vem material anexo
