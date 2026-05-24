@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   ScrollText,
   MessagesSquare,
+  BookText,
   Send,
   CheckSquare,
   Gauge,
@@ -44,6 +45,7 @@ const NAV: NavItem[] = [
   { href: "/gerador-xml", label: "Gerador XML jPDL", icon: FileCode2, group: "fluxos" },
   { href: "/validador", label: "Validador XML", icon: ShieldCheck, group: "fluxos" },
   { href: "/consultor", label: "Consultor de Fluxos", icon: MessagesSquare, group: "fluxos" },
+  { href: "/catalogos/els", label: "Catálogo de ELs", icon: BookText, group: "fluxos" },
   // Scrum
   { href: "/ritos", label: "Ritos Scrum", icon: ScrollText, group: "scrum" },
   // Integração

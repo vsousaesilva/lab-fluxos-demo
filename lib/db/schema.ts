@@ -592,6 +592,68 @@ export const jiraSyncOperation = sqliteTable(
 );
 
 // ============================================================
+// 15. ExpressionLanguage (EL) — catálogo de Expression Languages
+// usadas nos fluxos jPDL/BPMN do PJe (formato #{...} ou ${...}).
+// Catálogo cresce sob demanda (cadastro manual ou extração automática).
+// ============================================================
+export type ElCategory =
+  | "ASSINATURA"
+  | "TAREFA"
+  | "DECISAO"
+  | "DADO"
+  | "OUTRO";
+
+export type ElStatus = "ATIVO" | "DEPRECADO" | "EXPERIMENTAL";
+
+export const expressionLanguage = sqliteTable(
+  "expression_language",
+  {
+    id: uuid("id").primaryKey(),
+    code: text("code").notNull().unique(),
+    objective: text("objective"),
+    category: text("category").$type<ElCategory>(),
+    tags: text("tags", { mode: "json" })
+      .$type<string[]>()
+      .notNull()
+      .default(sql`'[]'`),
+    status: text("status").$type<ElStatus>().notNull().default("ATIVO"),
+    occurrenceCount: integer("occurrence_count").notNull().default(0),
+    ...timestamps,
+  },
+  (t) => ({
+    codeIdx: uniqueIndex("uq_expression_language_code").on(t.code),
+    categoryIdx: index("idx_expression_language_category").on(t.category),
+    statusIdx: index("idx_expression_language_status").on(t.status),
+  })
+);
+
+// Junção EL ↔ FlowSource: em que XMLs cada EL aparece e quantas vezes.
+export const expressionLanguageOccurrence = sqliteTable(
+  "expression_language_occurrence",
+  {
+    id: uuid("id").primaryKey(),
+    expressionLanguageId: text("expression_language_id")
+      .notNull()
+      .references(() => expressionLanguage.id, { onDelete: "cascade" }),
+    flowSourceId: text("flow_source_id")
+      .notNull()
+      .references(() => flowSource.id, { onDelete: "cascade" }),
+    count: integer("count").notNull().default(1),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  },
+  (t) => ({
+    uqElFlow: uniqueIndex("uq_el_flow").on(
+      t.expressionLanguageId,
+      t.flowSourceId
+    ),
+    elIdx: index("idx_el_occ_el").on(t.expressionLanguageId),
+    flowIdx: index("idx_el_occ_flow").on(t.flowSourceId),
+  })
+);
+
+// ============================================================
 // Helpers de tipo (exports nomeados)
 // ============================================================
 export type Demand = typeof demand.$inferSelect;
@@ -609,3 +671,7 @@ export type GeneratedFlow = typeof generatedFlow.$inferSelect;
 export type BpmnDiagram = typeof bpmnDiagram.$inferSelect;
 export type JiraCard = typeof jiraCard.$inferSelect;
 export type JiraSyncOperation = typeof jiraSyncOperation.$inferSelect;
+export type ExpressionLanguage = typeof expressionLanguage.$inferSelect;
+export type NewExpressionLanguage = typeof expressionLanguage.$inferInsert;
+export type ExpressionLanguageOccurrence =
+  typeof expressionLanguageOccurrence.$inferSelect;
