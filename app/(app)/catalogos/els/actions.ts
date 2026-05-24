@@ -55,9 +55,7 @@ function buildElsWhere(filter: ElsFilter) {
   return conditions.length > 0 ? and(...conditions) : undefined;
 }
 
-export const DEFAULT_PAGE_SIZE = 100;
-
-export type ListElsPage = {
+type ListElsPage = {
   rows: ExpressionLanguage[];
   total: number;
   page: number;
@@ -68,7 +66,7 @@ export type ListElsPage = {
 export async function listEls(
   filter: ElsFilter = {},
   page = 1,
-  pageSize = DEFAULT_PAGE_SIZE
+  pageSize = 100
 ): Promise<ListElsPage> {
   const db = await getDb();
   const where = buildElsWhere(filter);
