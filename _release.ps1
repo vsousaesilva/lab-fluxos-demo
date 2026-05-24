@@ -4,12 +4,15 @@
   Orquestrador de release do lab-fluxos-demo.
 
 .DESCRIPTION
-  Executa o fluxo completo de release:
+  Executa o fluxo de release deploy-first (bump SO depois do deploy ok):
     1) commit das mudancas pendentes (se houver)
-    2) npm version <bump>  (atualiza package.json + commit + tag vX.Y.Z)
-    3) git push origin main --follow-tags
-    4) opennextjs-cloudflare build && deploy
-    5) sumario final com versao, tag, GitHub e producao
+    2) git push origin main         (sem tag ainda)
+    3) opennextjs-cloudflare build && deploy   <- teste de fogo
+    4) npm version <bump>           (so se 3 passou)
+       git push origin main --follow-tags
+
+  Se o deploy (passo 3) falhar, NENHUM bump e' feito. Voce corrige o codigo
+  e roda de novo — sem inflar a versao por causa de build quebrado.
 
   Espera que _release.cmd ja tenha colocado os portateis no PATH:
     - git    (PortableGit)
