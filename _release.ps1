@@ -117,12 +117,21 @@ Write-Host "  versao atual : v$currentVersion"
 Write-Host "  bump         : $Bump"
 Write-Host "  msg (commit) : $(if ($Message) { $Message } else { '(nenhuma — sem mudancas pendentes)' })"
 
+# NOVA ORDEM (deploy primeiro, bump por último — evita tags órfãs):
+#   1/4 commit (sem bump)
+#   2/4 push do commit
+#   3/4 build + deploy   ← se falhar, NADA bumpado
+#   4/4 npm version <bump> + push --follow-tags
+
 # ---------- 1/4: commit das mudancas pendentes -------------------------------
 
 Write-Step 1 4 'commit das mudancas pendentes'
 
 $dirty = & $Git status --porcelain
-if ([string]::IsNullOrWhiteSpace($dirty)) {
+$preReleaseSha = (& $Git rev-parse HEAD).Trim()
+$hadChanges = -not [string]::IsNullOrWhiteSpace($dirty)
+
+if (-not $hadChanges) {
     Write-Info 'Working tree limpa, nada a commitar.'
 } else {
     if ([string]::IsNullOrWhiteSpace($Message)) {
@@ -164,9 +173,38 @@ if ([string]::IsNullOrWhiteSpace($dirty)) {
     Write-Ok 'Commit das mudancas pendentes feito.'
 }
 
-# ---------- 2/4: npm version (bump + commit + tag) ---------------------------
+# ---------- 2/4: push do commit (sem tag, ainda) ----------------------------
 
-Write-Step 2 4 "npm version $Bump"
+Write-Step 2 4 'git push origin main (sem tag ainda)'
+
+if ($hadChanges) {
+    & $Git push origin main
+    if ($LASTEXITCODE -ne 0) {
+        throw 'git push falhou (commit do codigo). Resolva e rode novamente.'
+    }
+    Write-Ok 'Commit do codigo enviado para GitHub.'
+} else {
+    Write-Info 'Sem novo commit pra enviar.'
+}
+
+# ---------- 3/4: deploy Cloudflare ------------------------------------------
+
+Write-Step 3 4 'opennextjs-cloudflare build && deploy'
+
+Write-Info 'Build pode demorar 1-3 min...'
+npm run deploy
+if ($LASTEXITCODE -ne 0) {
+    Write-Err 'Deploy falhou. NENHUM bump foi feito — corrija o erro e rode novamente.'
+    Write-Warn 'Estado atual:'
+    Write-Host "    HEAD em : $(& $Git rev-parse --short HEAD) (commit pushado, sem tag)"
+    Write-Host "    Pre-rel : $($preReleaseSha.Substring(0,7))"
+    throw 'Deploy falhou.'
+}
+Write-Ok 'Deploy concluido em producao.'
+
+# ---------- 4/4: npm version (bump + commit + tag) + push tag ---------------
+
+Write-Step 4 4 "npm version $Bump (so depois do deploy ok)"
 
 Write-Info 'Bumping package.json e criando tag...'
 npm version $Bump -m "release: v%s"
@@ -176,30 +214,13 @@ $newVersion = Get-PackageVersion
 $tag = "v$newVersion"
 Write-Ok "Nova versao: $tag"
 
-# ---------- 3/4: push -------------------------------------------------------
-
-Write-Step 3 4 'git push origin main --follow-tags'
-
+Write-Info 'git push origin main --follow-tags'
 & $Git push origin main --follow-tags
 if ($LASTEXITCODE -ne 0) {
-    Write-Warn 'Push falhou. Possiveis causas: PAT expirado, conflito remoto, sem permissao.'
-    throw 'git push falhou. Resolva manualmente (git pull --rebase / refazer PAT) e rode novamente.'
+    Write-Warn "Push da tag $tag falhou — deploy ja foi mas tag ficou local. Tente: git push origin main --follow-tags"
+    throw 'git push --follow-tags falhou.'
 }
-Write-Ok "Commits + tag $tag enviados para GitHub."
-
-# ---------- 4/4: deploy Cloudflare ------------------------------------------
-
-Write-Step 4 4 'opennextjs-cloudflare build && deploy'
-
-Write-Info 'Build pode demorar 1-3 min...'
-npm run deploy
-if ($LASTEXITCODE -ne 0) {
-    Write-Err 'Deploy falhou. O commit/tag JA foi enviado pro GitHub.'
-    Write-Warn 'Acoes possiveis:'
-    Write-Host '    1) Diagnosticar e re-rodar so o deploy: npm run deploy'
-    Write-Host "    2) Reverter a tag remota: git push --delete origin $tag"
-    throw 'Deploy falhou.'
-}
+Write-Ok "Tag $tag enviada para GitHub."
 
 # ---------- sumario ----------------------------------------------------------
 

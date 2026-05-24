@@ -574,15 +574,17 @@ export async function describeElsBatchAction(
   const errors: string[] = [];
 
   for (const r of settled) {
-    if (r.status === "fulfilled" && r.value.ok) {
-      okCount++;
-    } else if (r.status === "fulfilled") {
-      // r.value.ok === false aqui — TypeScript estreita pro variant de erro
-      failCount++;
-      errors.push(r.value.error);
-    } else {
+    if (r.status === "rejected") {
       failCount++;
       errors.push(String(r.reason));
+      continue;
+    }
+    // fulfilled aqui — narrowing direto pelo discriminator `ok`
+    if (r.value.ok) {
+      okCount++;
+    } else {
+      failCount++;
+      errors.push(r.value.error);
     }
   }
 
