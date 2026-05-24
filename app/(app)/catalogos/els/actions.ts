@@ -576,10 +576,13 @@ export async function describeElsBatchAction(
   for (const r of settled) {
     if (r.status === "fulfilled" && r.value.ok) {
       okCount++;
+    } else if (r.status === "fulfilled") {
+      // r.value.ok === false aqui — TypeScript estreita pro variant de erro
+      failCount++;
+      errors.push(r.value.error);
     } else {
       failCount++;
-      if (r.status === "fulfilled") errors.push(r.value.error);
-      else errors.push(String(r.reason));
+      errors.push(String(r.reason));
     }
   }
 
