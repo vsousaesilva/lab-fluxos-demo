@@ -105,91 +105,79 @@ export default async function ElsPage({
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-sm">
-                <thead className="bg-muted/30">
-                  <tr className="border-b text-left text-xs uppercase text-muted-foreground">
-                    <th className="px-3 py-2 font-medium">Código</th>
-                    <th className="px-3 py-2 font-medium">Objetivo</th>
-                    <th className="px-3 py-2 font-medium">Categoria</th>
-                    <th className="px-3 py-2 font-medium">Tags</th>
-                    <th className="px-3 py-2 text-right font-medium">Ocorrências</th>
-                    <th className="px-3 py-2 font-medium">Status</th>
-                    <th className="px-3 py-2 text-right font-medium">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {els.map((el) => {
-                    const status = STATUS_META[el.status];
-                    return (
-                      <tr key={el.id} className="border-b align-top hover:bg-muted/20">
-                        <td className="px-3 py-2">
-                          <Link
-                            href={`/catalogos/els/${el.id}`}
-                            className="font-mono text-xs text-primary hover:underline"
-                          >
-                            {el.code}
-                          </Link>
-                        </td>
-                        <td className="max-w-md px-3 py-2 text-xs text-muted-foreground">
-                          {el.objective ? (
-                            <span className="line-clamp-2">{el.objective}</span>
-                          ) : (
-                            <span className="italic opacity-60">sem descrição</span>
-                          )}
-                        </td>
-                        <td className="px-3 py-2 text-xs">
-                          {el.category ? CATEGORY_LABEL[el.category] : "—"}
-                        </td>
-                        <td className="px-3 py-2">
-                          {el.tags.length === 0 ? (
-                            <span className="text-xs text-muted-foreground/60">—</span>
-                          ) : (
-                            <div className="flex flex-wrap gap-1">
-                              {el.tags.slice(0, 4).map((t) => (
-                                <Badge
-                                  key={t}
-                                  variant="outline"
-                                  className="text-[10px]"
-                                >
-                                  {t}
-                                </Badge>
-                              ))}
-                              {el.tags.length > 4 ? (
-                                <span className="text-[10px] text-muted-foreground">
-                                  +{el.tags.length - 4}
-                                </span>
-                              ) : null}
-                            </div>
-                          )}
-                        </td>
-                        <td className="px-3 py-2 text-right text-xs">
-                          {el.occurrenceCount > 0 ? (
-                            <span className="font-medium">{el.occurrenceCount}</span>
-                          ) : (
-                            <span className="text-muted-foreground/60">—</span>
-                          )}
-                        </td>
-                        <td className="px-3 py-2">
-                          <Badge variant={status.variant} className="text-[10px]">
-                            {status.label}
+            <ul className="divide-y">
+              {els.map((el) => {
+                const status = STATUS_META[el.status];
+                const hasObjective = Boolean(el.objective?.trim());
+                return (
+                  <li
+                    key={el.id}
+                    className="group flex items-start gap-3 px-4 py-2.5 transition-colors hover:bg-muted/30"
+                  >
+                    <div className="flex min-w-0 flex-1 flex-col gap-1">
+                      {/* linha 1: código + badges inline */}
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Link
+                          href={`/catalogos/els/${el.id}`}
+                          className="break-all font-mono text-xs font-medium text-primary hover:underline"
+                          title={el.code}
+                        >
+                          {el.code}
+                        </Link>
+                        {el.category ? (
+                          <Badge variant="secondary" className="text-[10px]">
+                            {CATEGORY_LABEL[el.category]}
                           </Badge>
-                        </td>
-                        <td className="px-3 py-2 text-right">
-                          {el.objective ? (
-                            <span className="text-[10px] text-muted-foreground">
-                              descrita
-                            </span>
-                          ) : (
-                            <DescribeButton elId={el.id} size="sm" />
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                        ) : null}
+                        <Badge variant={status.variant} className="text-[10px]">
+                          {status.label}
+                        </Badge>
+                        {el.tags.length > 0
+                          ? el.tags.slice(0, 3).map((t) => (
+                              <Badge
+                                key={t}
+                                variant="outline"
+                                className="text-[10px]"
+                              >
+                                {t}
+                              </Badge>
+                            ))
+                          : null}
+                        {el.tags.length > 3 ? (
+                          <span className="text-[10px] text-muted-foreground">
+                            +{el.tags.length - 3}
+                          </span>
+                        ) : null}
+                      </div>
+                      {/* linha 2: objetivo (1 linha, truncado) */}
+                      <p className="line-clamp-1 text-[11px] text-muted-foreground">
+                        {hasObjective ? (
+                          el.objective
+                        ) : (
+                          <span className="italic opacity-60">
+                            sem descrição
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                    {/* coluna direita: ocorrências + ações */}
+                    <div className="flex shrink-0 items-center gap-3">
+                      <span
+                        className="text-xs tabular-nums text-muted-foreground"
+                        title="Ocorrências nos fluxos"
+                      >
+                        {el.occurrenceCount > 0
+                          ? `${el.occurrenceCount}×`
+                          : "—"}
+                      </span>
+                      {hasObjective ? null : (
+                        <DescribeButton elId={el.id} size="sm" />
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           )}
         </CardContent>
       </Card>
