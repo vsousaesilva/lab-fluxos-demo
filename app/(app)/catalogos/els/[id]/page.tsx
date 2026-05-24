@@ -56,7 +56,7 @@ export default async function ElDetailPage({
             ) : null}
             <Link
               href="/catalogos/els"
-              className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-accent"
+              className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:outline-none"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Voltar

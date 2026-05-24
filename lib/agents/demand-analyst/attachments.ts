@@ -5,13 +5,15 @@
 // - image/* → image part (Gemini vision)
 // - application/pdf → file part (Gemini lê PDF nativo)
 // - text/* + text/csv → text part inline no prompt
-// - Office (xlsx/docx) → menção textual ("[anexo X não processado nesta versão]")
+// - DOCX → texto extraído via mammoth, injetado inline
+// - XLSX → planilhas extraídas via xlsx (SheetJS), cada aba vira TSV inline
 
 import { eq } from "drizzle-orm";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { CoreUserMessage } from "ai";
 import { getDb, schema } from "@/lib/db/client";
 import { classifyMime } from "@/lib/attachments/config";
+import { extractDocxText, extractXlsxText, isDocx, isXlsx } from "./office";
 
 // `CoreUserMessage["content"]` é `string | Array<TextPart|ImagePart|FilePart>`.
 // Aqui sempre devolvemos array — extraímos o tipo do elemento pra eliminar
@@ -112,11 +114,33 @@ export async function loadDemandAttachmentParts(
         });
         summaryItems.push(`${att.fileName}(txt)`);
       } else if (category === "office") {
-        parts.push({
-          type: "text",
-          text: `\n[${att.fileName} — ${att.mimeType}] arquivo Office não processado nesta versão. Está armazenado pra referência mas a IA não consegue ler ainda.`,
-        });
-        summaryItems.push(`${att.fileName}(office-skip)`);
+        const buf = await obj.arrayBuffer();
+        let extracted = "";
+        let kind = "office";
+        if (isDocx(att.mimeType)) {
+          extracted = await extractDocxText(buf);
+          kind = "docx";
+        } else if (isXlsx(att.mimeType)) {
+          extracted = await extractXlsxText(buf);
+          kind = "xlsx";
+        }
+        if (!extracted) {
+          parts.push({
+            type: "text",
+            text: `\n[${att.fileName} — ${att.mimeType}] não foi possível extrair texto. Arquivo segue disponível no R2.`,
+          });
+          summaryItems.push(`${att.fileName}(${kind}-fail)`);
+        } else {
+          const truncated =
+            extracted.length > MAX_TEXT_FILE_CHARS
+              ? extracted.slice(0, MAX_TEXT_FILE_CHARS) + "\n…(truncado)"
+              : extracted;
+          parts.push({
+            type: "text",
+            text: `\n--- Conteúdo de "${att.fileName}" (${kind.toUpperCase()}) ---\n${truncated}\n--- fim "${att.fileName}" ---`,
+          });
+          summaryItems.push(`${att.fileName}(${kind})`);
+        }
       } else {
         parts.push({
           type: "text",

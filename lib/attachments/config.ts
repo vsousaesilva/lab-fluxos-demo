@@ -29,7 +29,7 @@ export const ACCEPTED_MIMES: Record<string, AttachmentCategory> = {
   "text/plain": "text",
   "text/markdown": "text",
   "text/csv": "text",
-  // Office (não consumido pela IA na v0.5 — fica como referência documental)
+  // Office — DOCX via mammoth, XLSX via SheetJS (consumido pela IA)
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "office",
   "application/vnd.ms-excel": "office",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document":

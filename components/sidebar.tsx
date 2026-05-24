@@ -19,6 +19,7 @@ import {
   Gauge,
   Bot,
   Ticket,
+  Wand2,
   LogOut,
   Menu,
   X,
@@ -58,6 +59,7 @@ const NAV: NavItem[] = [
 
 const ADMIN_NAV: NavItem[] = [
   { href: "/admin/convites", label: "Convites", icon: Ticket, group: "admin" },
+  { href: "/admin/mojibake", label: "Limpar mojibake", icon: Wand2, group: "admin" },
 ];
 
 const GROUP_LABELS: Record<NavItem["group"], string> = {
