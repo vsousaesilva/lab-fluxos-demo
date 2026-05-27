@@ -96,7 +96,7 @@ export function BpmnCard({ diagram }: { diagram: BpmnDiagram }) {
       "noopener,noreferrer"
     );
     toast.info(
-      "No Bizagi Modeler: File → Open → selecione o .bpmn baixado"
+      "No Bizagi Modeler: aba Export/Import → grupo Import → BPMN → selecione o .bpmn baixado (NÃO use File → Open, que só abre .bpm)"
     );
   }
 
@@ -210,7 +210,13 @@ export function BpmnCard({ diagram }: { diagram: BpmnDiagram }) {
                 <li>
                   <strong>Bizagi Modeler</strong> (desktop, gratuito): clique no
                   botão → o arquivo baixa e a página do Bizagi abre → instale o
-                  Modeler se necessário → abra-o e use File → Open no .bpmn.
+                  Modeler se necessário → abra-o e use a aba{" "}
+                  <strong>Export/Import → grupo Import → BPMN</strong> apontando
+                  para o .bpmn baixado.{" "}
+                  <em>
+                    File → Open só abre o formato nativo <code>.bpm</code> do
+                    Bizagi e rejeita <code>.bpmn</code> como “invalid or corrupt”.
+                  </em>
                 </li>
                 <li>
                   O mesmo XML BPMN 2.0 também é compatível com{" "}

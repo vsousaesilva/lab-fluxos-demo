@@ -8,13 +8,19 @@ import type { BpmnFlowSpec, BpmnNodeSpec } from "./schema";
  * gateways e ramificações, recomendamos abrir no bpmn.io / Bizagi Modeler
  * / Camunda Modeler e usar "Auto-arrange" / "Apply automatic layout".
  *
- * O XML também é enriquecido com `xmlns:xsi` + `exporter`/`exporterVersion`
- * para compatibilidade com validadores mais rígidos como o Bizagi.
+ * O XML é gerado com `<bpmn:collaboration>` + `<bpmn:participant>` (pool),
+ * porque o Bizagi Modeler exige um pool em todo diagrama para importar via
+ * Export/Import → BPMN — sem isso ele reporta "The file is invalid or
+ * corrupt". A `BPMNPlane` aponta para a Collaboration (não para o Process)
+ * e o pool tem `BPMNShape` com `isHorizontal="true"` envolvendo os nós.
  */
 
 const CENTER_Y = 240;
-const START_X = 180;
+const START_X = 220;
 const STEP_X = 260; // espaçamento generoso entre nós
+const POOL_PAD_X = 40;
+const POOL_TOP = 160;
+const POOL_HEIGHT = 200;
 
 type ElType = "START" | "TASK" | "GATEWAY" | "END";
 
@@ -143,6 +149,11 @@ export function renderBpmnXml(spec: BpmnFlowSpec): string {
       `targetNamespace="http://bpmn.io/schema/bpmn" ` +
       `exporter="Laboratorio de Fluxos" exporterVersion="1.0">`
   );
+  lines.push(`  <bpmn:collaboration id="Collaboration_1">`);
+  lines.push(
+    `    <bpmn:participant id="Participant_1" name="${esc(processName)}" processRef="Process_1"/>`
+  );
+  lines.push(`  </bpmn:collaboration>`);
   lines.push(
     `  <bpmn:process id="Process_1" name="${esc(processName)}" isExecutable="false">`
   );
@@ -174,12 +185,26 @@ export function renderBpmnXml(spec: BpmnFlowSpec): string {
   }
   lines.push(`  </bpmn:process>`);
 
-  // BPMNDI (layout horizontal)
+  // BPMNDI (layout horizontal) — BPMNPlane aponta para a Collaboration
+  // (Bizagi exige); o pool é desenhado como BPMNShape envolvendo todo o conteúdo.
   lines.push(`  <bpmndi:BPMNDiagram id="BPMNDiagram_1">`);
-  lines.push(`    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">`);
+  lines.push(
+    `    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">`
+  );
 
   const byId = new Map<string, Element>();
   for (const el of els) byId.set(el.id, el);
+
+  const poolMinX = Math.min(...els.map((e) => e.x)) - POOL_PAD_X;
+  const poolMaxX = Math.max(...els.map(rightX)) + POOL_PAD_X;
+  const poolWidth = poolMaxX - poolMinX;
+  lines.push(
+    `      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1" isHorizontal="true">`
+  );
+  lines.push(
+    `        <dc:Bounds x="${poolMinX}" y="${POOL_TOP}" width="${poolWidth}" height="${POOL_HEIGHT}"/>`
+  );
+  lines.push(`      </bpmndi:BPMNShape>`);
 
   for (const el of els) {
     lines.push(
