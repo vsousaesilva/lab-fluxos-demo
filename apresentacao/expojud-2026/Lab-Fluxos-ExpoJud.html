@@ -34,6 +34,8 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .foot{position:absolute;left:130px;right:130px;bottom:40px;display:flex;align-items:center;justify-content:space-between;font-size:19px;color:var(--muted);font-weight:500}
 .foot img{height:44px}
 .dark .foot{color:#8FB0C8}
+.status{position:absolute;right:130px;top:92px;display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700;color:var(--navy);background:var(--soft);border-radius:999px;padding:12px 22px}
+.status i{width:14px;height:14px;border-radius:50%}
 .kicker{font-size:22px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:18px}
 h1{font-size:92px;line-height:1.03;font-weight:900;color:var(--navy);letter-spacing:-.02em}
 h2{font-size:62px;line-height:1.1;font-weight:800;color:var(--navy);letter-spacing:-.015em;margin-bottom:46px}
@@ -105,6 +107,20 @@ p,li{font-size:30px;line-height:1.45}
 .person b{font-size:25px;color:var(--navy)}
 .dev{background:var(--navy);border-radius:30px;padding:46px 50px;color:#fff;display:flex;gap:32px;align-items:center;min-height:262px}
 .dev p{font-size:32px;font-weight:700;line-height:1.35}
+.train{display:grid;grid-template-columns:1fr 70px 1fr;gap:20px;align-items:stretch;margin-top:10px}
+.tcard{background:var(--soft);border-radius:30px;padding:44px 46px;position:relative}
+.tstep{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:28px}
+.tkind{font-size:32px;font-weight:800;margin-top:26px;line-height:1.2}
+.tdesc{font-size:23px;color:var(--muted);margin-top:10px}
+.tpeople{display:flex;flex-direction:column;gap:16px;margin-top:34px}
+.tpeople .person{background:#fff}
+.tpeople .person b{display:block;font-size:26px}.tpeople .person span{display:block;font-size:19px;color:var(--muted);margin-top:4px}
+.tarrow{display:grid;place-items:center}.tarrow::before{content:"›";font-size:90px;font-weight:300;color:#9DB2C3}
+.lead-dark{font-size:28px;color:#BFD3E2;margin-top:-26px}
+.inst{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:70px}
+.icard{background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.14);border-radius:30px;padding:46px 44px}
+.icard b{display:block;font-size:34px;color:#fff;margin-top:30px}
+.icard span{display:block;font-size:22px;color:#BFD3E2;margin-top:12px;line-height:1.45}
 .support{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .support div{border:2px solid var(--line);border-radius:22px;padding:24px 28px}
 .support b{display:block;font-size:24px;color:var(--navy)}
@@ -360,12 +376,12 @@ p,li{font-size:30px;line-height:1.45}
     <div class="ev" data-in="4"><div class="c" style="background:var(--sky)">3</div><h3>Execução Fiscal</h3><p>Primeiro fluxo completo entregue à Justiça Federal da 5ª Região</p></div>
     <div class="ev" data-in="5"><div class="c" style="background:#7FB27A">4</div><h3>Entregas ao TRF5</h3><p>Sob coordenação do Tribunal, atendendo às demandas solicitadas</p></div>
     <div class="ev" data-in="6"><div class="c" style="background:var(--orange)">5</div><h3>Justiça Centrada nas Pessoas</h3><p>Aporte do programa (TRF5 · JFCE · PNUD) e capacitação em PJe</p></div>
-    <div class="ev now" data-in="7"><div class="c" style="background:var(--red)">6</div><h3>Acordo e Mandado de Segurança</h3><p>Novos fluxos entregues ao TRF5</p></div>
+    <div class="ev now" data-in="7"><div class="c" style="background:var(--red)">6</div><h3>Acordo e Mandado de Segurança</h3><p>Acordo em produção no TRF5 · MS validado pelo grupo regional</p></div>
   </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
   <div class="notes"><b>~1 min 30 s.</b> Percorrer da esquerda para a direita.
     (2) A equipe juntou gente de negócio e de tecnologia. Agradecer a Anderson de Sousa Peres e Erick Gama Touret de Faria, servidores do TRF1, que foram os instrutores dos treinamentos iniciais de formação do Laboratório.
-    (3) Execução Fiscal: primeiro fluxo completo para a JF5. (4) Primeiras entregas ao TRF5, sob coordenação do Tribunal. (5) Aporte do JCP — próximo slide.</div>
+    (3) Execução Fiscal: primeiro fluxo completo para a JF5. (4) Primeiras entregas ao TRF5, sob coordenação do Tribunal. (5) Aporte do JCP. (6) Acordo em produção no TRF5; MS finalizado e validado pelo grupo regional, a caminho do envio formal.</div>
 </section>
 
 <!-- 5 · JCP -->
@@ -377,12 +393,10 @@ p,li{font-size:30px;line-height:1.45}
     <div class="rows">
       <div class="row" data-in="3"><div class="ico" style="background:var(--blue)" data-icon="globe"></div><div><b>Convênio com as Nações Unidas</b><span>TRF5 e JFCE em parceria com o PNUD.</span></div></div>
       <div class="row" data-in="4"><div class="ico" style="background:var(--sky)" data-icon="gear"></div><div><b>Suporte técnico especializado</b><span>Mais estrutura e método para a equipe do Laboratório.</span></div></div>
-      <div class="row" data-in="5"><div class="ico" style="background:var(--orange)" data-icon="board"></div><div><b>Capacitação em desenvolvimento PJe</b><span>Treinamento com Samuel de Aguiar Rodrigues, servidor do TRF5.</span></div></div>
     </div>
   </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> O programa Justiça Centrada nas Pessoas (convênio TRF5 + JFCE + PNUD) trouxe suporte técnico ainda mais especializado.
-    O servidor Samuel de Aguiar Rodrigues, do TRF5, treinou a equipe em desenvolvimento no PJe. Agradecer.</div>
+  <div class="notes"><b>~1 min.</b> O programa Justiça Centrada nas Pessoas (convênio TRF5 + JFCE + PNUD) trouxe suporte técnico ainda mais especializado para a equipe.</div>
 </section>
 
 <!-- 6 · EQUIPE -->
@@ -401,17 +415,55 @@ p,li{font-size:30px;line-height:1.45}
       <div class="dev"><div class="ico" style="background:var(--orange);width:96px;height:96px" data-icon="code"></div>
         <p>Capaz de entregar, com qualidade, fluxos e serviços voltados para o PJe.</p></div></div>
   </div>
-  <div class="support" data-in="4">
-    <div><b>Anderson de Sousa Peres</b><span>TRF1 · instrutor nos treinamentos iniciais</span></div>
-    <div><b>Erick Gama Touret de Faria</b><span>TRF1 · instrutor nos treinamentos iniciais</span></div>
-    <div><b>Samuel de Aguiar Rodrigues</b><span>TRF5 · capacitação em desenvolvimento PJe</span></div>
-  </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> Apresentar a equipe de negócio pelo nome. O diferencial é ter área fim e desenvolvimento juntos: quem conhece a regra e quem escreve o fluxo trabalham na mesma sprint.
-    Reforçar o agradecimento aos instrutores (Anderson e Erick, TRF1) e ao Samuel (TRF5).</div>
+  <div class="notes"><b>~1 min.</b> Apresentar a equipe de negócio pelo nome. O diferencial é ter área fim e desenvolvimento juntos: quem conhece a regra e quem escreve o fluxo trabalham na mesma sprint.</div>
 </section>
 
-<!-- 7 · MÉTODO -->
+<!-- 7 · TREINAMENTOS -->
+<section class="slide">
+  <div class="kicker" data-in="1">02 · A construção</div>
+  <h2 data-in="1">Quem nos <em>formou</em></h2>
+  <div class="train">
+    <div class="tcard" data-in="2">
+      <div class="tstep" style="background:var(--blue)">1</div>
+      <div class="tkind" style="color:var(--blue)">Treinamentos iniciais</div>
+      <p class="tdesc">A formação que deu origem à equipe do Laboratório de Fluxos.</p>
+      <div class="tpeople">
+        <div class="person"><div class="av" style="background:var(--blue)">AP</div><div><b>Anderson de Sousa Peres</b><span>Servidor do TRF1 · instrutor</span></div></div>
+        <div class="person"><div class="av" style="background:var(--sky)">EF</div><div><b>Erick Gama Touret de Faria</b><span>Servidor do TRF1 · instrutor</span></div></div>
+      </div>
+    </div>
+    <div class="tarrow" data-in="3"></div>
+    <div class="tcard" data-in="4">
+      <div class="tstep" style="background:var(--orange)">2</div>
+      <div class="tkind" style="color:#C9730C">Treinamento exclusivo de desenvolvimento</div>
+      <p class="tdesc">Capacitação dedicada ao desenvolvimento de fluxos no PJe.</p>
+      <div class="tpeople">
+        <div class="person"><div class="av" style="background:var(--orange)">SR</div><div><b>Samuel de Aguiar Rodrigues</b><span>Servidor do TRF5 · instrutor</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~40 s.</b> Agradecer nominalmente. Anderson de Sousa Peres e Erick Gama Touret de Faria, servidores do TRF1, conduziram os treinamentos iniciais que formaram a equipe do Laboratório.
+    Samuel de Aguiar Rodrigues, servidor do TRF5, conduziu um treinamento exclusivo de desenvolvimento no PJe — foi o que permitiu à equipe de tecnologia entregar fluxos completos.</div>
+</section>
+
+<!-- 8 · APOIO INSTITUCIONAL -->
+<section class="slide dark">
+  <div class="kicker" data-in="1">02 · A construção</div>
+  <h2 data-in="1">Um resultado construído <em style="color:var(--sky)">com o TRF5</em></h2>
+  <p class="lead-dark" data-in="1">O sucesso do projeto passa pelo apoio de quem coordena o PJe na 5ª Região.</p>
+  <div class="inst">
+    <div class="icard" data-in="2"><div class="ico" style="background:var(--orange)" data-icon="shield"></div><b>Corregedoria</b><span>Respaldo institucional e coordenação das entregas na Região.</span></div>
+    <div class="icard" data-in="3"><div class="ico" style="background:var(--sky)" data-icon="code"></div><b>Tecnologia da Informação</b><span>Parceria técnica para levar os fluxos à produção do PJe.</span></div>
+    <div class="icard" data-in="4"><div class="ico" style="background:var(--red)" data-icon="scale"></div><b>Secretaria Judiciária</b><span>Visão de negócio e validação junto às unidades judiciárias.</span></div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="labw" alt=""></div>
+  <div class="notes"><b>~40 s.</b> Enaltecer o apoio da Corregedoria, da TI e da Secretaria Judiciária do TRF5: sem esse apoio, as entregas não chegariam à produção.
+    [Ajustar os textos de cada card ao papel exato de cada unidade, se quiser.]</div>
+</section>
+
+<!-- 9 · MÉTODO -->
 <section class="slide">
   <div class="kicker" data-in="1">03 · O método</div>
   <h2 data-in="1">Da demanda ao fluxo, <em>sob Scrum e com IA de apoio</em></h2>
@@ -436,9 +488,10 @@ p,li{font-size:30px;line-height:1.45}
     Frase-chave: "A IA acelera; quem decide é a equipe."</div>
 </section>
 
-<!-- 8 · ACORDO: VISÃO GERAL -->
+<!-- 10 · ACORDO: VISÃO GERAL -->
 <section class="slide">
   <div class="kicker" data-in="1">04 · Os fluxos</div>
+  <div class="status" data-in="1"><i style="background:var(--green)"></i>Em produção no TRF5</div>
   <h2 data-in="1">Proposta de acordo: <em>quatro momentos</em></h2>
   <div class="ac">
     <div class="rows">
@@ -467,11 +520,11 @@ p,li{font-size:30px;line-height:1.45}
     </div>
   </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> Os quatro momentos que o público precisa guardar, em ordem de importância: (1) o gatilho é automático — o tipo de documento 40 cria o fluxo; (2) o fluxo recolhe o processo, encerrando as tarefas abertas; (3) o anel de espera; (4) a homologação se desdobra em dois fluxos.
+  <div class="notes"><b>~1 min.</b> Status: o fluxo de acordo já foi entregue, implantado e está em produção no TRF5. Os quatro momentos que o público precisa guardar, em ordem de importância: (1) o gatilho é automático — o tipo de documento 40 cria o fluxo; (2) o fluxo recolhe o processo, encerrando as tarefas abertas; (3) o anel de espera; (4) a homologação se desdobra em dois fluxos.
     À direita, os fluxos envolvidos (clique para ampliar). Embaixo, as etiquetas que a secretaria vê no PJe — a forma mais honesta de mostrar o progresso.</div>
 </section>
 
-<!-- 9 · SIMULADOR DO ACORDO -->
+<!-- 11 · SIMULADOR DO ACORDO -->
 <section class="slide sim" data-sim="acordo" data-title="Proposta de acordo: o caminho do processo">
   <div class="notes"><b>~3 min.</b> Rodar o "Caminho feliz" com P (ou → passo a passo). Pontos para pausar:
     (1) o SJP emite o sinal genérico ANTES de criar o fluxo de acordo; (2) o marcador azul nasce ao lado — é o incluirNovoFluxo, fluxo paralelo, não substituição;
@@ -479,32 +532,33 @@ p,li{font-size:30px;line-height:1.45}
     (5) o fork no final. Se sobrar tempo: "Anel de espera" ou "Sem acordo". Teclas 1–5 trocam o cenário.</div>
 </section>
 
-<!-- 10 · MAPA DO MS -->
+<!-- 12 · MAPA DO MS -->
 <section class="slide" style="padding-bottom:90px">
   <div class="kicker" data-in="1">04 · Os fluxos</div>
+  <div class="status" data-in="1"><i style="background:var(--orange)"></i>Finalizado · apresentado ao grupo regional de validação · envio formal ao TRF5</div>
   <h2 data-in="1" style="margin-bottom:10px">Mandado de Segurança: <em>12 fluxos conectados</em></h2>
   <p class="muted" data-in="1" style="font-size:22px">Classes 119 e 120 · do protocolo da inicial ao trânsito em julgado ou à remessa ao TRF5 · clique em um fluxo para ampliar</p>
   <div class="map-wrap" data-in="2"><svg id="msmap" viewBox="0 -14 1660 720"></svg></div>
   <div class="foot" style="bottom:30px"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> Visão geral antes da simulação. Linha de cima: o processo na fase de conhecimento — inicial, notificação da autoridade, controle de prazo, análise de manifestação, MPF.
+  <div class="notes"><b>~1 min.</b> Status: o fluxo de MS foi finalizado, apresentado ao grupo regional de validação e será enviado formalmente ao TRF5. Visão geral antes da simulação. Linha de cima: o processo na fase de conhecimento — inicial, notificação da autoridade, controle de prazo, análise de manifestação, MPF.
     Linha do meio: sentença e fase recursal. Embaixo: a rede de proteção — os fluxos gerais (CONTRPRAZ e CONTRDEVEXP) foram ajustados para devolver o MS ao trilho certo.
     Clique num fluxo para mostrar o diagrama ampliado (Esc fecha).</div>
 </section>
 
-<!-- 11 · SIMULADOR DO MS -->
+<!-- 13 · SIMULADOR DO MS -->
 <section class="slide sim" data-sim="ms" data-title="Mandado de Segurança: o processo percorrendo o fluxo">
   <div class="notes"><b>~3 min.</b> Escolher o cenário nas abas do topo (ou teclas 1–5). → avança um passo (o clicker funciona), P reproduz automaticamente, V mostra o diagrama inteiro, S muda a velocidade.
     Sugestão: rodar o "Caminho completo" com P, pausando em 3 pontos: (1) a decisão automática da liminar; (2) o controle de prazo que só libera quando todos os expedientes fecham; (3) o roteamento recursal que manda a sentença concessiva para a remessa necessária.
     Ao terminar o cenário, → segue para o próximo slide.</div>
 </section>
 
-<!-- 12 · ENCERRAMENTO -->
+<!-- 14 · ENCERRAMENTO -->
 <section class="slide end">
   <div class="kicker" data-in="1">Obrigado</div>
   <h1 data-in="2">Fluxos melhores, <em>justiça mais próxima das pessoas</em></h1>
   <div class="logos" data-in="3"><img class="l1" data-logo="lab" alt="Laboratório de Fluxos"><img class="l2" data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas"></div>
   <div class="url" data-in="4">justicacentradanaspessoas.jfce.jus.br/laboratorio-de-fluxos</div>
-  <div class="notes"><b>~30 s.</b> Agradecer ao TRF5, à JFCE, ao PNUD / Justiça Centrada nas Pessoas, aos instrutores do TRF1, ao Samuel (TRF5) e à equipe.</div>
+  <div class="notes"><b>~30 s.</b> Agradecer à Corregedoria, à TI e à Secretaria Judiciária do TRF5, à JFCE, ao PNUD / Justiça Centrada nas Pessoas, aos instrutores Anderson, Erick (TRF1) e Samuel (TRF5) e à equipe.</div>
 </section>
 
 </div>
@@ -719,6 +773,8 @@ const ICONS = {
   board:'<path d="M3 4h18v12H3zM8 20l4-4 4 4" fill="none" stroke="#fff" stroke-width="2"/><path d="M7 12l3-3 3 2 4-4" fill="none" stroke="#fff" stroke-width="2"/>',
   code:'<path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="#fff" stroke-width="2.4"/>',
   link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="#fff" stroke-width="2.2"/>',
+  shield:'<path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/>',
+  scale:'<path d="M12 3v18M5 21h14M4 7h16M7 7l-3 6a3 3 0 0 0 6 0zM17 7l-3 6a3 3 0 0 0 6 0z" fill="none" stroke="#fff" stroke-width="2"/>',
   check:'<path d="M4 12l5 5L20 6" fill="none" stroke="#fff" stroke-width="3"/>',
   bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
   collect:'<path d="M4 6h6M4 12h6M4 18h6M14 6l4 6-4 6" fill="none" stroke="#fff" stroke-width="2.4"/>',
