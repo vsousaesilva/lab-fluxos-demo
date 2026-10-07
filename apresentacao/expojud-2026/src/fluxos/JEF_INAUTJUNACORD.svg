@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 680" width="1520" height="680" font-family="Segoe UI, Arial, sans-serif">
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">JEF_INAUTJUNACORD — [JEF] Intimação automática da juntada do Acordo</text>
+  <text x="24" y="48" class="note">Ramo paralelo criado pelo fluxo de acordo · o subfluxo [CP] Intimação automática aparece aberto</text>
+  <rect class="lane" x="24" y="70" width="1472" height="160"/>
+  <rect class="lanealt" x="24" y="230" width="1472" height="240"/>
+  <rect class="lane" x="24" y="470" width="1472" height="160"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="160"/>
+  <text class="lanelbl" transform="translate(46,190) rotate(-90)">SECRETARIA</text>
+  <rect class="lane" x="24" y="230" width="34" height="240"/>
+  <text class="lanelbl" transform="translate(46,378) rotate(-90)">SISTEMA</text>
+  <rect class="lanealt" x="24" y="470" width="34" height="160"/>
+  <text class="lanelbl" transform="translate(46,582) rotate(-90)">DESTINOS</text>
+  <rect class="grp" x="150" y="244" width="1012" height="196" rx="14"/>
+  <text x="164" y="264" class="gl" fill="#00699F">dentro do [CP] Intimação automática (CP_INTAUT)</text>
+  <circle class="ev" data-name="INI" cx="105" cy="350" r="16" stroke-width="1.8"/>
+  <text x="105" y="385" class="ts" text-anchor="middle">Início</text>
+  <rect class="auto" data-name="C1" x="170" y="319" width="170" height="62"/>
+  <text x="255" y="341" class="tt" text-anchor="middle">Criar documento</text>
+  <text x="255" y="357" class="ts" text-anchor="middle">minuta do modelo · juntada</text>
+  <text x="255" y="370" class="ts" text-anchor="middle">movimento 581</text>
+  <rect class="auto" data-name="C2" x="380" y="307" width="210" height="86"/>
+  <text x="485" y="334.5" class="tt" text-anchor="middle">Processar intimação</text>
+  <text x="485" y="350.5" class="ts" text-anchor="middle">advogados → DJEN</text>
+  <text x="485" y="363.5" class="ts" text-anchor="middle">órgãos e defensoria → sistema</text>
+  <text x="485" y="376.5" class="ts" text-anchor="middle">prazo em dobro onde cabe</text>
+  <path class="gw" data-name="C3" d="M660,306 L705,350 L660,394 L615,350 z"/>
+  <rect x="613" y="402" width="72" height="28" fill="#fff"/>
+  <text x="616" y="412" class="gl" text-anchor="start">Intimação</text>
+  <text x="616" y="425" class="gl" text-anchor="start">realizada?</text>
+  <rect class="auto" data-name="C4" x="740" y="270" width="170" height="56"/>
+  <text x="825" y="295.5" class="tt" text-anchor="middle">Gerar certidão</text>
+  <text x="825" y="311.5" class="ts" text-anchor="middle">certidão de intimação</text>
+  <rect class="auto" data-name="C5" x="950" y="319" width="190" height="62"/>
+  <text x="1045" y="347.5" class="tt" text-anchor="middle">Verificar pendência</text>
+  <text x="1045" y="363.5" class="ts" text-anchor="middle">lista de partes não intimadas</text>
+  <path class="gw" data-name="PEND" d="M1240,306 L1285,350 L1240,394 L1195,350 z"/>
+  <rect x="1287" y="362" width="84.8" height="28" fill="#fff"/>
+  <text x="1290" y="372" class="gl" text-anchor="start">Sobrou parte</text>
+  <text x="1290" y="385" class="gl" text-anchor="start">sem intimar?</text>
+  <rect class="task" data-name="TPEND" x="1110" y="95" width="300" height="84"/>
+  <text x="1260" y="126.5" class="tt" text-anchor="middle">[JEF] Acordo — Analisar pendência</text>
+  <text x="1260" y="142.5" class="tt" text-anchor="middle">de intimação do acordo</text>
+  <text x="1260" y="158.5" class="ts" text-anchor="middle">miniPAC · prazo sugerido de 5 dias</text>
+  <circle class="ev" data-name="FIM" cx="1240" cy="545" r="16" stroke-width="3.4"/>
+  <text x="1240" y="580" class="ts" text-anchor="middle">Término</text>
+  <rect class="auto" data-name="ANCOM" x="1320" y="515" width="160" height="62"/>
+  <text x="1400" y="543.5" class="tt" text-anchor="middle">Análise de comunicação</text>
+  <text x="1400" y="559.5" class="ts" text-anchor="middle">JEF_ANCOM</text>
+  <path class="flow" data-name="f_ini" d="M121,350 L170,350"/>
+  <path class="flow" data-name="f_c1" d="M340,350 L380,350"/>
+  <path class="flow" data-name="f_c2" d="M590,350 L615,350"/>
+  <path class="flow" data-name="f_c3sim" d="M660,306 L660,298 L740,298"/>
+  <rect x="663" y="281" width="24.8" height="14" fill="#fff"/>
+  <text x="666" y="292" class="el">SIM</text>
+  <path class="flow" data-name="f_c4" d="M910,298 L1045,298 L1045,319"/>
+  <path class="flow" data-name="f_c3nao" d="M705,350 L950,350"/>
+  <rect x="757" y="332" width="24.8" height="14" fill="#fff"/>
+  <text x="760" y="343" class="el">NÃO</text>
+  <path class="flow" data-name="f_c5" d="M1140,350 L1195,350"/>
+  <path class="flow" data-name="f_vazia" d="M1240,394 L1240,529"/>
+  <rect x="1243" y="459" width="125.6" height="14" fill="#fff"/>
+  <text x="1246" y="470" class="el">NÃO · todos intimados</text>
+  <path class="flow" data-name="f_sobrou" d="M1285,350 L1330,350 L1330,179"/>
+  <rect x="1333" y="249" width="24.8" height="14" fill="#fff"/>
+  <text x="1336" y="260" class="el">SIM</text>
+  <path class="flow" data-name="f_ancom" d="M1410,137 L1440,137 L1440,515"/>
+  <path class="flow" data-name="f_pendfim" d="M1170,179 L1170,545 L1224,545"/>
+  <rect x="1173" y="489" width="47.2" height="14" fill="#fff"/>
+  <text x="1176" y="500" class="el">término</text>
+  <text x="24" y="666" class="note">Fonte: XMLs jPDL de fluxos-pje-ativos-2026-09-26. O prazo de 5 dias da tarefa de pendência é o único prazo fixado no fluxo de acordo.</text>
+</svg>

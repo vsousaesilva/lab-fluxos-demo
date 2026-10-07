@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 700" width="1480" height="700" font-family="Segoe UI, Arial, sans-serif">
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">SJP — Sinalizar Juntada de Petição (trecho do acordo)</text>
+  <text x="24" y="48" class="note">Fluxo de serviço disparado em toda juntada · só o trecho que leva à proposta de acordo</text>
+  <rect class="lane" x="24" y="70" width="1432" height="150"/>
+  <rect class="lanealt" x="24" y="220" width="1432" height="250"/>
+  <rect class="lane" x="24" y="470" width="1432" height="180"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="150"/>
+  <text class="lanelbl" transform="translate(46,165) rotate(-90)">PARTE</text>
+  <rect class="lane" x="24" y="220" width="34" height="250"/>
+  <text class="lanelbl" transform="translate(46,373) rotate(-90)">SISTEMA</text>
+  <rect class="lanealt" x="24" y="470" width="34" height="180"/>
+  <text class="lanelbl" transform="translate(46,592) rotate(-90)">DESTINOS</text>
+  <rect class="task" data-name="P0" x="150" y="100" width="260" height="80"/>
+  <text x="280" y="129.5" class="tt" text-anchor="middle">Advogado ou procurador</text>
+  <text x="280" y="145.5" class="tt" text-anchor="middle">protocola a petição</text>
+  <text x="280" y="161.5" class="ts" text-anchor="middle">tipo de documento 40 — proposta de acordo</text>
+  <circle class="ev" data-name="INI" cx="280" cy="345" r="16" stroke-width="1.8"/>
+  <text x="280" y="380" class="ts" text-anchor="middle">Início</text>
+  <path class="gw" data-name="EXT" d="M430,301 L475,345 L430,389 L385,345 z"/>
+  <rect x="372" y="400" width="110.4" height="28" fill="#fff"/>
+  <text x="375" y="410" class="gl" text-anchor="start">Juntado por</text>
+  <text x="375" y="423" class="gl" text-anchor="start">usuário externo?</text>
+  <rect class="auto" data-name="SIG" x="530" y="314" width="210" height="62"/>
+  <text x="635" y="336" class="tt" text-anchor="middle">Sinalizar juntada geral</text>
+  <text x="635" y="352" class="ts" text-anchor="middle">sinal sjp:aguardaPeticao</text>
+  <text x="635" y="365" class="ts" text-anchor="middle">acorda quem esperava petição</text>
+  <path class="gw" data-name="LAUDO" d="M840,301 L885,345 L840,389 L795,345 z"/>
+  <rect x="792" y="400" width="91.2" height="28" fill="#fff"/>
+  <text x="795" y="410" class="gl" text-anchor="start">Juntado laudo</text>
+  <text x="795" y="423" class="gl" text-anchor="start">pericial?</text>
+  <rect class="auto" data-name="ENT" x="950" y="305" width="230" height="80"/>
+  <text x="1065" y="336" class="tt" text-anchor="middle">Proposta de Acordo?</text>
+  <text x="1065" y="352" class="ts" text-anchor="middle">se o tipo do documento = 40</text>
+  <text x="1065" y="365" class="ts" text-anchor="middle">incluirNovoFluxo</text>
+  <circle class="ev" data-name="FIM" cx="1310" cy="345" r="16" stroke-width="3.4"/>
+  <text x="1310" y="380" class="ts" text-anchor="middle">Término</text>
+  <rect class="link" data-name="INTERNO" x="330" y="530" width="190" height="62"/>
+  <text x="425" y="558.5" class="tt" text-anchor="middle">Origem interna</text>
+  <text x="425" y="574.5" class="ts" text-anchor="middle">não cria o fluxo de acordo</text>
+  <rect class="link" data-name="ESPERA" x="545" y="530" width="200" height="62"/>
+  <text x="645" y="558.5" class="tt" text-anchor="middle">Fluxos que esperavam</text>
+  <text x="645" y="574.5" class="ts" text-anchor="middle">petição são acordados</text>
+  <rect class="link" data-name="LAUDOD" x="770" y="530" width="170" height="62"/>
+  <text x="855" y="558.5" class="tt" text-anchor="middle">Ramo do laudo</text>
+  <text x="855" y="574.5" class="ts" text-anchor="middle">pericial</text>
+  <rect class="sub" data-name="ACORDO" x="990" y="525" width="250" height="72"/>
+  <text x="1115" y="552" class="tt" text-anchor="middle">Fluxo de proposta de acordo</text>
+  <text x="1115" y="568" class="ts" text-anchor="middle">JFCE_FLUXO_ACORDO</text>
+  <text x="1115" y="581" class="ts" text-anchor="middle">criado ao lado · paralelo</text>
+  <path class="flow" data-name="f_p0" d="M280,180 L280,329"/>
+  <rect x="283" y="251" width="47.2" height="14" fill="#fff"/>
+  <text x="286" y="262" class="el">juntada</text>
+  <path class="flow" data-name="f_ext" d="M296,345 L385,345"/>
+  <path class="flow" data-name="f_sig" d="M475,345 L530,345"/>
+  <rect x="482" y="327" width="24.8" height="14" fill="#fff"/>
+  <text x="485" y="338" class="el">SIM</text>
+  <path class="flow" data-name="f_int" d="M430,389 L430,530"/>
+  <rect x="433" y="459" width="80.8" height="14" fill="#fff"/>
+  <text x="436" y="470" class="el">NÃO · interno</text>
+  <path class="flow" data-name="f_laudo" d="M740,345 L795,345"/>
+  <path class="flow" data-name="f_laudosim" d="M840,389 L840,530"/>
+  <rect x="843" y="459" width="24.8" height="14" fill="#fff"/>
+  <text x="846" y="470" class="el">SIM</text>
+  <path class="flow" data-name="f_ent" d="M885,345 L950,345"/>
+  <rect x="893" y="327" width="24.8" height="14" fill="#fff"/>
+  <text x="896" y="338" class="el">NÃO</text>
+  <path class="flow" data-name="f_fim" d="M1180,345 L1294,345"/>
+  <path class="par" data-name="p_sig" d="M635,376 L635,530"/>
+  <rect x="638" y="444" width="176" height="14" fill="#fff"/>
+  <text x="641" y="455" class="el">sinal genérico · antes de tudo</text>
+  <path class="par" data-name="p_ent" d="M1065,385 L1065,525"/>
+  <rect x="1068" y="444" width="120" height="14" fill="#fff"/>
+  <text x="1071" y="455" class="el">cria o fluxo ao lado</text>
+  <text x="24" y="686" class="note">Fonte: XMLs jPDL de fluxos-pje-ativos-2026-09-26. O sinal genérico sai antes da criação do fluxo de acordo.</text>
+</svg>

@@ -177,7 +177,7 @@ p,li{font-size:30px;line-height:1.45}
 .banner p{font-size:19px;color:#BFD3E2;margin-top:12px;line-height:1.45;max-width:620px}
 
 .panel{background:#fff;border-radius:24px;box-shadow:0 2px 0 var(--line),0 10px 40px rgba(11,42,69,.07);padding:30px 32px;display:flex;flex-direction:column;overflow:hidden}
-.prog{display:flex;flex-direction:column;gap:4px;font-size:15px;font-weight:700;color:var(--muted);letter-spacing:.05em}.prog #pscen{font-weight:600;letter-spacing:0;font-size:16px;color:var(--navy)}
+.prog{display:flex;flex-direction:column;gap:4px;font-size:15px;font-weight:700;color:var(--muted);letter-spacing:.05em}.prog .pscen{font-weight:600;letter-spacing:0;font-size:16px;color:var(--navy)}
 .pbar{height:8px;background:var(--soft);border-radius:4px;margin:10px 0 24px;overflow:hidden}
 .pbar i{display:block;height:100%;width:0;background:var(--warm);border-radius:4px;transition:width .5s var(--ease)}
 .kind{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:10px;align-self:flex-start}
@@ -186,7 +186,7 @@ p,li{font-size:30px;line-height:1.45}
 .k-sub{background:#E8EEF4;color:var(--navy)}.k-ev{background:#E5F5EE;color:#137A50}.k-link{background:#F1F3F5;color:var(--muted)}
 .ptitle{font-size:31px;font-weight:800;color:var(--navy);line-height:1.2;margin-top:16px}
 .pcode{font-size:16px;font-weight:700;color:var(--blue);margin-top:8px}
-.ptext{font-size:21px;line-height:1.5;color:var(--ink);margin-top:16px}
+.ptext{font-size:20px;line-height:1.48;color:var(--ink);margin-top:16px}
 .dec{margin-top:20px;border-radius:18px;background:var(--soft);padding:20px 22px}
 .dec .q{font-size:17px;font-weight:700;color:var(--muted)}
 .dec .a{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--green);color:#fff;font-weight:800;font-size:20px;padding:9px 16px;border-radius:12px}
@@ -225,6 +225,46 @@ p,li{font-size:30px;line-height:1.45}
 .fsvg .tok circle.r{fill:none;stroke:var(--red);stroke-width:2;animation:ring 1.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes ring{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(2.6)}}
 
+/* paralelismo e estado do processo */
+.fsvg .par{stroke:var(--sky);stroke-width:1.6;fill:none;stroke-dasharray:6 4;marker-end:url(#arrS)}
+.fsvg .grp{fill:rgba(43,181,224,.05);stroke:var(--sky);stroke-dasharray:5 4;stroke-width:1.4}
+.fsvg .trailp.par2{stroke:var(--sky);stroke-dasharray:7 5;stroke-width:3}
+.fsvg .tok2 circle.o{fill:var(--sky);stroke:#fff;stroke-width:3}
+.fsvg .tok2 circle.r{fill:none;stroke:var(--sky);stroke-width:2;animation:ring 1.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.state{margin-top:18px;background:var(--soft);border-radius:16px;padding:14px 18px 16px;display:none}
+.state.on{display:block}
+.state h5{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:12px 0 7px}
+.state h5:first-child{margin-top:0}
+.state .row2{display:flex;flex-wrap:wrap;gap:7px}
+.tag{font-size:14px;font-weight:700;padding:5px 10px;border-radius:8px;background:#FFF1E0;color:#A55A06;border:1.5px solid #F5C27A}
+.mv{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:800;padding:5px 12px;border-radius:999px;background:var(--navy);color:#fff;border:2px solid var(--navy)}
+.mv small{font-weight:600;font-size:12px;opacity:.85}
+.mv.tmp{background:#fff;color:var(--navy);border-style:dashed;opacity:.8}
+.pfl{display:flex;flex-direction:column;gap:5px}
+.pf{font-size:14px;font-weight:700;color:var(--navy);display:flex;gap:9px;align-items:center}
+.pf i{width:10px;height:10px;border-radius:50%;background:var(--green);flex:none}
+.new{animation:pop .7s var(--ease)}
+.gone{opacity:.45;text-decoration:line-through}
+.gone i{background:#9AAAB8!important}
+@keyframes pop{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:none}}
+
+/* ===== acordo: visão geral ===== */
+.ac{display:grid;grid-template-columns:1fr 660px;gap:80px;align-items:start}
+.ac .rows{gap:34px;padding-top:0}
+.ac .row b{font-size:29px}.ac .row span{font-size:22px}
+.acmap{display:flex;flex-direction:column}
+.fc{border:2.5px solid var(--blue);border-radius:18px;padding:20px 26px;background:#fff;cursor:pointer;transition:background .2s}
+.fc:hover{background:#E3F3FA}
+.fc b{display:block;font-size:17px;color:var(--blue);font-weight:800;letter-spacing:.02em}
+.fc span{display:block;font-size:23px;font-weight:700;color:var(--navy);margin-top:2px}
+.fc.par{border-style:dashed;border-color:var(--sky)}
+.fc.ext{border-color:var(--line);background:var(--soft);cursor:default}
+.dn{height:52px;display:flex;align-items:center;justify-content:center;gap:12px;color:#9DB2C3;font-weight:800;font-size:15px}
+.dn::before{content:"↓";font-size:24px;font-weight:900}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tagline{margin-top:30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:20px;color:#9DB2C3;font-weight:900}
+.tagline .tag{font-size:18px;padding:7px 12px}
+
 /* ===== demais ===== */
 .dark{background:radial-gradient(900px 600px at 82% 18%,rgba(43,181,224,.32),transparent 60%),radial-gradient(800px 520px at 8% 100%,rgba(245,156,44,.22),transparent 60%),var(--navy);color:#fff}
 .dark h1,.dark h2{color:#fff}
@@ -256,6 +296,7 @@ p,li{font-size:30px;line-height:1.45}
 <svg width="0" height="0" style="position:absolute">
   <defs>
     <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9AAAB8"/></marker>
+    <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2BB5E0"/></marker>
     <marker id="mArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DB2C3"/></marker>
   </defs>
 </svg>
@@ -286,7 +327,7 @@ p,li{font-size:30px;line-height:1.45}
     <div class="step" data-in="2"><div class="num" style="background:var(--blue)">01</div><h3>A ideia</h3><p>Uma necessidade percebida na área fim</p><div class="t" style="color:var(--blue)">2 min</div></div>
     <div class="step" data-in="3"><div class="num" style="background:var(--sky)">02</div><h3>A construção</h3><p>Equipe, parcerias e as primeiras entregas</p><div class="t" style="color:#1C93BC">4 min</div></div>
     <div class="step" data-in="4"><div class="num" style="background:var(--orange)">03</div><h3>O método</h3><p>Como uma demanda vira fluxo no PJe</p><div class="t" style="color:#D07E12">2 min</div></div>
-    <div class="step" data-in="5"><div class="num" style="background:var(--red)">04</div><h3>Os fluxos</h3><p>O Mandado de Segurança, percorrido passo a passo</p><div class="t" style="color:var(--red)">6 min</div></div>
+    <div class="step" data-in="5"><div class="num" style="background:var(--red)">04</div><h3>Os fluxos</h3><p>Acordo e Mandado de Segurança, percorridos passo a passo</p><div class="t" style="color:var(--red)">6 min</div></div>
   </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
   <div class="notes"><b>~30 s.</b> Passar rápido. O centro da fala é a simulação (parte 4).</div>
@@ -395,7 +436,50 @@ p,li{font-size:30px;line-height:1.45}
     Frase-chave: "A IA acelera; quem decide é a equipe."</div>
 </section>
 
-<!-- 8 · MAPA DO MS -->
+<!-- 8 · ACORDO: VISÃO GERAL -->
+<section class="slide">
+  <div class="kicker" data-in="1">04 · Os fluxos</div>
+  <h2 data-in="1">Proposta de acordo: <em>quatro momentos</em></h2>
+  <div class="ac">
+    <div class="rows">
+      <div class="row" data-in="2"><div class="ico" style="background:var(--blue)" data-icon="bolt"></div><div><b>O gatilho é automático</b><span>A petição do tipo 40 cria o fluxo sozinha. Ninguém na secretaria precisa perceber que chegou uma proposta.</span></div></div>
+      <div class="row" data-in="3"><div class="ico" style="background:var(--sky)" data-icon="collect"></div><div><b>O fluxo recolhe o processo</b><span>As tarefas abertas são encerradas: o processo não tramita em dois lugares com entendimentos diferentes.</span></div></div>
+      <div class="row" data-in="4"><div class="ico" style="background:var(--orange)" data-icon="loop"></div><div><b>O anel de espera</b><span>Intimar → esperar → ler a manifestação → intimar de novo. A espera escuta petição, prazo e expediente.</span></div></div>
+      <div class="row" data-in="5"><div class="ico" style="background:var(--red)" data-icon="fork"></div><div><b>A homologação se desdobra</b><span>Depois do trânsito em julgado, cumprimento de sentença e obrigação de fazer seguem em paralelo.</span></div></div>
+    </div>
+    <div data-in="3">
+      <div class="acmap">
+        <div class="fc" data-flow="SJP"><b>SJP</b><span>Sinalizar Juntada de Petição</span></div>
+        <div class="dn">petição tipo 40</div>
+        <div class="split">
+          <div class="fc" data-flow="JFCE_FLUXO_ACORDO"><b>JFCE_FLUXO_ACORDO</b><span>Fluxo de proposta de acordo</span></div>
+          <div class="fc par" data-flow="JEF_INAUTJUNACORD"><b>JEF_INAUTJUNACORD</b><span>Intimação · em paralelo</span></div>
+        </div>
+        <div class="dn">sentença homologatória</div>
+        <div class="fc" data-flow="JFCE_SENTACORDO"><b>JFCE_SENTACORDO</b><span>Elaboração de sentença de acordo</span></div>
+        <div class="dn">fork</div>
+        <div class="split">
+          <div class="fc ext"><b>JEF_CUMPRSENT</b><span>Cumprimento de sentença</span></div>
+          <div class="fc ext"><b>JEF_INTOBRFAZ</b><span>Obrigação de fazer</span></div>
+        </div>
+      </div>
+      <div class="tagline"><span class="tag">[A] Proposta de acordo</span>›<span class="tag">[A] Homologar acordo</span>›<span class="tag">[A] Acordo homologado</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min.</b> Os quatro momentos que o público precisa guardar, em ordem de importância: (1) o gatilho é automático — o tipo de documento 40 cria o fluxo; (2) o fluxo recolhe o processo, encerrando as tarefas abertas; (3) o anel de espera; (4) a homologação se desdobra em dois fluxos.
+    À direita, os fluxos envolvidos (clique para ampliar). Embaixo, as etiquetas que a secretaria vê no PJe — a forma mais honesta de mostrar o progresso.</div>
+</section>
+
+<!-- 9 · SIMULADOR DO ACORDO -->
+<section class="slide sim" data-sim="acordo" data-title="Proposta de acordo: o caminho do processo">
+  <div class="notes"><b>~3 min.</b> Rodar o "Caminho feliz" com P (ou → passo a passo). Pontos para pausar:
+    (1) o SJP emite o sinal genérico ANTES de criar o fluxo de acordo; (2) o marcador azul nasce ao lado — é o incluirNovoFluxo, fluxo paralelo, não substituição;
+    (3) na intimação, o processo sai do fluxo em que estava (veja o quadro "O processo está em"); (4) o movimento 466 aparece tracejado (temporário) e vira definitivo após a assinatura;
+    (5) o fork no final. Se sobrar tempo: "Anel de espera" ou "Sem acordo". Teclas 1–5 trocam o cenário.</div>
+</section>
+
+<!-- 10 · MAPA DO MS -->
 <section class="slide" style="padding-bottom:90px">
   <div class="kicker" data-in="1">04 · Os fluxos</div>
   <h2 data-in="1" style="margin-bottom:10px">Mandado de Segurança: <em>12 fluxos conectados</em></h2>
@@ -407,56 +491,14 @@ p,li{font-size:30px;line-height:1.45}
     Clique num fluxo para mostrar o diagrama ampliado (Esc fecha).</div>
 </section>
 
-<!-- 9 · SIMULADOR -->
-<section class="slide sim" id="simSlide">
-  <div class="sim-head">
-    <div><div class="k">04 · Simulação</div><h2>O processo percorrendo o fluxo</h2></div>
-    <div class="scen" id="scen"></div>
-  </div>
-  <div class="ribbon" id="ribbon"></div>
-  <div class="sim-main">
-    <div class="canvas">
-      <div class="ftitle"><b id="fcode"></b><span id="fname"></span></div>
-      <div class="svgbox" id="svgbox"></div>
-      <div class="banner" id="banner"><small>Entra no fluxo</small><b id="bcode"></b><span id="bname"></span><p id="bdesc"></p></div>
-      <div class="ctrl">
-        <button id="bRestart" title="Recomeçar (Home)"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>
-        <button id="bPrev" title="Passo anterior (←)"><svg viewBox="0 0 24 24"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/></svg></button>
-        <button id="bPlay" class="play" title="Reproduzir / pausar (P)"><svg viewBox="0 0 24 24" id="playIco"><path d="M8 5v14l11-7z"/></svg></button>
-        <button id="bNext" title="Próximo passo (→)"><svg viewBox="0 0 24 24"><path d="M10 6 8.6 7.4 13.2 12l-4.6 4.6L10 18l6-6z"/></svg></button>
-        <button id="bFit" title="Ver diagrama inteiro (V)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM4 15h2v3h3v2H4zm14 3v-3h2v5h-5v-2z"/></svg></button>
-        <button id="bSpd" class="spd" title="Velocidade (S)">1×</button>
-      </div>
-    </div>
-    <aside class="panel" id="panel">
-      <div class="prog"><span id="pstep"></span><span id="pscen"></span></div>
-      <div class="pbar"><i id="pbar"></i></div>
-      <div id="pbody"></div>
-      <div class="trail"><h4>Trilha percorrida</h4><ol id="ptrail"></ol></div>
-    </aside>
-  </div>
-  <div class="notes"><b>~4 min.</b> Escolher o cenário nas abas do topo. → avança um passo (o clicker funciona), P reproduz automaticamente, V mostra o diagrama inteiro, S muda a velocidade.
-    Sugestão: rodar o "Caminho completo" com P, pausando para comentar em 3 pontos: (1) a decisão automática da liminar; (2) o controle de prazo que só libera quando todos os expedientes fecham; (3) o roteamento recursal que manda a sentença concessiva para a remessa necessária.
-    Se sobrar tempo, mostrar "Embargos" ou "Rede de proteção". Ao terminar o cenário, → segue para o próximo slide.</div>
+<!-- 11 · SIMULADOR DO MS -->
+<section class="slide sim" data-sim="ms" data-title="Mandado de Segurança: o processo percorrendo o fluxo">
+  <div class="notes"><b>~3 min.</b> Escolher o cenário nas abas do topo (ou teclas 1–5). → avança um passo (o clicker funciona), P reproduz automaticamente, V mostra o diagrama inteiro, S muda a velocidade.
+    Sugestão: rodar o "Caminho completo" com P, pausando em 3 pontos: (1) a decisão automática da liminar; (2) o controle de prazo que só libera quando todos os expedientes fecham; (3) o roteamento recursal que manda a sentença concessiva para a remessa necessária.
+    Ao terminar o cenário, → segue para o próximo slide.</div>
 </section>
 
-<!-- 10 · ACORDO -->
-<section class="slide">
-  <div class="kicker" data-in="1">04 · Os fluxos</div>
-  <h2 data-in="1">E o fluxo de <em>Acordo</em></h2>
-  <div class="cols" style="grid-template-columns:1fr 1fr">
-    <div class="rows">
-      <div class="row" data-in="2"><div class="ico" style="background:var(--blue)" data-icon="link"></div><div><b>Integrado aos fluxos ativos do PJe</b><span>Entra no ponto em que a conciliação acontece, sem duplicar tarefas.</span></div></div>
-      <div class="row" data-in="3"><div class="ico" style="background:var(--sky)" data-icon="hands"></div><div><b>[o que o fluxo resolve]</b><span>[completar]</span></div></div>
-      <div class="row" data-in="4"><div class="ico" style="background:var(--orange)" data-icon="check"></div><div><b>[ganho para a vara e as partes]</b><span>[completar]</span></div></div>
-    </div>
-    <div class="quote" data-in="3" style="display:grid;place-items:center;min-height:520px;background:var(--soft)"><p style="margin:0;text-align:center;color:var(--muted);font-size:28px">Diagrama do fluxo de Acordo<br><span style="font-size:20px;font-weight:500">aguardando os arquivos para entrar no simulador</span></p></div>
-  </div>
-  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> [Completar com os destaques do fluxo de Acordo.]</div>
-</section>
-
-<!-- 11 · ENCERRAMENTO -->
+<!-- 12 · ENCERRAMENTO -->
 <section class="slide end">
   <div class="kicker" data-in="1">Obrigado</div>
   <h1 data-in="2">Fluxos melhores, <em>justiça mais próxima das pessoas</em></h1>
@@ -482,10 +524,10 @@ const LOGOS = { lab: "{{LOGO_LAB}}", labw: "{{LOGO_LAB_W}}", jcp: "{{LOGO_JCP}}"
    (ids de transições "fN" ou caminho SVG "M..." ) desde o nó anterior.
    ================================================================ */
 const BUS_ANLIN = "M725,157 L725,490 L182,490 L182,545";
-const SCENARIOS = [
+const SCEN_MS = [
 { id:"completo", name:"Caminho completo", sub:"Da inicial à remessa necessária ao TRF5", steps:[
   {f:"MS_ANLIN", at:"n3", t:"Inicial distribuída", d:"O processo da classe Mandado de Segurança (119 ou 120) entra no fluxo de análise da inicial."},
-  {f:"MS_ANLIN", at:"n4", go:["f0"], d:"O sistema vincula automaticamente a etiqueta da classe, para que o processo seja identificado em toda a tramitação."},
+  {f:"MS_ANLIN", at:"n4", go:["f0"], tg:["+[A] Mandado de segurança"], d:"O sistema vincula automaticamente a etiqueta da classe, para que o processo seja identificado em toda a tramitação."},
   {f:"MS_ANLIN", at:"n5", go:["f1"], q:"Há pedido de liminar ainda não apreciado?", a:"NÃO", alt:"<b>SIM</b> → vai para “Analisar Inicial urgente”, com encaminhamento a minutar decisão urgente (ELDECURG)."},
   {f:"MS_ANLIN", at:"n0", go:["f2"], d:"Tarefa do servidor, com avisos de tutela e de documentação da parte. É aqui que se escolhe o encaminhamento."},
   {f:"MS_ANLIN", at:"n6", go:BUS_ANLIN, q:"Encaminhamento escolhido", a:"Notificar impetrado", alt:"Também disponíveis: minutar sentença, decisão ou despacho, análise de secretaria e Nó de Desvio."},
@@ -515,7 +557,7 @@ const SCENARIOS = [
   {f:"MS_CONTRPRAZ", at:"n8", go:["f6","f8"], pass:["n7"], q:"Algum expediente ainda está aberto?", a:"NÃO · parecer juntado"},
   {f:"MS_ANMANFEST", at:"n2", t:"Nova análise de manifestação"},
   {f:"MS_ANMANFEST", at:"n0", go:["f0","f1"], pass:["n3"], d:"O parecer do MPF foi juntado no período."},
-  {f:"MS_ANMANFEST", at:"n8", go:"M730,161 L730,485 L1015,485 L1015,530", q:"Encaminhamento escolhido", a:"Conclusão para julgamento", alt:"Lança o movimento 51 (conclusão) e encaminha à elaboração de sentença."},
+  {f:"MS_ANMANFEST", at:"n8", go:"M730,161 L730,485 L1015,485 L1015,530", mv:["+51 concluso"], q:"Encaminhamento escolhido", a:"Conclusão para julgamento", alt:"Lança o movimento 51 (conclusão) e encaminha à elaboração de sentença."},
   {f:"ELSENT", at:"n11", t:"Sentença assinada", d:"O magistrado assina a sentença — no cenário, concessiva da segurança. Minutar, revisar e assinar seguem o fluxo de sempre."},
   {f:"ELSENT", at:"n3", go:["f0"], d:"Intima todas as partes automaticamente: 15 dias, em dobro, polos ativo e passivo, e o MPF."},
   {f:"ELSENT", at:"n4", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência", alt:"<b>Há pendência</b> → tarefa “Elaboração de sentença — Intimar”."},
@@ -534,9 +576,9 @@ const SCENARIOS = [
   {f:"MS_CONTRPRAZREC-2", at:"n3", go:["f2"], q:"Houve apelação?", a:"NÃO"},
   {f:"MS_CONTRPRAZREC-2", at:"n4", go:["f3"], q:"Houve outra manifestação?", a:"NÃO"},
   {f:"MS_CONTRPRAZREC-2", at:"n5", go:["f4"], q:"Qual o tipo da sentença?", a:"Concessiva", alt:"<b>Denegatória ou extinção sem mérito</b> → certificação do trânsito em julgado. <b>Indefinido</b> → tarefa para o servidor."},
-  {f:"MS_CONTRPRAZREC-2", at:"n14", go:["f12"], t:"Remessa necessária ao TRF5", d:"Sentença concessiva sem recurso: o sistema aplica a etiqueta [A] Remessa necessária e remete ao TRF5 (REMTRF5) para o reexame. Fim do percurso no 1º grau."},
+  {f:"MS_CONTRPRAZREC-2", at:"n14", go:["f12"], tg:["+[A] Remessa necessária"], t:"Remessa necessária ao TRF5", d:"Sentença concessiva sem recurso: o sistema aplica a etiqueta [A] Remessa necessária e remete ao TRF5 (REMTRF5) para o reexame. Fim do percurso no 1º grau."},
 ]},
-{ id:"embargos", name:"Embargos de declaração", sub:"Contrarrazões, julgamento e retorno ao prazo recursal", steps:[
+{ id:"embargos", init:{tg:["[A] Mandado de segurança"]}, name:"Embargos de declaração", sub:"Contrarrazões, julgamento e retorno ao prazo recursal", steps:[
   {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"A sentença foi intimada e o prazo recursal terminou. Uma das partes opôs embargos de declaração."},
   {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
   {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"SIM"},
@@ -560,7 +602,7 @@ const SCENARIOS = [
   {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"SIM"},
   {f:"MS_CONTRPRAZREC-2", at:"n8", go:["f5"], t:"[MS] Recursos — Analisar após julgamento dos embargos", d:"Tarefa do servidor: informa se havia apelação no prazo anterior. O encaminhamento é decisão humana, com todos os destinos disponíveis."},
 ]},
-{ id:"apelacao", name:"Apelação", sub:"Contrarrazões e remessa ao TRF5", steps:[
+{ id:"apelacao", init:{tg:["[A] Mandado de segurança"]}, name:"Apelação", sub:"Contrarrazões e remessa ao TRF5", steps:[
   {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"Uma das partes apelou da sentença."},
   {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
   {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"NÃO"},
@@ -569,7 +611,7 @@ const SCENARIOS = [
   {f:"MS_CONTRPRAZREC-2", at:"n11", go:["f8"], d:"Intima para contrarrazões (CP_INTAUT, 15 dias) e controla o prazo, com registro de ciência."},
   {f:"MS_CONTRPRAZREC-2", at:"n13", go:["f9"], t:"Remessa ao TRF5", d:"Contrarrazões juntadas ou prazo decorrido: o processo é remetido ao TRF5 (REMTRF5)."},
 ]},
-{ id:"perda", name:"Perda do objeto", sub:"Quando as informações noticiam a perda superveniente", steps:[
+{ id:"perda", init:{tg:["[A] Mandado de segurança"]}, name:"Perda do objeto", sub:"Quando as informações noticiam a perda superveniente", steps:[
   {f:"MS_ANMANFEST", at:"n2", t:"Início da análise de manifestação"},
   {f:"MS_ANMANFEST", at:"n3", go:["f0"], q:"Houve juntada de parte no período?", a:"SIM"},
   {f:"MS_ANMANFEST", at:"n0", go:["f1"], d:"As informações da autoridade noticiam que o ato impugnado deixou de existir."},
@@ -577,16 +619,90 @@ const SCENARIOS = [
   {f:"MS_INTIMPRET", at:"n3", t:"Início da intimação do impetrante"},
   {f:"MS_INTIMPRET", at:"n4", go:["f0"], d:"Intima o impetrante em 10 dias para se manifestar sobre a perda do objeto (modelo 56243, polo ativo)."},
   {f:"MS_INTIMPRET", at:"n5", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência"},
-  {f:"MS_INTIMPRET", at:"n7", go:["f3"], d:"Gera a etiqueta [A] Perda do objeto, visível na caixa da vara."},
+  {f:"MS_INTIMPRET", at:"n7", go:["f3"], tg:["+[A] Perda do objeto"], d:"Gera a etiqueta [A] Perda do objeto, visível na caixa da vara."},
   {f:"MS_INTIMPRET", at:"n8", go:["f13"], t:"Volta ao controle de prazo", d:"O processo retorna ao MS_CONTRPRAZ e aguarda a manifestação do impetrante."},
 ]},
-{ id:"protecao", name:"Rede de proteção", sub:"Os fluxos gerais devolvem o MS ao trilho certo", steps:[
+{ id:"protecao", init:{tg:["[A] Mandado de segurança"]}, name:"Rede de proteção", sub:"Os fluxos gerais devolvem o MS ao trilho certo", steps:[
   {f:"CONTRPRAZ", at:"n1", t:"Processo de MS no controle de prazo geral", d:"Chegou por ELDEC, ELDECURG, ELDESP, ELCOM, ANSEC ou CONTRDEVEXP — caminhos comuns a todas as classes."},
   {f:"CONTRPRAZ", at:"n2", go:["f0"], q:"É Mandado de Segurança? (teste acrescentado na entrada)", a:"SIM", alt:"<b>NÃO</b> → segue o controle de prazo geral, sem mudança para as demais classes."},
   {f:"CONTRPRAZ", at:"n6", go:["f2"], t:"Desvio para o controle de prazo do MS", d:"O processo de MS não fica no trilho geral: é desviado para o MS_CONTRPRAZ."},
   {f:"CONTRDEVEXP", at:"n0", t:"Expediente físico — Informar prazo", d:"Outro ponto de proteção: quando há expediente físico, como um mandado cumprido por oficial de justiça."},
   {f:"CONTRDEVEXP", at:"n3", go:["f1"], q:"O fluxo chamador indicou a saída? (variável fluxo:saida)", a:"SIM", alt:"<b>NÃO</b> → segue ao controle de prazo geral, comportamento padrão."},
   {f:"CONTRDEVEXP", at:"n5", go:["f4"], t:"Devolve ao fluxo chamador", d:"O processo volta exatamente para o fluxo de MS que o chamou. Única alteração neste fluxo geral."},
+]},
+];
+
+const SCEN_ACORDO = [
+{ id:"feliz", name:"Caminho feliz", sub:"Da petição de acordo à homologação e ao cumprimento", init:{pf:["Fluxo em que o processo estava"]}, steps:[
+  {f:"SJP", at:"P0", t:"Proposta de acordo protocolada", d:"O advogado — ou o procurador do INSS ou da União — junta ao processo uma petição do <b>tipo de documento 40</b>: proposta de acordo."},
+  {f:"SJP", at:"INI", go:["f_p0"], pf:["+SJP · serviço"], t:"SJP: o porteiro", d:"Toda juntada por usuário externo dispara automaticamente o SJP — Sinalizar Juntada de Petição. Ele olha o tipo do documento e avisa quem precisa saber."},
+  {f:"SJP", at:"EXT", go:["f_ext"], q:"Juntado por usuário externo?", a:"SIM", alt:"<b>NÃO</b> → documento tipo 40 juntado internamente não cria o fluxo de acordo."},
+  {f:"SJP", at:"SIG", go:["f_sig"], sp:["p_sig"], d:"Primeiro, o sinal genérico <b>sjp:aguardaPeticao</b> acorda qualquer fluxo que estivesse dormindo à espera de petição. Ele sai <b>antes</b> da criação do fluxo de acordo."},
+  {f:"SJP", at:"LAUDO", go:["f_laudo"], q:"É laudo pericial?", a:"NÃO"},
+  {f:"SJP", at:"ENT", go:["f_ent"], sp:["p_ent"], also:["ACORDO"], pf:["+JFCE_FLUXO_ACORDO"], t:"Proposta de Acordo?", d:"Reconhece o tipo 40 e cria o <b>JFCE_FLUXO_ACORDO ao lado</b> do que já existia — não no lugar. O processo passa a estar em dois fluxos."},
+  {f:"SJP", at:"FIM", go:["f_fim"], pf:["-SJP · serviço"], t:"O SJP termina", d:"O serviço cumpriu o papel de porteiro."},
+  {f:"JFCE_FLUXO_ACORDO", at:"INI", t:"Nasce o fluxo de proposta de acordo", d:"Ninguém na secretaria precisou perceber que chegou uma proposta: o tipo do documento criou o fluxo sozinho."},
+  {f:"JFCE_FLUXO_ACORDO", at:"ET1", go:["f_ini"], tg:["+[A] Proposta de acordo"], d:"Cola a etiqueta que a secretaria usa para achar esses processos."},
+  {f:"JFCE_FLUXO_ACORDO", at:"D1", go:["f_et"], q:"Está concluso para julgamento? (há movimento CNJ 51)", a:"NÃO · está na secretaria", alt:"<b>SIM · está no gabinete</b> → não se intima direto: gera despacho de vista (movimento 11022) e manda intimar."},
+  {f:"JFCE_FLUXO_ACORDO", at:"N2", go:["f_d1nao"], sp:["p_n2"], also:["INT"], pf:["+JEF_INAUTJUNACORD · intimação","-Fluxo em que o processo estava"], t:"Intimar polo ativo via DJEN", d:"Intima o polo ativo com modelo pronto, cria o ramo paralelo de intimação e <b>encerra à força todas as tarefas abertas</b>: o processo passa a viver no fluxo de acordo."},
+  {f:"JFCE_FLUXO_ACORDO", at:"ESP", go:["f_n2esp"], t:"[JFCE] Controle de prazo — proposta de acordo", d:"O coração do fluxo: o processo dorme aqui, escutando três gatilhos — nova petição, prazo vencido e expediente fechado."},
+  {f:"JEF_INAUTJUNACORD", at:"INI", t:"Enquanto isso, no ramo paralelo", d:"O JEF_INAUTJUNACORD chama o subfluxo padrão [CP] Intimação automática."},
+  {f:"JEF_INAUTJUNACORD", at:"C1", go:["f_ini"], mv:["+581"], d:"Gera o documento da intimação a partir do modelo, junta aos autos e lança o movimento 581."},
+  {f:"JEF_INAUTJUNACORD", at:"C2", go:["f_c1"], d:"Monta os destinatários por polo: advogados pelo <b>DJEN</b>; órgãos públicos, defensoria e partes com intimação eletrônica possível <b>pelo sistema</b> — prazo em dobro onde cabe. E dispara as comunicações."},
+  {f:"JEF_INAUTJUNACORD", at:"C3", go:["f_c2"], q:"A intimação se concretizou?", a:"SIM"},
+  {f:"JEF_INAUTJUNACORD", at:"C4", go:["f_c3sim"], d:"Gera e junta a certidão de intimação."},
+  {f:"JEF_INAUTJUNACORD", at:"C5", go:["f_c4"], d:"Monta a lista de partes que não foi possível intimar."},
+  {f:"JEF_INAUTJUNACORD", at:"PEND", go:["f_c5"], q:"Sobrou alguém sem intimar?", a:"NÃO", alt:"<b>SIM</b> → tarefa “[JEF] Acordo — Analisar pendência de intimação” para a secretaria resolver à mão (prazo sugerido de 5 dias)."},
+  {f:"JEF_INAUTJUNACORD", at:"FIM", go:["f_vazia"], pf:["-JEF_INAUTJUNACORD · intimação"], t:"O ramo paralelo termina em silêncio", d:"Sucesso invisível: ninguém precisou agir."},
+  {f:"JFCE_FLUXO_ACORDO", at:"ESP", t:"Chega a manifestação", d:"A parte junta nova petição. O SJP emite <b>sjp:aguardaPeticao</b> e o processo acorda na tarefa de espera."},
+  {f:"JFCE_FLUXO_ACORDO", at:"D2", go:["f_espd2"], q:"Por que acordou?", a:"Chegou petição", alt:"<b>Prazo vencido ou expediente fechado</b> → “Expediente de acordo — sem manifestação”."},
+  {f:"JFCE_FLUXO_ACORDO", at:"D3", go:["f_d2sim"], q:"A petição é do tipo 190?", a:"NÃO · outra petição", alt:"<b>SIM</b> → atalho direto para a sentença homologatória."},
+  {f:"JFCE_FLUXO_ACORDO", at:"TC", go:["f_d3nao"], d:"A secretaria lê o que a parte disse. Aqui mora a discricionariedade: homologar, intimar a parte contrária e voltar à espera, elaborar comunicação ou mandar à análise de secretaria."},
+  {f:"JFCE_FLUXO_ACORDO", at:"SENT", go:"M1530,135 L1570,135 L1570,706 L1530,706", pf:["+JFCE_SENTACORDO · homologação","-JFCE_FLUXO_ACORDO"], q:"Encaminhamento escolhido", a:"Gerar sentença homologatória", alt:"Cria o fluxo de homologação e o fluxo de acordo termina."},
+  {f:"JFCE_SENTACORDO", at:"INI", t:"Elaboração de sentença — proposta de acordo"},
+  {f:"JFCE_SENTACORDO", at:"S1", go:["f_ini"], tg:["+[A] Homologar acordo"], d:"Nova etiqueta: o processo está pronto para homologar."},
+  {f:"JFCE_SENTACORDO", at:"S2", go:["f_s1"], q:"Já está concluso para julgamento? (último movimento de Conclusão × de Magistrado)", a:"NÃO", alt:"<b>SIM</b> → não repete o movimento e vai direto minutar."},
+  {f:"JFCE_SENTACORDO", at:"S3", go:["f_s2nao"], mv:["+51 concluso"], d:"Lança o movimento 51: concluso para julgamento."},
+  {f:"JFCE_SENTACORDO", at:"MIN", go:["f_s3"], mv:["~466 homologação"], d:"Ao abrir a tarefa, o sistema <b>já gera a minuta</b> a partir do modelo e <b>pré-lança o movimento 466</b> (homologação) <b>de forma temporária</b> — veja o selo tracejado."},
+  {f:"JFCE_SENTACORDO", at:"ASS", go:["f_minass"], tg:["-[A] Homologar acordo"], d:"Encaminha para assinatura, com a opção “Intimar para obrigação de fazer — CEAB?”. Ao sair, desvincula a etiqueta [A] Homologar acordo."},
+  {f:"JFCE_SENTACORDO", at:"MAG", go:["f_assmag"], d:"O magistrado aparece uma única vez: para assinar. Se precisar, devolve para correção."},
+  {f:"JFCE_SENTACORDO", at:"HOM", go:["f_maghom"], mv:["!466"], t:"Homologar movimentos temporários", d:"O movimento 466 <b>deixa de ser provisório</b> e passa a valer, associado ao documento assinado."},
+  {f:"JFCE_SENTACORDO", at:"TRA", go:["f_homtra"], mv:["+848 trânsito em julgado"], tg:["-[A] Proposta de acordo","+[A] Acordo homologado"], d:"Grava a data do trânsito, gera e junta a certidão, lança os movimentos 848 e 581 e troca as etiquetas."},
+  {f:"JFCE_SENTACORDO", at:"FORK", go:["f_trafork"], t:"Fork: um fluxo vira dois", d:"A homologação se desdobra."},
+  {f:"JFCE_SENTACORDO", at:"CUM", go:["f_forkcum"], sp:["f_forkobr"], also:["OBR"], pf:["+JEF_CUMPRSENT · cumprimento","+JEF_INTOBRFAZ · obrigação de fazer"], t:"Dois fluxos em paralelo", d:"Cumprimento de sentença e intimação para obrigação de fazer nascem ao mesmo tempo."},
+  {f:"JFCE_SENTACORDO", at:"FIM", go:["f_cumfim"], sp:["f_obrfim"], pf:["-JFCE_SENTACORDO · homologação"], t:"Join e término", d:"Os dois ramos se reencontram no join e o fluxo de homologação termina. O processo segue no cumprimento de sentença e na obrigação de fazer."},
+]},
+{ id:"gabinete", name:"Processo no gabinete", sub:"Concluso para julgamento: despacho de vista", init:{pf:["Fluxo em que o processo estava","JFCE_FLUXO_ACORDO"]}, steps:[
+  {f:"JFCE_FLUXO_ACORDO", at:"INI", t:"Fluxo de acordo criado pelo SJP", d:"Desta vez, o processo já estava concluso no gabinete quando chegou a proposta."},
+  {f:"JFCE_FLUXO_ACORDO", at:"ET1", go:["f_ini"], tg:["+[A] Proposta de acordo"]},
+  {f:"JFCE_FLUXO_ACORDO", at:"D1", go:["f_et"], q:"Está concluso para julgamento? (há movimento CNJ 51)", a:"SIM · está no gabinete", alt:"<b>NÃO</b> → intima direto o polo ativo via DJEN."},
+  {f:"JFCE_FLUXO_ACORDO", at:"N1", go:["f_d1sim"], sp:["p_n1"], also:["INT"], mv:["~11022 vista"], pf:["+JEF_INAUTJUNACORD · intimação","-Fluxo em que o processo estava"], t:"Gerar despacho de vista", d:"Não se pode simplesmente intimar: gera um despacho de vista sobre a proposta, lança o movimento 11022 (temporário, associado à minuta), junta o documento e manda intimar."},
+  {f:"JFCE_FLUXO_ACORDO", at:"ESP", go:["f_n1esp"], d:"As tarefas abertas foram encerradas: o processo espera no controle de prazo do acordo."},
+]},
+{ id:"anel", name:"Anel de espera", sub:"Sem manifestação, nova intimação e atalho do tipo 190", init:{tg:["[A] Proposta de acordo"], pf:["JFCE_FLUXO_ACORDO"]}, steps:[
+  {f:"JFCE_FLUXO_ACORDO", at:"ESP", t:"Processo na espera", d:"O polo ativo foi intimado e o processo aguarda."},
+  {f:"JFCE_FLUXO_ACORDO", at:"D2", go:["f_espd2"], q:"Por que acordou?", a:"Prazo vencido", alt:"<b>Chegou petição</b> → verifica o tipo do documento."},
+  {f:"JFCE_FLUXO_ACORDO", at:"TS", go:["f_d2nao"], d:"Ninguém se manifestou. A secretaria decide o próximo passo."},
+  {f:"JFCE_FLUXO_ACORDO", at:"N3", go:"M1530,255 L1570,255 L1570,536 L1620,536", sp:["p_n3"], also:["INT"], pf:["+JEF_INAUTJUNACORD · intimação"], q:"Encaminhamento escolhido", a:"Intimar polo passivo", alt:"Na tarefa <b>com</b> manifestação, a intimação oferecida é a da parte contrária."},
+  {f:"JFCE_FLUXO_ACORDO", at:"ESP", go:["f_n3esp"], t:"De volta à espera", d:"Esse é o anel: intimar → esperar → ler a manifestação → intimar de novo, quantas vezes a tramitação exigir."},
+  {f:"JFCE_FLUXO_ACORDO", at:"D2", go:["f_espd2"], q:"Por que acordou?", a:"Chegou petição"},
+  {f:"JFCE_FLUXO_ACORDO", at:"D3", go:["f_d2sim"], q:"A petição é do tipo 190?", a:"SIM"},
+  {f:"JFCE_FLUXO_ACORDO", at:"SENT", go:["f_d3sim"], pf:["+JFCE_SENTACORDO · homologação","-JFCE_FLUXO_ACORDO"], t:"Atalho para a homologação", d:"Com a petição do tipo 190, o fluxo vai direto gerar a sentença homologatória, sem passar pela tarefa de expediente."},
+]},
+{ id:"sem", name:"Sem acordo", sub:"Encerrar o fluxo sem deixar o processo órfão", init:{tg:["[A] Proposta de acordo"], pf:["JFCE_FLUXO_ACORDO"]}, steps:[
+  {f:"JFCE_FLUXO_ACORDO", at:"ESP", t:"O acordo não prospera", d:"A secretaria decide encerrar o fluxo de acordo."},
+  {f:"JFCE_FLUXO_ACORDO", at:"DESV", go:["f_espdesv"], d:"Pela tarefa de desvio, chega-se à “[JFCE] Proposta de acordo” — apesar do nome, não é a porta de entrada. Ela mostra o aviso “Cuidado ao movimentar processo no Fluxo de acordo!” e onde o processo está."},
+  {f:"JFCE_FLUXO_ACORDO", at:"D4", go:["f_desvd4"], q:"O processo tem outro fluxo aberto em paralelo?", a:"NÃO", alt:"<b>SIM</b> → o fluxo de acordo apenas termina; o processo segue intacto no outro fluxo."},
+  {f:"JFCE_FLUXO_ACORDO", at:"ANS", go:["f_d4nao"], pf:["+JEF_ANSECR · análise da secretaria","-JFCE_FLUXO_ACORDO"], t:"Evita o processo órfão", d:"Antes de terminar, o fluxo empurra o processo para a análise da secretaria (JEF_ANSECR), para que ele não fique sem nenhum fluxo."},
+]},
+{ id:"pend", name:"Pendência de intimação", sub:"Quando alguém não pôde ser intimado", init:{tg:["[A] Proposta de acordo"], pf:["JFCE_FLUXO_ACORDO","JEF_INAUTJUNACORD · intimação"]}, steps:[
+  {f:"JEF_INAUTJUNACORD", at:"INI", t:"Ramo paralelo de intimação"},
+  {f:"JEF_INAUTJUNACORD", at:"C2", go:["f_ini","f_c1"], pass:["C1"], d:"Documento criado e destinatários montados por polo."},
+  {f:"JEF_INAUTJUNACORD", at:"C3", go:["f_c2"], q:"A intimação se concretizou?", a:"NÃO", alt:"<b>SIM</b> → gera a certidão de intimação."},
+  {f:"JEF_INAUTJUNACORD", at:"C5", go:["f_c3nao"], d:"Lista as partes principais ativas do polo sem expediente aberto."},
+  {f:"JEF_INAUTJUNACORD", at:"PEND", go:["f_c5"], q:"Sobrou alguém sem intimar?", a:"SIM"},
+  {f:"JEF_INAUTJUNACORD", at:"TPEND", go:["f_sobrou"], d:"A secretaria resolve à mão, no miniPAC, com prazo sugerido de 5 dias — o único prazo fixado no fluxo de acordo."},
+  {f:"JEF_INAUTJUNACORD", at:"ANCOM", go:["f_ancom"], q:"Encaminhamento escolhido", a:"Análise de comunicação", alt:"Também disponível: término."},
 ]},
 ];
 
@@ -603,7 +719,11 @@ const ICONS = {
   board:'<path d="M3 4h18v12H3zM8 20l4-4 4 4" fill="none" stroke="#fff" stroke-width="2"/><path d="M7 12l3-3 3 2 4-4" fill="none" stroke="#fff" stroke-width="2"/>',
   code:'<path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="#fff" stroke-width="2.4"/>',
   link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="#fff" stroke-width="2.2"/>',
-  check:'<path d="M4 12l5 5L20 6" fill="none" stroke="#fff" stroke-width="3"/>'
+  check:'<path d="M4 12l5 5L20 6" fill="none" stroke="#fff" stroke-width="3"/>',
+  bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+  collect:'<path d="M4 6h6M4 12h6M4 18h6M14 6l4 6-4 6" fill="none" stroke="#fff" stroke-width="2.4"/>',
+  loop:'<path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4" fill="none" stroke="#fff" stroke-width="2.4"/>',
+  fork:'<path d="M6 4v6a4 4 0 0 0 4 4h4a4 4 0 0 1 4 4v2M6 4v16M18 4v4" fill="none" stroke="#fff" stroke-width="2.4"/>'
 };
 $$("[data-icon]").forEach(e => e.innerHTML = `<svg viewBox="0 0 24 24" fill="#fff">${ICONS[e.dataset.icon]}</svg>`);
 
@@ -622,7 +742,7 @@ function go(i) {
   try { history.replaceState(null, "", "#" + (i + 1)); } catch (e) {}
   if (i > 0 && !started) started = Date.now();
   $$("[data-count]", slides[i]).forEach(countUp);
-  if (slides[i].id === "simSlide") Sim.enter(); else Sim.pause();
+  Object.entries(SIMS).forEach(([k, sim]) => +k === i ? sim.enter() : sim.pause());
 }
 function countUp(el) {
   const to = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now(), dur = 1400;
@@ -684,57 +804,100 @@ function openLightbox(k) {
   $("#lbcode").textContent = k; $("#lbname").textContent = FLOWS[k].title;
   $("#lbbody").innerHTML = FLOWS[k].svg; $("#lightbox").classList.add("on");
 }
+$$(".fc[data-flow]").forEach(c => c.addEventListener("click", () => openLightbox(c.dataset.flow)));
 $("#lightbox").addEventListener("click", () => $("#lightbox").classList.remove("on"));
 
 /* ---------------- simulador ---------------- */
-const Sim = (() => {
+const ICO = {
+  restart: '<path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/>',
+  prev: '<path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/>',
+  play: '<path d="M8 5v14l11-7z"/>', pause: '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>',
+  next: '<path d="M10 6 8.6 7.4 13.2 12l-4.6 4.6L10 18l6-6z"/>',
+  fit: '<path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM4 15h2v3h3v2H4zm14 3v-3h2v5h-5v-2z"/>'
+};
+const simMarkup = title => `
+  <div class="sim-head"><div><div class="k">04 · Simulação</div><h2>${title}</h2></div><div class="scen"></div></div>
+  <div class="ribbon"></div>
+  <div class="sim-main">
+    <div class="canvas">
+      <div class="ftitle"><b class="fcode"></b><span class="fname"></span></div>
+      <div class="svgbox"></div>
+      <div class="banner"><small>Entra no fluxo</small><b class="bcode"></b><span class="bname"></span><p class="bdesc"></p></div>
+      <div class="ctrl">
+        <button data-a="restart" title="Recomeçar (Home)"><svg viewBox="0 0 24 24">${ICO.restart}</svg></button>
+        <button data-a="prev" title="Passo anterior (←)"><svg viewBox="0 0 24 24">${ICO.prev}</svg></button>
+        <button data-a="play" class="play" title="Reproduzir / pausar (P)"><svg viewBox="0 0 24 24" class="playIco">${ICO.play}</svg></button>
+        <button data-a="next" title="Próximo passo (→)"><svg viewBox="0 0 24 24">${ICO.next}</svg></button>
+        <button data-a="fit" title="Ver diagrama inteiro (V)"><svg viewBox="0 0 24 24">${ICO.fit}</svg></button>
+        <button data-a="spd" class="spd" title="Velocidade (S)">1×</button>
+      </div>
+    </div>
+    <aside class="panel">
+      <div class="prog"><span class="pstep"></span><span class="pscen"></span></div>
+      <div class="pbar"><i></i></div>
+      <div class="pbody"></div>
+      <div class="state"></div>
+      <div class="trail"><h4>Trilha percorrida</h4><ol></ol></div>
+    </aside>
+  </div>`;
+
+const fcode = f => f.replace("-1", " · 1/2").replace("-2", " · 2/2");
+
+function makeSim(root, SC) {
   const NS = "http://www.w3.org/2000/svg";
-  const box = $("#svgbox");
-  let sc = SCENARIOS[0], idx = 0, playing = false, timer = null, anim = null, speed = 1, svg = null, flow = null, entered = false;
+  const q = sel => root.querySelector(sel), qa = sel => Array.from(root.querySelectorAll(sel));
+  const box = q(".svgbox");
+  let sc = SC[0], idx = 0, playing = false, timer = null, anim = null, speed = 1, svg = null, flow = null,
+      entered = false, vbNow = null, busy = false, queued = 0;
+  const KIND = { task: "Tarefa humana", sub: "Subprocesso · fluxo paralelo", auto: "Automático · Sistema", gw: "Decisão automática", ev: "Evento", link: "Continuação" };
 
-  $("#scen").innerHTML = SCENARIOS.map(s => `<button data-id="${s.id}">${s.name}</button>`).join("");
-  $$("#scen button").forEach(b => b.addEventListener("click", () => { choose(b.dataset.id); }));
+  q(".scen").innerHTML = SC.map((s, k) => `<button data-id="${s.id}" title="Tecla ${k + 1}">${s.name}</button>`).join("");
+  qa(".scen button").forEach(b => b.addEventListener("click", () => choose(b.dataset.id)));
 
-  function choose(id) { sc = SCENARIOS.find(s => s.id === id); idx = 0; stop(); flow = null; $$("#scen button").forEach(b => b.classList.toggle("on", b.dataset.id === id)); render(true); }
+  function choose(id) {
+    sc = SC.find(s => s.id === id); idx = 0; stop(); flow = null;
+    qa(".scen button").forEach(b => b.classList.toggle("on", b.dataset.id === id));
+    render(true);
+  }
 
-  const node = id => svg.querySelector(`#${CSS.escape(flow + "-" + id)}`);
-  const kindOf = el => el ? el.dataset.k : "ev";
-  const KIND = { task:"Tarefa humana · Secretaria", sub:"Subprocesso", auto:"Automático · Sistema", gw:"Decisão automática", ev:"Evento", link:"Continuação" };
-
+  // ---- diagrama
+  const find = id => svg.querySelector(`#${CSS.escape(flow + "-" + id)}`) || svg.querySelector(`[data-name="${id}"]`);
+  const ov = () => svg.querySelector(".ov");
+  function pathD(go) {
+    if (!go) return null;
+    const arr = typeof go === "string" ? [go] : go;
+    return arr.map((g, k) => { const d = /^M/.test(g) ? g : find(g).getAttribute("d"); return k ? d.replace(/^M/, "L") : d; }).join(" ");
+  }
+  function addPath(d, cls) { const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("class", cls); ov().appendChild(p); return p; }
+  function measure(d) { const p = addPath(d, ""); const b = p.getBBox(), L = p.getTotalLength(), end = p.getPointAtLength(L); p.remove(); return { b, end }; }
+  function load(f) {
+    flow = f; box.innerHTML = FLOWS[f].svg; svg = box.querySelector("svg");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    const g = document.createElementNS(NS, "g"); g.setAttribute("class", "ov"); svg.appendChild(g);
+    q(".fcode").textContent = fcode(f); q(".fname").textContent = FLOWS[f].title;
+  }
   function labelOf(el) {
     if (!el) return "";
     const b = el.getBBox(), out = [];
-    $$("text", svg).forEach(t => {
-      const x = +t.getAttribute("x"), y = +t.getAttribute("y"), c = t.getAttribute("class");
-      if (c === "tt" && x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height) out.push(t.textContent);
+    svg.querySelectorAll("text.tt").forEach(t => {
+      const x = +t.getAttribute("x"), y = +t.getAttribute("y");
+      if (x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height) out.push(t.textContent);
     });
     return out.join(" ").replace(/\s+—\s*/g, " — ");
   }
-  function pathD(step) {
-    if (!step.go) return null;
-    if (typeof step.go === "string") return step.go;
-    return step.go.map((id, k) => { const d = svg.querySelector(`#${CSS.escape(flow + "-" + id)}`).getAttribute("d"); return k ? d.replace(/^M/, "L") : d; }).join(" ");
-  }
 
-  function load(f) {
-    flow = f; box.innerHTML = FLOWS[f].svg; svg = $("svg", box);
-    svg.removeAttribute("width"); svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    const g = document.createElementNS(NS, "g"); g.id = "ov"; svg.appendChild(g);
-    $("#fcode").textContent = f.replace("-1", " · 1/2").replace("-2", " · 2/2"); $("#fname").textContent = FLOWS[f].title;
-  }
-  // viewBox
-  let vbNow = null;
+  // ---- câmera
+  const full = () => FLOWS[flow].vb.slice();
   function setVB(v) { vbNow = v; svg.setAttribute("viewBox", v.join(" ")); }
-  function full() { return FLOWS[flow].vb.slice(); }
   function focusBox(els, extra) {
     let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
     const add = b => { x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.width); y1 = Math.max(y1, b.y + b.height); };
-    els.filter(Boolean).forEach(e => add(e.getBBox())); if (extra) add(extra);
+    els.filter(Boolean).forEach(e => add(e.getBBox())); (extra || []).forEach(add);
     const F = full(), cw = box.clientWidth || 1340, ch = box.clientHeight || 860, ar = cw / ch;
     let w = Math.max(x1 - x0 + 260, 760), h = Math.max(y1 - y0 + 220, 420);
     if (w / h > ar) h = w / ar; else w = h * ar;
     if (w >= F[2] && h >= F[3]) return F;
-    let cx = (x0 + x1) / 2, cy = (y0 + y1) / 2 + 10;
+    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2 + 10;
     let x = Math.max(F[0], Math.min(cx - w / 2, F[0] + F[2] - w)), y = Math.max(F[1], Math.min(cy - h / 2, F[1] + F[3] - h));
     if (w > F[2]) x = F[0] + (F[2] - w) / 2; if (h > F[3]) y = F[1] + (F[3] - h) / 2;
     return [x, y, w, h];
@@ -747,26 +910,57 @@ const Sim = (() => {
     });
   }
 
-  function mark(step, final) {
-    const ov = $("#ov", svg);
-    (step.pass || []).forEach(n => { const e = node(n); e && e.classList.add("vis"); });
-    const d = pathD(step);
-    if (d) { const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("class", "trailp"); ov.appendChild(p); }
-    const e = node(step.at); if (e) e.classList.add(final ? "act" : "vis");
-  }
-  function token(at) {
-    let t = $(".tok", svg);
-    if (!t) { t = document.createElementNS(NS, "g"); t.setAttribute("class", "tok"); t.innerHTML = '<circle class="r" r="10"/><circle class="o" r="10"/>'; $("#ov", svg).appendChild(t); }
-    if (at) t.setAttribute("transform", `translate(${at.x},${at.y})`);
-    return t;
-  }
+  // ---- marcadores
+  function mkTok(cls) { const t = document.createElementNS(NS, "g"); t.setAttribute("class", cls); t.innerHTML = '<circle class="r" r="10"/><circle class="o" r="10"/>'; ov().appendChild(t); return t; }
+  const place = (t, pt) => t.setAttribute("transform", `translate(${pt.x},${pt.y})`);
+  function token(at) { let t = svg.querySelector(".tok"); if (!t) t = mkTok("tok"); else ov().appendChild(t); if (at) place(t, at); return t; }
   function center(el) { const b = el.getBBox(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }
   function rest(el, d) {
-    if (d) { const t = document.createElementNS(NS, "path"); t.setAttribute("d", d); const L = t.getTotalLength(); return t.getPointAtLength(L); }
+    if (d) return measure(d).end;
     const b = el.getBBox(); return el.tagName === "rect" ? { x: b.x, y: b.y + b.height / 2 } : center(el);
   }
+  function mark(step, final) {
+    (step.pass || []).forEach(n => { const e = find(n); e && e.classList.add("vis"); });
+    const d = pathD(step.go); if (d) addPath(d, "trailp");
+    (step.sp || []).forEach(g => { const x = pathD([g]); addPath(x, "trailp par2"); place(mkTok("tok2"), measure(x).end); });
+    [step.at, ...(step.also || [])].forEach(n => { const e = find(n); e && e.classList.add(final ? "act" : "vis"); });
+  }
 
-  // estado do passo i: desenha tudo do trecho do mesmo fluxo até i
+  // ---- estado do processo (etiquetas, movimentos, fluxos)
+  function applyMv(S, m) {
+    const op = m[0], body = m.slice(1), code = body.split(" ")[0], label = body.slice(code.length).trim();
+    const ex = S.mv.find(v => v.c === code);
+    if (op === "!") { if (ex) ex.tmp = false; return; }
+    if (ex) { ex.tmp = op === "~"; return; }
+    S.mv.push({ c: code, l: label, tmp: op === "~" });
+  }
+  function stateAt(i) {
+    const init = sc.init || {}, S = { tg: [...(init.tg || [])], pf: [...(init.pf || [])], mv: [] };
+    (init.mv || []).forEach(m => applyMv(S, m));
+    const set = (arr, o) => o[0] === "+" ? (arr.includes(o.slice(1)) ? arr : [...arr, o.slice(1)]) : arr.filter(x => x !== o.slice(1));
+    for (let k = 0; k <= i; k++) { const st = sc.steps[k];
+      (st.tg || []).forEach(o => S.tg = set(S.tg, o)); (st.pf || []).forEach(o => S.pf = set(S.pf, o)); (st.mv || []).forEach(m => applyMv(S, m)); }
+    return S;
+  }
+  function state() {
+    const S = stateAt(idx), P = idx > 0 ? stateAt(idx - 1) : { tg: [...((sc.init || {}).tg || [])], pf: [...((sc.init || {}).pf || [])], mv: [] };
+    const diff = (a, b) => [...a.map(t => ({ t, c: b.includes(t) ? "" : "new" })), ...b.filter(t => !a.includes(t)).map(t => ({ t, c: "gone" }))];
+    const tgs = diff(S.tg, P.tg), pfs = diff(S.pf, P.pf);
+    const mvs = S.mv.map(m => { const pm = P.mv.find(x => x.c === m.c); return { ...m, n: !pm || pm.tmp !== m.tmp ? "new" : "" }; });
+    let h = "";
+    if (tgs.length) h += `<h5>Etiquetas</h5><div class="row2">${tgs.map(x => `<span class="tag ${x.c}">${x.t}</span>`).join("")}</div>`;
+    if (mvs.length) h += `<h5>Movimentos</h5><div class="row2">${mvs.map(m => `<span class="mv ${m.tmp ? "tmp" : ""} ${m.n}">${m.c}${m.l ? ` <small>${m.l}</small>` : ""}${m.tmp ? " <small>· temporário</small>" : ""}</span>`).join("")}</div>`;
+    if (pfs.length) h += `<h5>O processo está em</h5><div class="pfl">${pfs.map(x => `<span class="pf ${x.c}"><i></i>${x.t}</span>`).join("")}</div>`;
+    const st = q(".state"); st.innerHTML = h; st.classList.toggle("on", !!h);
+  }
+
+  // ---- passo
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  function stopAnim() { if (anim) cancelAnimationFrame(anim); anim = null; }
+  async function banner(f) {
+    q(".bcode").textContent = fcode(f); q(".bname").textContent = FLOWS[f].title; q(".bdesc").textContent = FLOWS[f].desc;
+    const b = q(".banner"); b.classList.add("on"); await wait(1500 / speed); b.classList.remove("on"); await wait(250);
+  }
   async function render(animate) {
     stopAnim();
     const step = sc.steps[idx];
@@ -774,85 +968,80 @@ const Sim = (() => {
     if (changed) {
       if (animate && flow) { box.classList.add("fade"); await wait(350); }
       load(step.f); setVB(full());
-    } else { $$(".act,.vis", svg).forEach(e => e.classList.remove("act", "vis")); $("#ov", svg).innerHTML = ""; }
-    // segmento: do último passo sem "go" (entrada no fluxo) até idx
+    } else { svg.querySelectorAll(".act,.vis").forEach(e => e.classList.remove("act", "vis")); ov().innerHTML = ""; }
     let s0 = idx; while (s0 > 0 && sc.steps[s0].go && sc.steps[s0 - 1].f === step.f) s0--;
     for (let k = s0; k < idx; k++) mark(sc.steps[k], false);
-    const el = node(step.at), prevEl = idx > s0 ? node(sc.steps[idx - 1].at) : null;
-    panel(step, el);
-    ribbon();
+    const el = find(step.at), prevEl = idx > s0 ? find(sc.steps[idx - 1].at) : null;
+    panel(step, el); ribbon(); state();
     if (changed) {
       box.classList.remove("fade");
-      if (animate) { await banner(step.f); }
-      mark(step, true); token(rest(el));
-      setVB(full());
+      if (animate) await banner(step.f);
+      mark(step, true); token(rest(el)); setVB(full());
       return;
     }
-    const d = pathD(step);
-    // câmera enquadra origem, destino e trajeto
-    let pb = null; if (d) { const tmp = document.createElementNS(NS, "path"); tmp.setAttribute("d", d); $("#ov", svg).appendChild(tmp); pb = tmp.getBBox(); tmp.remove(); }
-    const target = focusBox([el, prevEl], pb);
+    const d = pathD(step.go), spD = (step.sp || []).map(g => pathD([g]));
+    const extra = [d, ...spD].filter(Boolean).map(x => measure(x).b);
+    const target = focusBox([el, prevEl, ...(step.also || []).map(find)], extra);
     if (!animate || !d) { mark(step, true); token(rest(el, d)); setVB(target); return; }
     const cam = tweenVB(target, 650);
-    const ov = $("#ov", svg), p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("class", "trailp hot"); ov.appendChild(p);
-    const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
-    const tok = token(); ov.appendChild(tok);
-    (step.pass || []).forEach(n => { const e = node(n); e && e.classList.add("vis"); });
+    (step.pass || []).forEach(n => { const e = find(n); e && e.classList.add("vis"); });
+    const p = addPath(d, "trailp hot"), len = p.getTotalLength();
+    p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+    const sps = spD.map(x => { const sp = addPath(x, "trailp par2"), L = sp.getTotalLength(); sp.style.strokeDasharray = L; sp.style.strokeDashoffset = L; return { sp, L, t2: mkTok("tok2") }; });
+    const tok = token();
+    sps.forEach(o => place(o.t2, o.sp.getPointAtLength(0)));
     await cam;
-    const dur = Math.min(1900, Math.max(550, len * 2.1)) / speed;
-    const t0 = performance.now();
-    await new Promise(res => { (function f(t) { const q = Math.min(1, (t - t0) / dur), e = q < .5 ? 2 * q * q : 1 - Math.pow(-2 * q + 2, 2) / 2;
-      const pt = p.getPointAtLength(len * e); tok.setAttribute("transform", `translate(${pt.x},${pt.y})`); p.style.strokeDashoffset = len * (1 - e);
-      if (q < 1) anim = requestAnimationFrame(f); else res(); })(t0); });
+    const dur = Math.min(1900, Math.max(550, len * 2.1)) / speed, t0 = performance.now();
+    await new Promise(res => { (function f(t) {
+      const k = Math.min(1, (t - t0) / dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      place(tok, p.getPointAtLength(len * e)); p.style.strokeDashoffset = len * (1 - e);
+      sps.forEach(o => { place(o.t2, o.sp.getPointAtLength(o.L * e)); o.sp.style.strokeDashoffset = o.L * (1 - e); });
+      if (k < 1) anim = requestAnimationFrame(f); else res(); })(t0); });
     p.classList.remove("hot"); p.style.strokeDasharray = ""; p.style.strokeDashoffset = "";
+    sps.forEach(o => { o.sp.style.strokeDasharray = ""; o.sp.style.strokeDashoffset = ""; });
     if (prevEl) { prevEl.classList.remove("act"); prevEl.classList.add("vis"); }
-    el.classList.add("act"); const rp = rest(el, d); tok.setAttribute("transform", `translate(${rp.x},${rp.y})`);
+    [step.at, ...(step.also || [])].forEach(n => { const e = find(n); e && e.classList.add("act"); });
+    place(tok, rest(el, d));
   }
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  async function banner(f) {
-    $("#bcode").textContent = f.replace("-1", " · 1/2").replace("-2", " · 2/2"); $("#bname").textContent = FLOWS[f].title; $("#bdesc").textContent = FLOWS[f].desc;
-    const b = $("#banner"); b.classList.add("on"); await wait(1500 / speed); b.classList.remove("on"); await wait(250);
-  }
-  function stopAnim() { if (anim) cancelAnimationFrame(anim); anim = null; }
 
-  function panel(step, el) {
-    const k = kindOf(el);
-    const title = step.t || labelOf(el) || "";
-    let h = `<div class="pin"><span class="kind k-${k}"><i></i>${KIND[k] || ""}</span>
-      <div class="ptitle">${title}</div><div class="pcode">${flow.replace("-1", " 1/2").replace("-2", " 2/2")} · ${FLOWS[flow].title}</div>`;
-    if (step.d) h += `<p class="ptext">${step.d}</p>`;
-    if (step.q) h += `<div class="dec"><div class="q">${step.q}</div><div class="a">✓ ${step.a}</div>${step.alt ? `<div class="alt">${step.alt}</div>` : ""}</div>`;
-    h += "</div>";
-    $("#pbody").innerHTML = h;
-    $("#pstep").textContent = `PASSO ${idx + 1} DE ${sc.steps.length}`;
-    $("#pscen").textContent = sc.sub;
-    $("#pbar").style.width = `${(idx + 1) / sc.steps.length * 100}%`;
-    const items = [];
-    for (let i = Math.max(0, idx - 5); i <= idx; i++) { const s = sc.steps[i]; items.push(`<li><em>${i + 1}</em><span>${trailLabel(s)}</span></li>`); }
-    $("#ptrail").innerHTML = items.join("");
-  }
-  function trailLabel(s) {
-    if (s.t) return s.t;
-    if (s.q) { let q = s.q.replace(/\s*\(.*?\)/g, "").replace(/\?$/, ""); if (q.length > 34) q = q.slice(0, 32) + "…"; return `${q}: <b>${s.a}</b>`; }
-    return shortLabel(s);
-  }
+  // ---- painel
   const DOCS = {};
-  function shortLabel(s) {
+  function srcLabel(s) {
     const doc = DOCS[s.f] || (DOCS[s.f] = new DOMParser().parseFromString(FLOWS[s.f].svg, "image/svg+xml"));
-    const e = doc.getElementById(`${s.f}-${s.at}`); if (!e || e.tagName !== "rect") return s.f;
+    const e = doc.getElementById(`${s.f}-${s.at}`) || doc.querySelector(`[data-name="${s.at}"]`);
+    if (!e || e.tagName !== "rect") return s.f;
     const [x, y, w, h] = ["x", "y", "width", "height"].map(a => +e.getAttribute(a));
     const out = Array.from(doc.querySelectorAll("text.tt")).filter(t => { const tx = +t.getAttribute("x"), ty = +t.getAttribute("y"); return tx >= x && tx <= x + w && ty >= y && ty <= y + h; }).map(t => t.textContent);
     return out.join(" ").replace(/\s+—\s*/g, " — ") || s.f;
   }
-
+  function trailLabel(s) {
+    if (s.t) return s.t;
+    if (s.q) { let t = s.q.replace(/\s*\(.*?\)/g, "").replace(/\?$/, ""); if (t.length > 34) t = t.slice(0, 32) + "…"; return `${t}: <b>${s.a}</b>`; }
+    return srcLabel(s);
+  }
+  function panel(step, el) {
+    const k = el ? el.dataset.k : "ev";
+    let h = `<div class="pin"><span class="kind k-${k}"><i></i>${KIND[k] || ""}</span>
+      <div class="ptitle">${step.t || labelOf(el) || ""}</div><div class="pcode">${fcode(flow)} · ${FLOWS[flow].title}</div>`;
+    if (step.d) h += `<p class="ptext">${step.d}</p>`;
+    if (step.q) h += `<div class="dec"><div class="q">${step.q}</div><div class="a">✓ ${step.a}</div>${step.alt ? `<div class="alt">${step.alt}</div>` : ""}</div>`;
+    q(".pbody").innerHTML = h + "</div>";
+    q(".pstep").textContent = `PASSO ${idx + 1} DE ${sc.steps.length}`;
+    q(".pscen").textContent = sc.sub;
+    q(".pbar i").style.width = `${(idx + 1) / sc.steps.length * 100}%`;
+    const items = [];
+    for (let i = Math.max(0, idx - 3); i <= idx; i++) items.push(`<li><em>${i + 1}</em><span>${trailLabel(sc.steps[i])}</span></li>`);
+    q(".trail ol").innerHTML = items.join("");
+  }
   function ribbon() {
-    const seq = []; sc.steps.forEach((s, i) => { if (!seq.length || seq[seq.length - 1].f !== s.f) seq.push({ f: s.f, i }); });
-    let curSeg = 0; seq.forEach((s, k) => { if (s.i <= idx) curSeg = k; });
-    $("#ribbon").innerHTML = seq.map((s, k) => `${k ? '<span class="ar">›</span>' : ""}<span class="chip ${k < curSeg ? "done" : k === curSeg ? "cur" : ""}">${s.f.replace("-1", " 1/2").replace("-2", " 2/2")}</span>`).join("");
-    const cur = $("#ribbon .chip.cur"); if (cur) { const r = $("#ribbon"); r.scrollLeft = cur.offsetLeft - r.clientWidth / 2; }
+    const seq = []; sc.steps.forEach((s, i) => { if (!seq.length || seq[seq.length - 1].f !== s.f || !s.go) seq.push({ f: s.f, i }); });
+    let cur = 0; seq.forEach((s, k) => { if (s.i <= idx) cur = k; });
+    const r = q(".ribbon");
+    r.innerHTML = seq.map((s, k) => `${k ? '<span class="ar">›</span>' : ""}<span class="chip ${k < cur ? "done" : k === cur ? "cur" : ""}">${fcode(s.f).replace(" · ", " ")}</span>`).join("");
+    const c = r.querySelector(".chip.cur"); if (c) r.scrollLeft = c.offsetLeft - r.clientWidth / 2;
   }
 
-  let busy = false, queued = 0;
+  // ---- controles
   function setBusy(v) { busy = v; box.dataset.busy = v ? "1" : ""; }
   async function next() {
     if (busy) { if (idx + queued < sc.steps.length - 1) { queued++; return true; } return false; }
@@ -862,21 +1051,26 @@ const Sim = (() => {
     return true;
   }
   async function prev() { if (busy) return true; if (idx <= 0) return false; setBusy(true); idx--; await render(false); setBusy(false); return true; }
-  function stop() { queued = 0; playing = false; clearTimeout(timer); $("#playIco").innerHTML = '<path d="M8 5v14l11-7z"/>'; }
+  function stop() { queued = 0; playing = false; clearTimeout(timer); q(".playIco").innerHTML = ICO.play; }
   async function loop() { if (!playing) return; const ok = await next(); if (!ok) { stop(); return; } timer = setTimeout(loop, 1300 / speed); }
-  function play() { if (playing) { stop(); return; } if (idx >= sc.steps.length - 1) { idx = 0; render(false); } playing = true; $("#playIco").innerHTML = '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>'; timer = setTimeout(loop, 400); }
-  function cycleSpeed() { speed = speed === 1 ? 1.6 : speed === 1.6 ? 0.6 : 1; $("#bSpd").textContent = (speed === 1.6 ? "1,6" : speed === 0.6 ? "0,6" : "1") + "×"; }
-  async function overview() { if (!svg) return; const F = full(); const isFull = vbNow && Math.abs(vbNow[2] - F[2]) < 2 && Math.abs(vbNow[3] - F[3]) < 2;
-    await tweenVB(isFull ? focusBox([node(sc.steps[idx].at)]) : F, 700); }
-
-  $("#bNext").onclick = () => { stop(); next(); }; $("#bPrev").onclick = () => { stop(); prev(); };
-  $("#bPlay").onclick = play; $("#bRestart").onclick = () => { stop(); idx = 0; flow = null; render(true); };
-  $("#bFit").onclick = overview; $("#bSpd").onclick = cycleSpeed;
+  function play() {
+    if (playing) { stop(); return; }
+    if (idx >= sc.steps.length - 1) { idx = 0; flow = null; render(false); }
+    playing = true; q(".playIco").innerHTML = ICO.pause; timer = setTimeout(loop, 400);
+  }
+  function cycleSpeed() { speed = speed === 1 ? 1.6 : speed === 1.6 ? 0.6 : 1; q('[data-a="spd"]').textContent = String(speed).replace(".", ",") + "×"; }
+  async function overview() {
+    if (!svg) return; const F = full(), isFull = vbNow && Math.abs(vbNow[2] - F[2]) < 2 && Math.abs(vbNow[3] - F[3]) < 2;
+    await tweenVB(isFull ? focusBox([find(sc.steps[idx].at)]) : F, 700);
+  }
+  function restart() { stop(); idx = 0; flow = null; render(true); }
+  const ACT = { restart, prev: () => { stop(); prev(); }, next: () => { stop(); next(); }, play, fit: overview, spd: cycleSpeed };
+  qa(".ctrl button").forEach(b => b.addEventListener("click", () => ACT[b.dataset.a]()));
 
   return {
-    enter() { if (!entered) { entered = true; choose(SCENARIOS[0].id); } },
+    enter() { if (!entered) { entered = true; choose(SC[0].id); } },
     pause: stop,
-    // teclado no slide do simulador: devolve false quando chega ao fim/início (navegação segue para o slide vizinho)
+    // devolve false no fim/início do cenário: a navegação segue para o slide vizinho
     async key(e) {
       switch (e.key) {
         case "ArrowRight": case "PageDown": case " ": stop(); return await next();
@@ -884,13 +1078,19 @@ const Sim = (() => {
         case "p": case "P": case "Enter": play(); return true;
         case "v": case "V": overview(); return true;
         case "s": case "S": cycleSpeed(); return true;
-        case "Home": stop(); idx = 0; flow = null; render(true); return true;
-        case "1": case "2": case "3": case "4": case "5": choose(SCENARIOS[+e.key - 1].id); return true;
+        case "Home": restart(); return true;
       }
+      if (/^[1-9]$/.test(e.key) && SC[+e.key - 1]) { choose(SC[+e.key - 1].id); return true; }
       return false;
     }
   };
-})();
+}
+
+const SIMS = {};
+$$(".slide.sim").forEach(sl => {
+  sl.insertAdjacentHTML("afterbegin", simMarkup(sl.dataset.title));
+  SIMS[slides.indexOf(sl)] = makeSim(sl, sl.dataset.sim === "acordo" ? SCEN_ACORDO : SCEN_MS);
+});
 
 /* ---------------- teclado ---------------- */
 document.addEventListener("keydown", async e => {
@@ -898,9 +1098,10 @@ document.addEventListener("keydown", async e => {
   if (e.key === "n" || e.key === "N") { $("#notes").classList.toggle("on"); return; }
   if (e.key === "f" || e.key === "F") { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); return; }
   if (e.key === "r" || e.key === "R") { started = Date.now(); return; }
-  if (slides[cur].id === "simSlide") {
+  const sim = SIMS[cur];
+  if (sim) {
     if (["ArrowRight","ArrowLeft","PageDown","PageUp"," ","Home"].includes(e.key)) e.preventDefault();
-    if (await Sim.key(e)) return;
+    if (await sim.key(e)) return;
     if (e.key === "Home") return;
   }
   switch (e.key) {
@@ -911,7 +1112,7 @@ document.addEventListener("keydown", async e => {
 });
 let x0 = null;
 document.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
-document.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 60 && slides[cur].id !== "simSlide") go(cur + (dx < 0 ? 1 : -1)); x0 = null; });
+document.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 60 && !SIMS[cur]) go(cur + (dx < 0 ? 1 : -1)); x0 = null; });
 setInterval(() => { const s = started ? Math.floor((Date.now() - started) / 1000) : 0, el = $("#clock");
   el.textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")} / 15:00`; el.classList.toggle("late", s > 900); }, 1000);
 addEventListener("resize", fit); fit();

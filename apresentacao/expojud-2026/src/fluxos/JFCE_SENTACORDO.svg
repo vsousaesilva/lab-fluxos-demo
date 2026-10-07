@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1900 860" width="1900" height="860" font-family="Segoe UI, Arial, sans-serif">
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">JFCE_SENTACORDO — [JEF] Elaboração de Sentença - proposta acordo</text>
+  <text x="24" y="48" class="note">Movimento 466 nasce temporário na minuta e só vira definitivo depois da assinatura</text>
+  <rect class="lane" x="24" y="70" width="1852" height="180"/>
+  <rect class="lanealt" x="24" y="250" width="1852" height="150"/>
+  <rect class="lane" x="24" y="400" width="1852" height="240"/>
+  <rect class="lanealt" x="24" y="640" width="1852" height="170"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="180"/>
+  <text class="lanelbl" transform="translate(46,200) rotate(-90)">SECRETARIA</text>
+  <rect class="lane" x="24" y="250" width="34" height="150"/>
+  <text class="lanelbl" transform="translate(46,365) rotate(-90)">MAGISTRADO</text>
+  <rect class="lanealt" x="24" y="400" width="34" height="240"/>
+  <text class="lanelbl" transform="translate(46,548) rotate(-90)">SISTEMA</text>
+  <rect class="lane" x="24" y="640" width="34" height="170"/>
+  <text class="lanelbl" transform="translate(46,757) rotate(-90)">DESTINOS</text>
+  <circle class="ev" data-name="INI" cx="105" cy="520" r="16" stroke-width="1.8"/>
+  <text x="105" y="555" class="ts" text-anchor="middle">Início</text>
+  <rect class="auto" data-name="S1" x="150" y="489" width="180" height="62"/>
+  <text x="240" y="517.5" class="tt" text-anchor="middle">Vincular etiqueta</text>
+  <text x="240" y="533.5" class="ts" text-anchor="middle">[A] Homologar acordo</text>
+  <path class="gw" data-name="S2" d="M420,476 L465,520 L420,564 L375,520 z"/>
+  <rect x="374" y="575" width="148.8" height="41" fill="#fff"/>
+  <text x="377" y="585" class="gl" text-anchor="start">Já está</text>
+  <text x="377" y="598" class="gl" text-anchor="start">concluso?</text>
+  <text x="377" y="611" class="ts" text-anchor="start">Conclusão × Magistrado</text>
+  <rect class="auto" data-name="S3" x="500" y="489" width="180" height="62"/>
+  <text x="590" y="517.5" class="tt" text-anchor="middle">Lançar concluso</text>
+  <text x="590" y="533.5" class="ts" text-anchor="middle">para julgamento · mov. 51</text>
+  <rect class="task" data-name="MIN" x="540" y="110" width="270" height="90"/>
+  <text x="675" y="146" class="tt" text-anchor="middle">[JEF] Minutar sentença — Acordo</text>
+  <text x="675" y="162" class="ts" text-anchor="middle">minuta gerada do modelo</text>
+  <text x="675" y="175" class="ts" text-anchor="middle">mov. 466 lançado temporário</text>
+  <rect class="task" data-name="COR" x="900" y="110" width="250" height="80"/>
+  <text x="1025" y="146" class="tt" text-anchor="middle">[JEF] Minutar sentença</text>
+  <text x="1025" y="162" class="tt" text-anchor="middle">de acordo — Corrigir</text>
+  <rect class="auto" data-name="ASS" x="860" y="470" width="200" height="62"/>
+  <text x="960" y="498.5" class="tt" text-anchor="middle">Encaminhar para assinatura</text>
+  <text x="960" y="514.5" class="ts" text-anchor="middle">opção: obrigação de fazer (CEAB)</text>
+  <rect class="task" data-name="MAG" x="900" y="290" width="250" height="80"/>
+  <text x="1025" y="319.5" class="tt" text-anchor="middle">[JEF] Ato do magistrado</text>
+  <text x="1025" y="335.5" class="tt" text-anchor="middle">— Sentença de acordo</text>
+  <text x="1025" y="351.5" class="ts" text-anchor="middle">o juiz assina</text>
+  <rect class="auto" data-name="HOM" x="1220" y="489" width="220" height="62"/>
+  <text x="1330" y="517.5" class="tt" text-anchor="middle">Homologar movimentos</text>
+  <text x="1330" y="533.5" class="ts" text-anchor="middle">temporários · 466 definitivo</text>
+  <rect class="auto" data-name="TRA" x="1480" y="478" width="230" height="84"/>
+  <text x="1595" y="503" class="tt" text-anchor="middle">Certificação do</text>
+  <text x="1595" y="519" class="tt" text-anchor="middle">trânsito em julgado</text>
+  <text x="1595" y="535" class="ts" text-anchor="middle">certidão · movimentos 848 e 581</text>
+  <text x="1595" y="548" class="ts" text-anchor="middle">[A] Acordo homologado</text>
+  <path class="gw" data-name="FORK" d="M1790,476 L1835,520 L1790,564 L1745,520 z"/>
+  <rect x="1715.8" y="436" width="155.2" height="28" fill="#fff"/>
+  <text x="1868" y="446" class="gl" text-anchor="end">Fork</text>
+  <text x="1868" y="459" class="ts" text-anchor="end">dois fluxos em paralelo</text>
+  <rect class="auto" data-name="CUM" x="1440" y="680" width="200" height="62"/>
+  <text x="1540" y="708.5" class="tt" text-anchor="middle">Cumprimento de sentença</text>
+  <text x="1540" y="724.5" class="ts" text-anchor="middle">JEF_CUMPRSENT</text>
+  <rect class="auto" data-name="OBR" x="1670" y="680" width="190" height="62"/>
+  <text x="1765" y="708.5" class="tt" text-anchor="middle">Obrigação de fazer</text>
+  <text x="1765" y="724.5" class="ts" text-anchor="middle">JEF_INTOBRFAZ</text>
+  <circle class="ev" data-name="FIM" cx="1655" cy="785" r="16" stroke-width="3.4"/>
+  <text x="1682" y="789" class="ts">join · Término</text>
+  <path class="flow" data-name="f_ini" d="M121,520 L150,520"/>
+  <path class="flow" data-name="f_s1" d="M330,520 L375,520"/>
+  <path class="flow" data-name="f_s2sim" d="M420,476 L420,155 L540,155"/>
+  <rect x="423" y="289" width="24.8" height="14" fill="#fff"/>
+  <text x="426" y="300" class="el">SIM</text>
+  <path class="flow" data-name="f_s2nao" d="M465,520 L500,520"/>
+  <rect x="467" y="502" width="24.8" height="14" fill="#fff"/>
+  <text x="470" y="513" class="el">NÃO</text>
+  <path class="flow" data-name="f_s3" d="M640,489 L640,200"/>
+  <path class="flow" data-name="f_minass" d="M760,200 L760,501 L860,501"/>
+  <rect x="763" y="429" width="103.2" height="14" fill="#fff"/>
+  <text x="766" y="440" class="el">ato do magistrado</text>
+  <path class="flow" data-name="f_assmag" d="M960,470 L960,370"/>
+  <path class="flow" data-name="f_magcor" d="M1040,290 L1040,190"/>
+  <rect x="1043" y="234" width="52.8" height="14" fill="#fff"/>
+  <text x="1046" y="245" class="el">corrigir</text>
+  <path class="flow" data-name="f_cormin" d="M900,150 L810,150"/>
+  <path class="flow" data-name="f_maghom" d="M1150,330 L1330,330 L1330,489"/>
+  <rect x="1167" y="313" width="52.8" height="14" fill="#fff"/>
+  <text x="1170" y="324" class="el">assinada</text>
+  <path class="flow" data-name="f_minhom" d="M700,200 L700,612 L1290,612 L1290,551"/>
+  <rect x="997" y="595" width="97.6" height="14" fill="#fff"/>
+  <text x="1000" y="606" class="el">homologar direto</text>
+  <path class="flow" data-name="f_homtra" d="M1440,520 L1480,520"/>
+  <path class="flow" data-name="f_trafork" d="M1710,520 L1745,520"/>
+  <path class="flow" data-name="f_forkcum" d="M1790,564 L1790,620 L1540,620 L1540,680"/>
+  <path class="flow" data-name="f_forkobr" d="M1790,564 L1790,620 L1765,620 L1765,680"/>
+  <path class="flow" data-name="f_cumfim" d="M1540,742 L1540,785 L1639,785"/>
+  <path class="flow" data-name="f_obrfim" d="M1765,742 L1765,765 L1655,765 L1655,769"/>
+  <text x="24" y="846" class="note">Fonte: XMLs jPDL de fluxos-pje-ativos-2026-09-26. Os escapes de minuta (urgente, despacho, decisão, cálculo, extinção) foram omitidos para não poluir o desenho.</text>
+</svg>

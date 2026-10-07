@@ -1,6 +1,6 @@
 """Gera a apresentação em um único HTML autônomo (funciona offline).
 
-Uso: python build.py
+Uso: python build.py   (antes, se mudar os diagramas do acordo: python gen_acordo.py)
 Lê template.html, os diagramas em fluxos/*.svg e as logos, e grava
 ../Lab-Fluxos-ExpoJud.html. Os SVGs recebem ids estáveis (n0.. para nós,
 f0.. para transições, na ordem do documento) usados pelos cenários do simulador.
@@ -26,6 +26,10 @@ FLOWS = {
     "MS_CONTRPRAZREC-2": ("Roteamento recursal · 2/2", "Cadeia de decisões quando o prazo se encerra, na ordem de precedência, e os destinos de cada hipótese."),
     "MS_CONTRPRAZCONTREMB": ("Contrarrazões aos embargos", "Identifica o polo que embargou, intima o contrário e o MPF em 5 dias e conclui para julgamento."),
     "CONTRPRAZ": ("Controle de prazo geral · recorte", "Teste de classe na entrada (acrescentado) e na saída (já existia)."),
+    "SJP": ("Sinalizar Juntada de Petição", "Serviço disparado em toda juntada por usuário externo: olha o tipo do documento e avisa quem precisa saber."),
+    "JFCE_FLUXO_ACORDO": ("Fluxo de proposta de acordo", "Etiqueta, decide o primeiro passo, intima e espera a manifestação no anel de controle de prazo."),
+    "JEF_INAUTJUNACORD": ("Intimação da juntada do acordo", "Ramo paralelo: chama o [CP] Intimação automática e trata quem não pôde ser intimado."),
+    "JFCE_SENTACORDO": ("Sentença homologatória de acordo", "Minuta, assinatura, homologação dos movimentos, trânsito em julgado e fork para o cumprimento."),
     "CONTRDEVEXP": ("Devolução de expediente · recorte", "A saída para controle de prazo passou a respeitar a variável indicada pelo fluxo chamador."),
 }
 

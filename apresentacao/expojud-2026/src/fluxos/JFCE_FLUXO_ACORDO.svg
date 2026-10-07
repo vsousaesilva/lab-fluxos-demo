@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1900 880" width="1900" height="880" font-family="Segoe UI, Arial, sans-serif">
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">JFCE_FLUXO_ACORDO — [JFCE] Fluxo de proposta de acordo</text>
+  <text x="24" y="48" class="note">Contorno grosso = fluxo paralelo criado · caixa cinza = automático · caixa branca = tarefa humana · tracejado azul = incluirNovoFluxo</text>
+  <rect class="lane" x="24" y="70" width="1852" height="260"/>
+  <rect class="lanealt" x="24" y="330" width="1852" height="290"/>
+  <rect class="lane" x="24" y="620" width="1852" height="200"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="260"/>
+  <text class="lanelbl" transform="translate(46,240) rotate(-90)">SECRETARIA</text>
+  <rect class="lane" x="24" y="330" width="34" height="290"/>
+  <text class="lanelbl" transform="translate(46,503) rotate(-90)">SISTEMA</text>
+  <rect class="lanealt" x="24" y="620" width="34" height="200"/>
+  <text class="lanelbl" transform="translate(46,752) rotate(-90)">DESTINOS</text>
+  <circle class="ev" data-name="INI" cx="140" cy="470" r="16" stroke-width="1.8"/>
+  <text x="140" y="505" class="ts" text-anchor="middle">Início</text>
+  <rect class="auto" data-name="ET1" x="185" y="439" width="180" height="62"/>
+  <text x="275" y="467.5" class="tt" text-anchor="middle">Vincular etiqueta</text>
+  <text x="275" y="483.5" class="ts" text-anchor="middle">[A] Proposta de acordo</text>
+  <path class="gw" data-name="D1" d="M455,426 L500,470 L455,514 L410,470 z"/>
+  <rect x="297.6" y="525" width="110.4" height="41" fill="#fff"/>
+  <text x="405" y="535" class="gl" text-anchor="end">Está concluso</text>
+  <text x="405" y="548" class="gl" text-anchor="end">para julgamento?</text>
+  <text x="405" y="561" class="ts" text-anchor="end">movimento CNJ 51</text>
+  <rect class="auto" data-name="N1" x="550" y="350" width="200" height="76"/>
+  <text x="650" y="379" class="tt" text-anchor="middle">Gerar despacho de vista</text>
+  <text x="650" y="395" class="ts" text-anchor="middle">mov. 11022 temporário</text>
+  <text x="650" y="408" class="ts" text-anchor="middle">junta e manda intimar</text>
+  <rect class="auto" data-name="N2" x="550" y="510" width="200" height="76"/>
+  <text x="650" y="537.5" class="tt" text-anchor="middle">Intimar polo ativo</text>
+  <text x="650" y="553.5" class="tt" text-anchor="middle">via DJEN</text>
+  <text x="650" y="569.5" class="ts" text-anchor="middle">e encerra as tarefas abertas</text>
+  <rect class="task" data-name="ESP" x="800" y="106" width="250" height="90"/>
+  <text x="925" y="140.5" class="tt" text-anchor="middle">[JFCE] Controle de prazo</text>
+  <text x="925" y="156.5" class="tt" text-anchor="middle">— proposta de acordo</text>
+  <text x="925" y="172.5" class="ts" text-anchor="middle">espera: petição · prazo · expediente</text>
+  <path class="gw" data-name="D2" d="M925,426 L970,470 L925,514 L880,470 z"/>
+  <rect x="972" y="502" width="78.4" height="28" fill="#fff"/>
+  <text x="975" y="512" class="gl" text-anchor="start">Acordou por</text>
+  <text x="975" y="525" class="gl" text-anchor="start">petição?</text>
+  <path class="gw" data-name="D3" d="M1110,426 L1155,470 L1110,514 L1065,470 z"/>
+  <rect x="1062" y="525" width="84.8" height="28" fill="#fff"/>
+  <text x="1065" y="535" class="gl" text-anchor="start">A petição é</text>
+  <text x="1065" y="548" class="gl" text-anchor="start">do tipo 190?</text>
+  <rect class="task" data-name="TC" x="1290" y="100" width="240" height="70"/>
+  <text x="1410" y="131" class="tt" text-anchor="middle">[JFCE] Expediente de acordo</text>
+  <text x="1410" y="147" class="tt" text-anchor="middle">— com manifestação</text>
+  <rect class="task" data-name="TS" x="1290" y="220" width="240" height="70"/>
+  <text x="1410" y="251" class="tt" text-anchor="middle">[JFCE] Expediente de acordo</text>
+  <text x="1410" y="267" class="tt" text-anchor="middle">— sem manifestação</text>
+  <rect class="task" data-name="PAC" x="1620" y="160" width="220" height="70"/>
+  <text x="1730" y="184.5" class="tt" text-anchor="middle">[JEF] Comunicação</text>
+  <text x="1730" y="200.5" class="tt" text-anchor="middle">acordo — elaborar</text>
+  <text x="1730" y="216.5" class="ts" text-anchor="middle">PAC completo</text>
+  <rect class="auto" data-name="N3" x="1620" y="500" width="200" height="72"/>
+  <text x="1720" y="533.5" class="tt" text-anchor="middle">Intimar polo passivo</text>
+  <text x="1720" y="549.5" class="ts" text-anchor="middle">incluirNovoFluxo da intimação</text>
+  <rect class="task" data-name="DESV" x="110" y="96" width="240" height="84"/>
+  <text x="230" y="129" class="tt" text-anchor="middle">[JFCE] Proposta de acordo</text>
+  <text x="230" y="145" class="ts" text-anchor="middle">só pela tarefa de desvio</text>
+  <text x="230" y="158" class="ts" text-anchor="middle">“Cuidado ao movimentar…”</text>
+  <path class="gw" data-name="D4" d="M230,211 L275,255 L230,299 L185,255 z"/>
+  <rect x="279" y="240" width="97.6" height="28" fill="#fff"/>
+  <text x="282" y="250" class="gl" text-anchor="start">Há outro fluxo</text>
+  <text x="282" y="263" class="gl" text-anchor="start">aberto?</text>
+  <circle class="ev" data-name="FIM" cx="200" cy="715" r="16" stroke-width="3.4"/>
+  <text x="200" y="750" class="ts" text-anchor="middle">Término</text>
+  <rect class="auto" data-name="ANS" x="300" y="680" width="190" height="62"/>
+  <text x="395" y="708.5" class="tt" text-anchor="middle">Análise da secretaria</text>
+  <text x="395" y="724.5" class="ts" text-anchor="middle">JEF_ANSECR</text>
+  <rect class="sub" data-name="INT" x="550" y="680" width="220" height="72"/>
+  <text x="660" y="707" class="tt" text-anchor="middle">Intimação da juntada</text>
+  <text x="660" y="723" class="ts" text-anchor="middle">JEF_INAUTJUNACORD</text>
+  <text x="660" y="736" class="ts" text-anchor="middle">fluxo paralelo</text>
+  <rect class="auto" data-name="SENT" x="1290" y="670" width="240" height="72"/>
+  <text x="1410" y="697" class="tt" text-anchor="middle">Sentença homologatória</text>
+  <text x="1410" y="713" class="ts" text-anchor="middle">JFCE_SENTACORDO</text>
+  <text x="1410" y="726" class="ts" text-anchor="middle">incluirNovoFluxo · Término</text>
+  <path class="flow" data-name="f_ini" d="M156,470 L185,470"/>
+  <path class="flow" data-name="f_et" d="M365,470 L410,470"/>
+  <path class="flow" data-name="f_d1sim" d="M455,426 L455,388 L550,388"/>
+  <rect x="458" y="394" width="24.8" height="14" fill="#fff"/>
+  <text x="461" y="405" class="el">SIM</text>
+  <path class="flow" data-name="f_d1nao" d="M455,514 L455,520 L500,520 L500,548 L550,548"/>
+  <rect x="503" y="527" width="24.8" height="14" fill="#fff"/>
+  <text x="506" y="538" class="el">NÃO</text>
+  <path class="flow" data-name="f_n1esp" d="M750,388 L780,388 L780,165 L800,165"/>
+  <path class="flow" data-name="f_n2esp" d="M750,548 L790,548 L790,180 L800,180"/>
+  <path class="flow" data-name="f_espd2" d="M925,196 L925,426"/>
+  <rect x="928" y="289" width="47.2" height="14" fill="#fff"/>
+  <text x="931" y="300" class="el">acordou</text>
+  <path class="flow" data-name="f_d2sim" d="M970,470 L1065,470"/>
+  <rect x="987" y="452" width="24.8" height="14" fill="#fff"/>
+  <text x="990" y="463" class="el">SIM</text>
+  <path class="flow" data-name="f_d2nao" d="M925,514 L925,560 L960,560 L960,598 L1250,598 L1250,255 L1290,255"/>
+  <rect x="987" y="580" width="192.8" height="14" fill="#fff"/>
+  <text x="990" y="591" class="el">NÃO · prazo ou expediente fechado</text>
+  <path class="flow" data-name="f_d3nao" d="M1110,426 L1110,135 L1290,135"/>
+  <rect x="1113" y="289" width="114.4" height="14" fill="#fff"/>
+  <text x="1116" y="300" class="el">NÃO · outra petição</text>
+  <path class="flow" data-name="f_d3sim" d="M1155,470 L1200,470 L1200,706 L1290,706"/>
+  <rect x="1203" y="629" width="75.2" height="14" fill="#fff"/>
+  <text x="1206" y="640" class="el">SIM · atalho</text>
+  <path class="bus" data-name="bus" d="M1530,135 L1570,135 M1530,255 L1570,255 M1570,135 L1570,640"/>
+  <rect x="1573" y="409" width="80.8" height="14" fill="#fff"/>
+  <text x="1576" y="420" class="el">saídas comuns</text>
+  <path class="flow" data-name="f_bussent" d="M1570,640 L1570,706 L1530,706"/>
+  <rect x="1573" y="649" width="86.4" height="14" fill="#fff"/>
+  <text x="1576" y="660" class="el">gerar sentença</text>
+  <path class="flow" data-name="f_buspac" d="M1570,195 L1620,195"/>
+  <path class="flow" data-name="f_busn3" d="M1570,536 L1620,536"/>
+  <path class="flow" data-name="f_tcn2" d="M1410,100 L1410,78 L765,78 L765,525 L750,525"/>
+  <rect x="1097" y="63" width="136.8" height="14" fill="#fff"/>
+  <text x="1100" y="74" class="el">intimar parte contrária</text>
+  <path class="flow" data-name="f_pacesp" d="M1730,160 L1730,92 L1000,92 L1000,106"/>
+  <rect x="1597" y="77" width="86.4" height="14" fill="#fff"/>
+  <text x="1600" y="88" class="el">volta à espera</text>
+  <path class="flow" data-name="f_n3esp" d="M1680,500 L1680,312 L1010,312 L1010,196"/>
+  <rect x="1397" y="297" width="86.4" height="14" fill="#fff"/>
+  <text x="1400" y="308" class="el">volta à espera</text>
+  <path class="flow" data-name="f_espdesv" d="M800,128 L350,128"/>
+  <rect x="557" y="111" width="75.2" height="14" fill="#fff"/>
+  <text x="560" y="122" class="el">nó de desvio</text>
+  <path class="flow" data-name="f_desvd4" d="M230,180 L230,211"/>
+  <rect x="233" y="189" width="142.4" height="14" fill="#fff"/>
+  <text x="236" y="200" class="el">encerrar fluxo de acordo</text>
+  <path class="flow" data-name="f_d4sim" d="M185,255 L90,255 L90,715 L184,715"/>
+  <rect x="93" y="289" width="24.8" height="14" fill="#fff"/>
+  <text x="96" y="300" class="el">SIM</text>
+  <path class="flow" data-name="f_d4nao" d="M230,299 L230,318 L387,318 L387,680"/>
+  <rect x="390" y="341" width="153.6" height="14" fill="#fff"/>
+  <text x="393" y="352" class="el">NÃO · evita processo órfão</text>
+  <path class="flow" data-name="f_espans" d="M820,196 L820,620 L470,620 L470,680"/>
+  <rect x="677" y="603" width="125.6" height="14" fill="#fff"/>
+  <text x="680" y="614" class="el">análise de secretaria</text>
+  <path class="par" data-name="p_n2" d="M650,586 L650,680"/>
+  <rect x="653" y="639" width="108.8" height="14" fill="#fff"/>
+  <text x="656" y="650" class="el">cria ramo paralelo</text>
+  <path class="par" data-name="p_n1" d="M550,410 L520,410 L520,660 L600,660 L600,680"/>
+  <path class="par" data-name="p_n3" d="M1720,572 L1720,650 L760,650 L760,680"/>
+  <rect x="1297" y="635" width="108.8" height="14" fill="#fff"/>
+  <text x="1300" y="646" class="el">cria ramo paralelo</text>
+  <text x="24" y="866" class="note">Fonte: XMLs jPDL de fluxos-pje-ativos-2026-09-26. As saídas com e sem manifestação diferem só na intimação: parte contrária (com) ou polo passivo (sem).</text>
+</svg>
