@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 700" width="1700" height="700" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <style>
+      .lane{fill:#fcfcfc;stroke:#9a9a9a;stroke-width:1}.lanealt{fill:#f3f3f3;stroke:#9a9a9a;stroke-width:1}
+      .lanelbl{font-size:12px;font-weight:600;fill:#333;letter-spacing:.1em}
+      .task{fill:#fff;stroke:#333;stroke-width:1.6;rx:8}.sub{fill:#fff;stroke:#333;stroke-width:3;rx:8}
+      .auto{fill:#ededed;stroke:#555;stroke-width:1.2;rx:8}
+      .gw{fill:#fff;stroke:#333;stroke-width:1.6}.ev{fill:#fff;stroke:#333}
+      .link{fill:#fff;stroke:#333;stroke-width:1.6;stroke-dasharray:5 3;rx:8}
+      .tt{font-size:12px;fill:#111;font-weight:600}.ts{font-size:9.5px;fill:#555}
+      .gl{font-size:10.5px;fill:#111;font-weight:600}.el{font-size:10px;fill:#333}
+      .flow{stroke:#333;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .note{font-size:10px;fill:#666;font-style:italic}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1700" height="700" fill="#fff"/>
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">ELSENT — recorte alterado para o Mandado de Segurança</text>
+  <text x="24" y="48" class="note">Do ato assinado até o desvio por classe · as tarefas de minutar, revisar e assinar não são mostradas</text>
+
+  <rect class="lane" x="24" y="70" width="1652" height="180"/>
+  <rect class="lanealt" x="24" y="250" width="1652" height="240"/>
+  <rect class="lane" x="24" y="490" width="1652" height="150"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="180"/><rect class="lane" x="24" y="250" width="34" height="240"/><rect class="lanealt" x="24" y="490" width="34" height="150"/>
+  <text class="lanelbl" transform="translate(46,205) rotate(-90)">SECRETARIA</text>
+  <text class="lanelbl" transform="translate(46,405) rotate(-90)">SISTEMA</text>
+  <text class="lanelbl" transform="translate(46,595) rotate(-90)">DESTINOS</text>
+
+  <!-- SECRETARIA -->
+  <rect class="task" x="470" y="105" width="200" height="70"/>
+  <text x="570" y="131" class="tt" text-anchor="middle">Elaboração de sentença</text>
+  <text x="570" y="147" class="tt" text-anchor="middle">— Intimar</text>
+  <text x="570" y="164" class="ts" text-anchor="middle">parte sem procuradoria vinculada</text>
+
+  <rect class="sub" x="800" y="105" width="200" height="70"/>
+  <text x="900" y="133" class="tt" text-anchor="middle">Análise de comunicação</text>
+  <text x="900" y="150" class="ts" text-anchor="middle">subprocesso ANCOM</text>
+  <text x="900" y="164" class="ts" text-anchor="middle">despacha e devolve</text>
+
+  <rect class="sub" x="1090" y="105" width="200" height="70"/>
+  <text x="1190" y="133" class="tt" text-anchor="middle">Controle de devolução</text>
+  <text x="1190" y="150" class="ts" text-anchor="middle">subprocesso CONTRDEVEXP</text>
+  <text x="1190" y="164" class="ts" text-anchor="middle">devolve ao fluxo</text>
+
+  <!-- SISTEMA -->
+  <rect class="auto" x="90" y="334" width="185" height="62"/>
+  <text x="182" y="357" class="tt" text-anchor="middle">Intimar todas as partes</text>
+  <text x="182" y="373" class="ts" text-anchor="middle">CP_INTAUT · 15 dias, em dobro</text>
+  <text x="182" y="386" class="ts" text-anchor="middle">polos A e P · MPF intimado</text>
+
+  <path class="gw" d="M360,321 L405,365 L360,409 L315,365 z"/>
+  <rect x="300" y="424" width="126" height="26" fill="#fff"/>
+  <text x="303" y="434" class="gl">Pendência</text>
+  <text x="303" y="447" class="gl">de intimação?</text>
+
+  <path class="gw" d="M990,251 L1035,295 L990,339 L945,295 z"/>
+  <rect x="1042" y="278" width="152" height="26" fill="#fff"/>
+  <text x="1045" y="288" class="gl">Expediente físico</text>
+  <text x="1045" y="301" class="gl">a devolver?</text>
+
+  <path class="gw" d="M1420,321 L1465,365 L1420,409 L1375,365 z"/>
+  <rect x="1300" y="424" width="146" height="26" fill="#fff"/>
+  <text x="1426" y="434" class="gl" text-anchor="end">É Mandado</text>
+  <text x="1426" y="447" class="gl" text-anchor="end">de segurança?</text>
+  <text x="1426" y="462" class="ts" text-anchor="end">classes 119 e 120</text>
+
+  <!-- DESTINOS -->
+  <rect class="auto" x="1080" y="535" width="230" height="62"/>
+  <text x="1195" y="560" class="tt" text-anchor="middle">Controle de prazo recursal</text>
+  <text x="1195" y="576" class="ts" text-anchor="middle">MS_CONTRPRAZREC</text>
+  <text x="1195" y="589" class="ts" text-anchor="middle">classes 119 e 120</text>
+
+  <rect class="auto" x="1370" y="535" width="200" height="62"/>
+  <text x="1470" y="560" class="tt" text-anchor="middle">Controle de prazo geral</text>
+  <text x="1470" y="576" class="ts" text-anchor="middle">CONTRPRAZ</text>
+  <text x="1470" y="589" class="ts" text-anchor="middle">demais classes</text>
+
+  <rect class="auto" x="470" y="535" width="200" height="62"/>
+  <text x="570" y="566" class="tt" text-anchor="middle">Análise de comunicação</text>
+  <text x="570" y="582" class="ts" text-anchor="middle">ANCOM · saída manual</text>
+
+  <rect class="auto" x="720" y="535" width="200" height="62"/>
+  <text x="820" y="566" class="tt" text-anchor="middle">Análise de secretaria</text>
+  <text x="820" y="582" class="ts" text-anchor="middle">ANSEC · saída manual</text>
+
+  <!-- FLUXOS -->
+  <rect class="link" x="90" y="105" width="185" height="70"/>
+  <text x="182" y="133" class="tt" text-anchor="middle">Sentença assinada</text>
+  <text x="182" y="150" class="ts" text-anchor="middle">documento tipo 550</text>
+  <text x="182" y="164" class="ts" text-anchor="middle">tarefas anteriores omitidas</text>
+  <path class="flow" d="M182,175 L182,334"/>
+
+  <path class="flow" d="M275,365 L315,365"/>
+
+  <path class="flow" d="M360,321 L360,140 L470,140"/>
+  <rect x="366" y="238" width="90" height="14" fill="#fff"/>
+  <text x="369" y="249" class="el">há pendência</text>
+
+  <path class="flow" d="M405,365 L1375,365"/>
+  <rect x="600" y="348" width="118" height="14" fill="#fff"/>
+  <text x="603" y="359" class="el">sem pendência</text>
+
+  <path class="flow" d="M670,140 L800,140"/>
+  <rect x="686" y="121" width="116" height="14" fill="#fff"/>
+  <text x="689" y="132" class="el">finalizar pelo miniPAC</text>
+
+  <path class="flow" d="M900,175 L900,225 L990,225 L990,251"/>
+  <path class="flow" d="M1035,295 L1190,295 L1190,175"/>
+  <rect x="1068" y="278" width="26" height="14" fill="#fff"/>
+  <text x="1071" y="289" class="el">SIM</text>
+
+  <path class="flow" d="M1290,140 L1340,140 L1340,321"/>
+  <rect x="1252" y="121" width="60" height="14" fill="#fff"/>
+  <text x="1255" y="132" class="el">devolvido</text>
+
+  <path class="flow" d="M990,339 L990,460 L1400,460 L1400,409 L1400,409"/>
+  <rect x="1060" y="444" width="152" height="14" fill="#fff"/>
+  <text x="1063" y="455" class="el">NÃO · sem expediente físico</text>
+
+  <path class="flow" d="M1420,409 L1420,500 L1195,500 L1195,535"/>
+  <rect x="1230" y="484" width="30" height="14" fill="#fff"/>
+  <text x="1233" y="495" class="el">SIM</text>
+
+  <path class="flow" d="M1465,365 L1520,365 L1520,510 L1470,510 L1470,535"/>
+  <rect x="1476" y="494" width="34" height="14" fill="#fff"/>
+  <text x="1479" y="505" class="el">NÃO</text>
+
+  <path class="flow" d="M520,175 L520,520 L570,520 L570,535"/>
+  <path class="flow" d="M620,175 L620,510 L820,510 L820,535"/>
+  <rect x="700" y="494" width="118" height="14" fill="#fff"/>
+  <text x="703" y="505" class="el">analisar — secretaria</text>
+
+  <text x="24" y="676" class="note">Fonte: ELSENT.xml · revisão de 10/09/2026. O teste de classe usa recuperaProcesso(), e não processoTrfHome, porque o decision também é alcançado a partir da finalização do miniPAC.</text>
+</svg>

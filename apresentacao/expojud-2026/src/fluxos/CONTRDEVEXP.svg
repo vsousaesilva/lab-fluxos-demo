@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 580" width="1400" height="580" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <style>
+      .lane{fill:#fcfcfc;stroke:#9a9a9a;stroke-width:1}.lanealt{fill:#f3f3f3;stroke:#9a9a9a;stroke-width:1}
+      .lanelbl{font-size:12px;font-weight:600;fill:#333;letter-spacing:.1em}
+      .task{fill:#fff;stroke:#333;stroke-width:1.6;rx:8}.auto{fill:#ededed;stroke:#555;stroke-width:1.2;rx:8}
+      .gw{fill:#fff;stroke:#333;stroke-width:1.6}.ev{fill:#fff;stroke:#333}
+      .link{fill:#fff;stroke:#333;stroke-width:1.6;stroke-dasharray:5 3;rx:8}
+      .tt{font-size:12px;fill:#111;font-weight:600}.ts{font-size:9.5px;fill:#555}
+      .gl{font-size:10.5px;fill:#111;font-weight:600}.el{font-size:10px;fill:#333}
+      .flow{stroke:#333;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .note{font-size:10px;fill:#666;font-style:italic}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1400" height="580" fill="#fff"/>
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">CONTRDEVEXP — recorte alterado para o Mandado de Segurança</text>
+  <text x="24" y="48" class="note">Única alteração: a saída para controle de prazo passou a respeitar a variável fluxo:saida gravada pelo chamador</text>
+
+  <rect class="lane" x="24" y="70" width="1352" height="150"/>
+  <rect class="lanealt" x="24" y="220" width="1352" height="180"/>
+  <rect class="lane" x="24" y="400" width="1352" height="130"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="150"/><rect class="lane" x="24" y="220" width="34" height="180"/><rect class="lanealt" x="24" y="400" width="34" height="130"/>
+  <text class="lanelbl" transform="translate(46,190) rotate(-90)">SECRETARIA</text>
+  <text class="lanelbl" transform="translate(46,340) rotate(-90)">SISTEMA</text>
+  <text class="lanelbl" transform="translate(46,490) rotate(-90)">DESTINOS</text>
+
+  <!-- SECRETARIA -->
+  <rect class="task" x="180" y="100" width="220" height="76"/>
+  <text x="290" y="126" class="tt" text-anchor="middle">Expediente físico</text>
+  <text x="290" y="142" class="tt" text-anchor="middle">— Informar prazo</text>
+  <text x="290" y="159" class="ts" text-anchor="middle">prazo para devolução do expediente</text>
+
+  <rect class="task" x="470" y="100" width="200" height="76"/>
+  <text x="570" y="126" class="tt" text-anchor="middle">Expediente físico</text>
+  <text x="570" y="142" class="tt" text-anchor="middle">— Aguardar</text>
+  <text x="570" y="159" class="ts" text-anchor="middle">aguarda a devolução</text>
+
+  <rect class="link" x="740" y="100" width="220" height="76"/>
+  <text x="850" y="130" class="tt" text-anchor="middle">Demais tarefas</text>
+  <text x="850" y="147" class="ts" text-anchor="middle">não cumpridos · não devolvidos</text>
+  <text x="850" y="161" class="ts" text-anchor="middle">inalteradas</text>
+
+  <!-- SISTEMA -->
+  <path class="gw" d="M700,266 L745,310 L700,354 L655,310 z"/>
+  <rect x="752" y="296" width="200" height="26" fill="#fff"/>
+  <text x="755" y="306" class="gl">O chamador indicou saída?</text>
+  <text x="755" y="319" class="ts">variável fluxo:saida · acrescentado</text>
+
+  <!-- DESTINOS -->
+  <rect class="auto" x="300" y="445" width="230" height="62"/>
+  <text x="415" y="470" class="tt" text-anchor="middle">Controle de prazo geral</text>
+  <text x="415" y="486" class="ts" text-anchor="middle">CONTRPRAZ</text>
+  <text x="415" y="499" class="ts" text-anchor="middle">comportamento padrão</text>
+
+  <rect class="auto" x="900" y="445" width="260" height="62"/>
+  <text x="1030" y="470" class="tt" text-anchor="middle">Devolve ao fluxo chamador</text>
+  <text x="1030" y="486" class="ts" text-anchor="middle">Término · quem chamou retoma</text>
+  <text x="1030" y="499" class="ts" text-anchor="middle">fluxos de MS e ELSENT</text>
+
+  <!-- FLUXOS -->
+  <path class="flow" d="M400,138 L470,138"/>
+  <rect x="404" y="119" width="60" height="14" fill="#fff"/>
+  <text x="407" y="130" class="el">aguardar</text>
+
+  <path class="flow" d="M290,176 L290,240 L700,240 L700,266"/>
+  <rect x="420" y="224" width="118" height="14" fill="#fff"/>
+  <text x="423" y="235" class="el">controlar prazo</text>
+
+  <path class="flow" d="M570,176 L570,220 L640,220 L640,250 L680,250 L680,270"/>
+
+  <path class="flow" d="M700,354 L700,420 L415,420 L415,445"/>
+  <rect x="480" y="404" width="152" height="14" fill="#fff"/>
+  <text x="483" y="415" class="el">NÃO · segue ao CONTRPRAZ</text>
+
+  <path class="flow" d="M745,310 L1030,310 L1030,445"/>
+  <rect x="800" y="293" width="184" height="14" fill="#fff"/>
+  <text x="803" y="304" class="el">SIM · sai pela transição indicada</text>
+
+  <text x="24" y="556" class="note">Fonte: CONTRDEVEXP.xml · revisão de 10/09/2026. As saídas para ANSEC e ELCOM continuam fixas e não foram alteradas — processo de MS que sair por elas deixa o trilho, e é recuperado pelo teste de classe na entrada do CONTRPRAZ.</text>
+</svg>

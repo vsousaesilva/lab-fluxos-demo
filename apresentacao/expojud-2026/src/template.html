@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratório de Fluxos · ExpoJud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#00699F; --navy:#0B2A45; --sky:#2BB5E0; --orange:#F59C2C; --red:#E8512C; --green:#1E9E6A;
+  --ink:#13212E; --muted:#5B6B7A; --paper:#FFFFFF; --soft:#EEF5FA; --line:#DCE6EE;
+  --grad:linear-gradient(90deg,var(--blue),var(--sky));
+  --warm:linear-gradient(90deg,var(--red),var(--orange));
+  --ease:cubic-bezier(.22,.8,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#08131d;overflow:hidden}
+body{font-family:"Montserrat","Segoe UI",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+#stage{position:absolute;width:1920px;height:1080px;left:50%;top:50%;transform-origin:center}
+.slide{position:absolute;inset:0;background:var(--paper);padding:96px 130px 120px;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s;overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transition:opacity .5s var(--ease),visibility 0s}
+/* entrada em cascata */
+.slide [data-in]{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.slide.active [data-in]{opacity:1;transform:none}
+.slide.active [data-in="1"]{transition-delay:.08s}.slide.active [data-in="2"]{transition-delay:.18s}
+.slide.active [data-in="3"]{transition-delay:.28s}.slide.active [data-in="4"]{transition-delay:.38s}
+.slide.active [data-in="5"]{transition-delay:.48s}.slide.active [data-in="6"]{transition-delay:.58s}
+.slide.active [data-in="7"]{transition-delay:.68s}
+
+.foot{position:absolute;left:130px;right:130px;bottom:40px;display:flex;align-items:center;justify-content:space-between;font-size:19px;color:var(--muted);font-weight:500}
+.foot img{height:44px}
+.dark .foot{color:#8FB0C8}
+.kicker{font-size:22px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:18px}
+h1{font-size:92px;line-height:1.03;font-weight:900;color:var(--navy);letter-spacing:-.02em}
+h2{font-size:62px;line-height:1.1;font-weight:800;color:var(--navy);letter-spacing:-.015em;margin-bottom:46px}
+h2 em,h1 em{font-style:normal;color:var(--blue)}
+h3{font-size:32px;font-weight:700;color:var(--navy)}
+p,li{font-size:30px;line-height:1.45}
+.muted{color:var(--muted)}
+
+/* ===== capa ===== */
+.cover{padding-top:80px}
+.cover .top{display:flex;justify-content:space-between;align-items:flex-start}
+.cover .top img{height:118px}
+.cover .event{text-align:right;font-size:26px;font-weight:600;color:var(--navy);line-height:1.55}
+.cover .event b{color:var(--orange)}
+.cover .title{margin-top:100px;max-width:1040px}
+.cover h1{font-size:74px}
+.cover h1 span{background:var(--warm);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .speaker{margin-top:56px;display:flex;gap:26px;align-items:center}
+.cover .speaker i{width:22px;height:22px;border-radius:50%;background:var(--orange);flex:none}
+.cover .speaker b{font-size:36px;color:var(--navy);display:block}
+.cover .speaker span{font-size:22px;color:var(--muted);font-weight:500;display:block;margin-top:6px;line-height:1.45}
+.orbit{position:absolute;right:90px;top:270px;width:580px;height:580px}
+.orbit .disc{position:absolute;inset:0;border-radius:50%;background:var(--soft)}
+.orbit img{position:absolute;left:50%;top:50%;width:370px;transform:translate(-50%,-50%)}
+.orbit .dot{position:absolute;border-radius:50%;animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px)}}
+
+/* ===== roteiro ===== */
+.agenda{display:grid;grid-template-columns:repeat(4,1fr);gap:34px;margin-top:20px}
+.agenda .step{background:var(--soft);border-radius:30px;padding:44px 40px;min-height:470px;display:flex;flex-direction:column}
+.agenda .num{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:34px}
+.agenda h3{margin-top:40px;font-size:38px}
+.agenda p{font-size:25px;color:var(--muted);margin-top:14px;flex:1}
+.agenda .t{font-size:22px;font-weight:800;margin-top:20px}
+
+/* ===== ideia ===== */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.quote{background:var(--soft);border-radius:32px;padding:60px 64px;position:relative}
+.quote::before{content:"“";position:absolute;left:52px;top:-6px;font-size:190px;font-weight:900;color:var(--orange);line-height:1}
+.quote p{font-size:38px;line-height:1.38;font-weight:700;color:var(--navy);margin-top:70px}
+.rows{display:flex;flex-direction:column;gap:42px;padding-top:20px}
+.row{display:flex;gap:30px;align-items:flex-start}
+.ico{flex:none;width:86px;height:86px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.ico svg{width:40px;height:40px}
+.row b{display:block;font-size:30px;color:var(--navy)}
+.row span{display:block;font-size:24px;color:var(--muted);margin-top:6px;line-height:1.45}
+
+/* ===== linha do tempo ===== */
+.tl{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:26px;margin-top:60px}
+.tl::before{content:"";position:absolute;left:44px;right:180px;top:42px;height:6px;border-radius:3px;background:var(--line)}
+.tl .bar{position:absolute;left:44px;top:42px;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--sky),var(--orange),var(--red));width:0;transition:width 2.2s var(--ease) .3s}
+.slide.active .tl .bar{width:calc(100% - 224px)}
+.ev{position:relative}
+.ev .c{width:90px;height:90px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:32px;font-weight:900;position:relative;z-index:1;box-shadow:0 0 0 10px #fff}
+.ev h3{font-size:28px;margin-top:34px;line-height:1.2}
+.ev p{font-size:22px;color:var(--muted);margin-top:12px;line-height:1.45}
+.ev.now h3{color:var(--red)}
+
+/* ===== JCP ===== */
+.jcp{display:grid;grid-template-columns:680px 1fr;gap:90px;align-items:center;flex:1}
+.jcp img{width:640px}
+
+/* ===== equipe ===== */
+.team{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.team h3{font-size:28px;color:var(--blue);margin-bottom:24px}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.person{display:flex;gap:22px;align-items:center;background:var(--soft);border-radius:22px;padding:24px 26px}
+.person .av{flex:none;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px}
+.person b{font-size:25px;color:var(--navy)}
+.dev{background:var(--navy);border-radius:30px;padding:46px 50px;color:#fff;display:flex;gap:32px;align-items:center;min-height:262px}
+.dev p{font-size:32px;font-weight:700;line-height:1.35}
+.support{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.support div{border:2px solid var(--line);border-radius:22px;padding:24px 28px}
+.support b{display:block;font-size:24px;color:var(--navy)}
+.support span{display:block;font-size:20px;color:var(--muted);margin-top:6px;line-height:1.4}
+
+/* ===== método ===== */
+.pipe{display:flex;margin-top:10px}
+.pipe .st{flex:1;height:120px;margin-right:-22px;display:grid;place-items:center;text-align:center;color:#fff;font-weight:800;font-size:23px;padding:0 44px 0 52px;
+  clip-path:polygon(0 0,calc(100% - 40px) 0,100% 50%,calc(100% - 40px) 100%,0 100%,40px 50%)}
+.pipe .st:first-child{clip-path:polygon(0 0,calc(100% - 40px) 0,100% 50%,calc(100% - 40px) 100%,0 100%);padding-left:30px}
+.pipe-d{display:flex;margin-top:16px}.pipe-d span{flex:1;text-align:center;font-size:19px;color:var(--muted);padding:0 10px;line-height:1.35}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:64px}
+.stat{background:var(--soft);border-radius:26px;padding:36px 40px}
+.stat .v{font-size:78px;font-weight:900;line-height:1}
+.stat .l{font-size:23px;color:var(--ink);margin-top:14px;line-height:1.4}
+
+/* ===== mapa do MS ===== */
+.map-wrap{flex:1;position:relative;margin-top:-10px}
+#msmap{width:100%;height:100%}
+#msmap .box rect{fill:#fff;stroke:var(--blue);stroke-width:2.5;rx:16;transition:fill .2s}
+#msmap .box.alt rect{stroke:var(--muted);stroke-dasharray:7 5}
+#msmap .box.ext rect{fill:var(--soft);stroke:var(--line)}
+#msmap .box{cursor:pointer}
+#msmap .box:hover rect{fill:#E3F3FA}
+#msmap .box.ext{cursor:default}
+#msmap .box.ext:hover rect{fill:var(--soft)}
+#msmap .code{font:800 17px Montserrat,Segoe UI,sans-serif;fill:var(--blue);letter-spacing:.02em}
+#msmap .name{font:600 20px Montserrat,Segoe UI,sans-serif;fill:var(--navy)}
+#msmap .num{font:900 17px Montserrat,sans-serif;fill:#fff}
+#msmap .lk{fill:none;stroke:#9DB2C3;stroke-width:3;marker-end:url(#mArr)}
+#msmap .lk.flow{stroke:var(--orange);stroke-dasharray:10 12;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-22}}
+#msmap .lbl{font:600 16px Montserrat,sans-serif;fill:var(--muted)}
+#msmap .zone{font:800 15px Montserrat,sans-serif;fill:var(--muted);letter-spacing:.18em}
+
+/* ===== simulador ===== */
+.sim{padding:34px 40px 30px;background:#F6FAFD}
+.sim-head{display:flex;align-items:center;gap:26px;height:70px}
+.sim-head .k{font-size:18px;font-weight:800;letter-spacing:.2em;color:var(--orange);text-transform:uppercase;white-space:nowrap}
+.sim-head h2{font-size:34px;margin:0;white-space:nowrap}
+.scen{display:flex;gap:10px;margin-left:auto;flex-wrap:nowrap}
+.scen button{font-size:17px;font-weight:700;padding:12px 20px;border-radius:999px;background:#fff;border:2px solid var(--line);color:var(--navy);white-space:nowrap;transition:.2s}
+.scen button:hover{border-color:var(--sky)}
+.scen button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.ribbon{display:flex;align-items:center;gap:8px;height:58px;margin:14px 0 16px;overflow:hidden}
+.chip{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-size:15px;font-weight:700;color:var(--muted);white-space:nowrap;transition:.35s var(--ease)}
+.chip.done{border-color:#A9D3EA;color:var(--blue);background:#EAF5FB}
+.chip.cur{background:var(--orange);border-color:var(--orange);color:#fff;transform:scale(1.06);box-shadow:0 6px 18px rgba(245,156,44,.35)}
+.ribbon .ar{color:#B7C6D3;font-weight:900;font-size:18px}
+.sim-main{display:grid;grid-template-columns:1fr 520px;gap:22px;height:860px}
+.canvas{position:relative;background:#fff;border-radius:24px;box-shadow:0 2px 0 var(--line),0 10px 40px rgba(11,42,69,.07);overflow:hidden}
+.canvas .ftitle{position:absolute;left:26px;top:20px;z-index:3;display:flex;gap:14px;align-items:baseline;background:rgba(255,255,255,.92);padding:8px 16px;border-radius:12px}
+.canvas .ftitle b{font-size:18px;color:var(--blue);font-weight:800;letter-spacing:.02em}
+.canvas .ftitle span{font-size:22px;font-weight:700;color:var(--navy)}
+.svgbox{position:absolute;inset:0;transition:opacity .45s var(--ease)}
+.svgbox.fade{opacity:0}
+.svgbox svg{width:100%;height:100%;display:block}
+.ctrl{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:var(--navy);padding:8px;border-radius:999px;z-index:4;box-shadow:0 10px 30px rgba(11,42,69,.3)}
+.ctrl button{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;transition:background .2s}
+.ctrl button:hover{background:rgba(255,255,255,.14)}
+.ctrl button.play{background:var(--orange);width:60px;height:60px}
+.ctrl svg{width:24px;height:24px;fill:currentColor}
+.ctrl .spd{color:#BFD3E2;font-size:15px;font-weight:700;padding:0 14px 0 6px;width:auto;border-radius:999px}
+.banner{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);z-index:5;background:var(--navy);color:#fff;border-radius:26px;padding:34px 46px;
+  min-width:620px;opacity:0;pointer-events:none;transition:.4s var(--ease);box-shadow:0 30px 80px rgba(11,42,69,.35)}
+.banner.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.banner small{display:block;font-size:16px;letter-spacing:.2em;font-weight:800;color:var(--orange);text-transform:uppercase}
+.banner b{display:block;font-size:22px;color:var(--sky);margin-top:14px;font-weight:800}
+.banner span{display:block;font-size:34px;font-weight:800;margin-top:4px}
+.banner p{font-size:19px;color:#BFD3E2;margin-top:12px;line-height:1.45;max-width:620px}
+
+.panel{background:#fff;border-radius:24px;box-shadow:0 2px 0 var(--line),0 10px 40px rgba(11,42,69,.07);padding:30px 32px;display:flex;flex-direction:column;overflow:hidden}
+.prog{display:flex;flex-direction:column;gap:4px;font-size:15px;font-weight:700;color:var(--muted);letter-spacing:.05em}.prog #pscen{font-weight:600;letter-spacing:0;font-size:16px;color:var(--navy)}
+.pbar{height:8px;background:var(--soft);border-radius:4px;margin:10px 0 24px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0;background:var(--warm);border-radius:4px;transition:width .5s var(--ease)}
+.kind{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:10px;align-self:flex-start}
+.kind i{width:12px;height:12px;border-radius:3px;background:currentColor}
+.k-task{background:#FFF1E0;color:#B5650A}.k-auto{background:#E3F3FA;color:var(--blue)}.k-gw{background:#FDE8E2;color:#C23D1C}
+.k-sub{background:#E8EEF4;color:var(--navy)}.k-ev{background:#E5F5EE;color:#137A50}.k-link{background:#F1F3F5;color:var(--muted)}
+.ptitle{font-size:31px;font-weight:800;color:var(--navy);line-height:1.2;margin-top:16px}
+.pcode{font-size:16px;font-weight:700;color:var(--blue);margin-top:8px}
+.ptext{font-size:21px;line-height:1.5;color:var(--ink);margin-top:16px}
+.dec{margin-top:20px;border-radius:18px;background:var(--soft);padding:20px 22px}
+.dec .q{font-size:17px;font-weight:700;color:var(--muted)}
+.dec .a{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--green);color:#fff;font-weight:800;font-size:20px;padding:9px 16px;border-radius:12px}
+.dec .alt{margin-top:12px;font-size:17px;color:var(--muted);line-height:1.45}
+.dec .alt b{color:var(--ink);font-weight:700}
+.trail{margin-top:auto;border-top:2px solid var(--soft);padding-top:16px}
+.trail h4{font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.trail ol{list-style:none;display:flex;flex-direction:column;gap:6px}
+.trail li{font-size:16px;line-height:1.35;display:flex;gap:10px;color:var(--muted);white-space:nowrap}.trail li span{overflow:hidden;text-overflow:ellipsis}
+.trail li em{font-style:normal;font-weight:800;color:var(--blue);min-width:30px}
+.trail li:last-child{color:var(--navy);font-weight:700}
+.panel .pin{animation:pin .45s var(--ease)}
+@keyframes pin{from{opacity:0;transform:translateY(12px)}}
+
+/* restyle dos diagramas */
+.fsvg text{font-family:"Segoe UI",Arial,sans-serif}
+.fsvg .lane{fill:#FBFDFF;stroke:#DCE6EE}.fsvg .lanealt{fill:#F3F8FC;stroke:#DCE6EE}
+.fsvg .lanelbl{font-size:12px;font-weight:700;fill:var(--blue);letter-spacing:.12em}
+.fsvg .task{fill:#fff;stroke:#0B2A45;stroke-width:1.6}
+.fsvg .sub{fill:#fff;stroke:#0B2A45;stroke-width:3.2}
+.fsvg .auto{fill:#EAF4FA;stroke:#86B9D6;stroke-width:1.3}
+.fsvg .link{fill:#fff;stroke:#7F93A5;stroke-width:1.6;stroke-dasharray:5 3}
+.fsvg .gw{fill:#FFF5E6;stroke:#F59C2C;stroke-width:2}
+.fsvg .ev{fill:#fff;stroke:#0B2A45}
+.fsvg .tt{font-size:12px;fill:#0B2A45;font-weight:600}.fsvg .ts{font-size:9.5px;fill:#5B6B7A}
+.fsvg .gl{font-size:10.5px;fill:#0B2A45;font-weight:700}.fsvg .el{font-size:10px;fill:#4A5B6B}
+.fsvg .flow{stroke:#9AAAB8;stroke-width:1.4;fill:none;marker-end:url(#arrG)}
+.fsvg .bus{stroke:#9AAAB8;stroke-width:1.4;fill:none}
+.fsvg [data-k]{transition:fill .35s,stroke .35s,stroke-width .35s}
+.fsvg .vis{fill:#DDEFF9!important;stroke:var(--blue)!important}
+.fsvg .act{fill:#FFE9CC!important;stroke:var(--red)!important;stroke-width:3.4!important;filter:drop-shadow(0 0 7px rgba(232,81,44,.55))}
+.fsvg .gw.act{fill:#FFD9A8!important}
+.fsvg .trailp{fill:none;stroke:var(--blue);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.fsvg .trailp.hot{stroke:var(--orange);stroke-width:4}
+.fsvg .tok circle.o{fill:var(--red);stroke:#fff;stroke-width:3}
+.fsvg .tok circle.r{fill:none;stroke:var(--red);stroke-width:2;animation:ring 1.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes ring{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(2.6)}}
+
+/* ===== demais ===== */
+.dark{background:radial-gradient(900px 600px at 82% 18%,rgba(43,181,224,.32),transparent 60%),radial-gradient(800px 520px at 8% 100%,rgba(245,156,44,.22),transparent 60%),var(--navy);color:#fff}
+.dark h1,.dark h2{color:#fff}
+.end{justify-content:center;align-items:center;text-align:center}
+.end h1{font-size:96px;max-width:1500px}
+.end .logos{margin-top:80px;display:flex;gap:110px;align-items:center;justify-content:center}
+.end .logos .l1{height:124px}.end .logos .l2{height:230px}
+.end .url{margin-top:44px;font-size:26px;color:var(--blue);font-weight:700}
+
+#lightbox{position:fixed;inset:0;z-index:60;background:rgba(8,19,29,.82);display:none;align-items:center;justify-content:center;padding:3vh 3vw;cursor:zoom-out}
+#lightbox.on{display:flex}
+#lightbox .lb{background:#fff;border-radius:20px;width:100%;height:100%;display:flex;flex-direction:column;padding:2vh 2vw}
+#lightbox .lb header{display:flex;gap:16px;align-items:baseline;font-size:clamp(14px,1.5vw,24px)}
+#lightbox .lb header b{color:var(--blue)}#lightbox .lb header span{font-weight:700;color:var(--navy)}
+#lightbox .lb header em{font-style:normal;color:var(--muted);font-size:.75em;margin-left:auto}
+#lightbox .lb .body{flex:1;min-height:0;margin-top:1vh}
+#lightbox .lb svg{width:100%;height:100%}
+
+#progress{position:fixed;left:0;bottom:0;height:4px;background:var(--orange);z-index:40;transition:width .3s}
+#hud{position:fixed;right:16px;bottom:12px;color:#7d97ab;font:600 12px system-ui,sans-serif;z-index:40;opacity:.65}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:40vh;overflow:auto;z-index:45;display:none;background:rgba(11,42,69,.97);color:#E9F2F8;padding:16px 26px 22px;font:16px/1.55 system-ui,sans-serif}
+#notes.on{display:block}
+#notes header{display:flex;justify-content:space-between;font-weight:700;color:var(--orange);margin-bottom:6px}
+#notes .clock{color:#fff;font-variant-numeric:tabular-nums}#notes .clock.late{color:#ff8a7a}
+.notes{display:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9AAAB8"/></marker>
+    <marker id="mArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DB2C3"/></marker>
+  </defs>
+</svg>
+
+<div id="stage">
+
+<!-- 1 · CAPA -->
+<section class="slide cover active">
+  <div class="top" data-in="1"><img data-logo="lab" alt="Laboratório de Fluxos">
+    <div class="event">PJe Summit · <b>10ª ExpoJud</b><br>06 a 08 de outubro · Brasília – DF</div></div>
+  <div class="title" data-in="2"><h1>Da criação do Laboratório de Fluxos à entrega dos fluxos de <span>Acordo</span> e <span>Mandado de Segurança</span> no TRF5</h1></div>
+  <div class="speaker" data-in="3"><i></i><div><b>Vinícius Sousa e Silva</b>
+    <span>Diretor de Secretaria da 35ª Vara Federal do Ceará<br>Coordenador Executivo do INOVAJUS e do Laboratório de Fluxos da SJCE</span></div></div>
+  <div class="orbit" data-in="4"><div class="disc"></div><img data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas">
+    <i class="dot" style="left:-20px;top:30px;width:58px;height:58px;background:var(--orange)"></i>
+    <i class="dot" style="right:10px;top:70px;width:34px;height:34px;background:var(--sky);animation-delay:-2s"></i>
+    <i class="dot" style="left:30px;bottom:30px;width:40px;height:40px;background:var(--blue);animation-delay:-4s"></i>
+    <i class="dot" style="right:40px;bottom:10px;width:26px;height:26px;background:var(--red);animation-delay:-1s"></i></div>
+  <div class="notes"><b>~30 s.</b> Cumprimentar a organização e o público. Apresentar-se em uma frase.
+    "Em 15 minutos vou contar como um grupo da área fim da Justiça Federal no Ceará virou um laboratório que hoje entrega fluxos completos para o PJe da 5ª Região — e mostrar um deles funcionando, passo a passo."</div>
+</section>
+
+<!-- 2 · ROTEIRO -->
+<section class="slide">
+  <div class="kicker" data-in="1">Roteiro</div>
+  <h2 data-in="1">15 minutos, <em>quatro paradas</em></h2>
+  <div class="agenda">
+    <div class="step" data-in="2"><div class="num" style="background:var(--blue)">01</div><h3>A ideia</h3><p>Uma necessidade percebida na área fim</p><div class="t" style="color:var(--blue)">2 min</div></div>
+    <div class="step" data-in="3"><div class="num" style="background:var(--sky)">02</div><h3>A construção</h3><p>Equipe, parcerias e as primeiras entregas</p><div class="t" style="color:#1C93BC">4 min</div></div>
+    <div class="step" data-in="4"><div class="num" style="background:var(--orange)">03</div><h3>O método</h3><p>Como uma demanda vira fluxo no PJe</p><div class="t" style="color:#D07E12">2 min</div></div>
+    <div class="step" data-in="5"><div class="num" style="background:var(--red)">04</div><h3>Os fluxos</h3><p>O Mandado de Segurança, percorrido passo a passo</p><div class="t" style="color:var(--red)">6 min</div></div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~30 s.</b> Passar rápido. O centro da fala é a simulação (parte 4).</div>
+</section>
+
+<!-- 3 · A IDEIA -->
+<section class="slide">
+  <div class="kicker" data-in="1">01 · A ideia</div>
+  <h2 data-in="1">Quem usa o fluxo todo dia <em>sabe onde ele trava</em></h2>
+  <div class="cols">
+    <div class="quote" data-in="2"><p>O Laboratório nasceu da área fim da Seção Judiciária do Ceará, de quem percebeu, no dia a dia das varas, a necessidade de melhorar os fluxos do PJe.</p></div>
+    <div class="rows">
+      <div class="row" data-in="3"><div class="ico" style="background:var(--blue)" data-icon="chat"></div><div><b>Diálogo com o TRF5</b><span>O Tribunal coordena o PJe na 5ª Região. A proposta foi oferecer apoio.</span></div></div>
+      <div class="row" data-in="4"><div class="ico" style="background:var(--sky)" data-icon="tool"></div><div><b>Melhorias pontuais</b><span>Primeiro passo: ajustes em fluxos que já existiam.</span></div></div>
+      <div class="row" data-in="5"><div class="ico" style="background:var(--orange)" data-icon="hands"></div><div><b>Apoio, não caminho paralelo</b><span>Somar esforços com a Região, a partir de quem opera o processo.</span></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min 30 s.</b> Servidores da área fim, na SJCE, perceberam gargalos nos fluxos do PJe. Em vez de esperar, buscaram o TRF5 para oferecer ajuda.
+    Começou pequeno: ajustes em fluxos que já existiam. Mensagem-chave: a iniciativa veio de quem opera o processo.</div>
+</section>
+
+<!-- 4 · LINHA DO TEMPO -->
+<section class="slide">
+  <div class="kicker" data-in="1">02 · A construção</div>
+  <h2 data-in="1">De ajustes pontuais a <em>fluxos completos</em></h2>
+  <div class="tl"><div class="bar"></div>
+    <div class="ev" data-in="2"><div class="c" style="background:var(--blue)">1</div><h3>Melhorias pontuais</h3><p>Ajustes em fluxos existentes, em diálogo com o TRF5</p></div>
+    <div class="ev" data-in="3"><div class="c" style="background:#1584BB">2</div><h3>Equipe formada</h3><p>Área fim + tecnologia, capacitadas por instrutores do TRF1</p></div>
+    <div class="ev" data-in="4"><div class="c" style="background:var(--sky)">3</div><h3>Execução Fiscal</h3><p>Primeiro fluxo completo entregue à Justiça Federal da 5ª Região</p></div>
+    <div class="ev" data-in="5"><div class="c" style="background:#7FB27A">4</div><h3>Entregas ao TRF5</h3><p>Sob coordenação do Tribunal, atendendo às demandas solicitadas</p></div>
+    <div class="ev" data-in="6"><div class="c" style="background:var(--orange)">5</div><h3>Justiça Centrada nas Pessoas</h3><p>Aporte do programa (TRF5 · JFCE · PNUD) e capacitação em PJe</p></div>
+    <div class="ev now" data-in="7"><div class="c" style="background:var(--red)">6</div><h3>Acordo e Mandado de Segurança</h3><p>Novos fluxos entregues ao TRF5</p></div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min 30 s.</b> Percorrer da esquerda para a direita.
+    (2) A equipe juntou gente de negócio e de tecnologia. Agradecer a Anderson de Sousa Peres e Erick Gama Touret de Faria, servidores do TRF1, que foram os instrutores dos treinamentos iniciais de formação do Laboratório.
+    (3) Execução Fiscal: primeiro fluxo completo para a JF5. (4) Primeiras entregas ao TRF5, sob coordenação do Tribunal. (5) Aporte do JCP — próximo slide.</div>
+</section>
+
+<!-- 5 · JCP -->
+<section class="slide">
+  <div class="kicker" data-in="1">02 · A construção</div>
+  <h2 data-in="1">O aporte do <em>Justiça Centrada nas Pessoas</em></h2>
+  <div class="jcp">
+    <img data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas" data-in="2">
+    <div class="rows">
+      <div class="row" data-in="3"><div class="ico" style="background:var(--blue)" data-icon="globe"></div><div><b>Convênio com as Nações Unidas</b><span>TRF5 e JFCE em parceria com o PNUD.</span></div></div>
+      <div class="row" data-in="4"><div class="ico" style="background:var(--sky)" data-icon="gear"></div><div><b>Suporte técnico especializado</b><span>Mais estrutura e método para a equipe do Laboratório.</span></div></div>
+      <div class="row" data-in="5"><div class="ico" style="background:var(--orange)" data-icon="board"></div><div><b>Capacitação em desenvolvimento PJe</b><span>Treinamento com Samuel de Aguiar Rodrigues, servidor do TRF5.</span></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min.</b> O programa Justiça Centrada nas Pessoas (convênio TRF5 + JFCE + PNUD) trouxe suporte técnico ainda mais especializado.
+    O servidor Samuel de Aguiar Rodrigues, do TRF5, treinou a equipe em desenvolvimento no PJe. Agradecer.</div>
+</section>
+
+<!-- 6 · EQUIPE -->
+<section class="slide">
+  <div class="kicker" data-in="1">02 · A construção</div>
+  <h2 data-in="1">Hoje: <em>negócio e desenvolvimento</em> no mesmo time</h2>
+  <div class="team">
+    <div data-in="2"><h3>Equipe de negócio</h3>
+      <div class="people">
+        <div class="person"><div class="av" style="background:var(--blue)">IM</div><b>Italo Martins</b></div>
+        <div class="person"><div class="av" style="background:var(--red)">DL</div><b>Danielle Lira</b></div>
+        <div class="person"><div class="av" style="background:var(--sky)">GS</div><b>Gabriela de Sousa</b></div>
+        <div class="person"><div class="av" style="background:var(--orange)">VS</div><b>Vinícius Sousa e Silva</b></div>
+      </div></div>
+    <div data-in="3"><h3>Equipe de desenvolvimento</h3>
+      <div class="dev"><div class="ico" style="background:var(--orange);width:96px;height:96px" data-icon="code"></div>
+        <p>Capaz de entregar, com qualidade, fluxos e serviços voltados para o PJe.</p></div></div>
+  </div>
+  <div class="support" data-in="4">
+    <div><b>Anderson de Sousa Peres</b><span>TRF1 · instrutor nos treinamentos iniciais</span></div>
+    <div><b>Erick Gama Touret de Faria</b><span>TRF1 · instrutor nos treinamentos iniciais</span></div>
+    <div><b>Samuel de Aguiar Rodrigues</b><span>TRF5 · capacitação em desenvolvimento PJe</span></div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min.</b> Apresentar a equipe de negócio pelo nome. O diferencial é ter área fim e desenvolvimento juntos: quem conhece a regra e quem escreve o fluxo trabalham na mesma sprint.
+    Reforçar o agradecimento aos instrutores (Anderson e Erick, TRF1) e ao Samuel (TRF5).</div>
+</section>
+
+<!-- 7 · MÉTODO -->
+<section class="slide">
+  <div class="kicker" data-in="1">03 · O método</div>
+  <h2 data-in="1">Da demanda ao fluxo, <em>sob Scrum e com IA de apoio</em></h2>
+  <div data-in="2">
+    <div class="pipe">
+      <div class="st" style="background:var(--blue)">Demanda</div><div class="st" style="background:var(--blue)">Análise</div>
+      <div class="st" style="background:var(--blue)">História de Usuário</div><div class="st" style="background:var(--blue)">Sprint</div>
+      <div class="st" style="background:var(--sky)">BPMN</div><div class="st" style="background:var(--sky)">XML jPDL</div>
+      <div class="st" style="background:var(--orange)">Validação</div>
+    </div>
+    <div class="pipe-d"><span>registrada pela área fim</span><span>backlog e critérios de aceite</span><span>BDD + regras de negócio</span><span>planejamento e ritos</span><span>desenho do fluxo</span><span>fluxo pronto para o PJe</span><span>regras automáticas + homologação</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat" data-in="3"><div class="v" style="color:var(--blue)" data-count="212">212</div><div class="l">fluxos do PJe indexados como base de consulta</div></div>
+    <div class="stat" data-in="4"><div class="v" style="color:#1C93BC" data-count="2713">2.713</div><div class="l">expressões (EL) catalogadas e descritas</div></div>
+    <div class="stat" data-in="5"><div class="v" style="color:#D07E12" data-count="6">6</div><div class="l">regras automáticas de validação do XML</div></div>
+    <div class="stat" data-in="6"><div class="v" style="color:var(--red)" data-count="100" data-suffix="%">100%</div><div class="l">das saídas da IA passam por aprovação humana</div></div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~2 min.</b> Cada etapa tem um agente de IA que gera um rascunho (análise, HU, sprint, BPMN, XML), mas nada avança sem aprovação humana.
+    A IA consulta os 212 fluxos existentes do PJe para gerar XML coerente com o padrão da Região. O validador verifica início, fim, becos sem saída, nós inalcançáveis, transições quebradas e expressões EL.
+    Frase-chave: "A IA acelera; quem decide é a equipe."</div>
+</section>
+
+<!-- 8 · MAPA DO MS -->
+<section class="slide" style="padding-bottom:90px">
+  <div class="kicker" data-in="1">04 · Os fluxos</div>
+  <h2 data-in="1" style="margin-bottom:10px">Mandado de Segurança: <em>12 fluxos conectados</em></h2>
+  <p class="muted" data-in="1" style="font-size:22px">Classes 119 e 120 · do protocolo da inicial ao trânsito em julgado ou à remessa ao TRF5 · clique em um fluxo para ampliar</p>
+  <div class="map-wrap" data-in="2"><svg id="msmap" viewBox="0 -14 1660 720"></svg></div>
+  <div class="foot" style="bottom:30px"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min.</b> Visão geral antes da simulação. Linha de cima: o processo na fase de conhecimento — inicial, notificação da autoridade, controle de prazo, análise de manifestação, MPF.
+    Linha do meio: sentença e fase recursal. Embaixo: a rede de proteção — os fluxos gerais (CONTRPRAZ e CONTRDEVEXP) foram ajustados para devolver o MS ao trilho certo.
+    Clique num fluxo para mostrar o diagrama ampliado (Esc fecha).</div>
+</section>
+
+<!-- 9 · SIMULADOR -->
+<section class="slide sim" id="simSlide">
+  <div class="sim-head">
+    <div><div class="k">04 · Simulação</div><h2>O processo percorrendo o fluxo</h2></div>
+    <div class="scen" id="scen"></div>
+  </div>
+  <div class="ribbon" id="ribbon"></div>
+  <div class="sim-main">
+    <div class="canvas">
+      <div class="ftitle"><b id="fcode"></b><span id="fname"></span></div>
+      <div class="svgbox" id="svgbox"></div>
+      <div class="banner" id="banner"><small>Entra no fluxo</small><b id="bcode"></b><span id="bname"></span><p id="bdesc"></p></div>
+      <div class="ctrl">
+        <button id="bRestart" title="Recomeçar (Home)"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>
+        <button id="bPrev" title="Passo anterior (←)"><svg viewBox="0 0 24 24"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/></svg></button>
+        <button id="bPlay" class="play" title="Reproduzir / pausar (P)"><svg viewBox="0 0 24 24" id="playIco"><path d="M8 5v14l11-7z"/></svg></button>
+        <button id="bNext" title="Próximo passo (→)"><svg viewBox="0 0 24 24"><path d="M10 6 8.6 7.4 13.2 12l-4.6 4.6L10 18l6-6z"/></svg></button>
+        <button id="bFit" title="Ver diagrama inteiro (V)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM4 15h2v3h3v2H4zm14 3v-3h2v5h-5v-2z"/></svg></button>
+        <button id="bSpd" class="spd" title="Velocidade (S)">1×</button>
+      </div>
+    </div>
+    <aside class="panel" id="panel">
+      <div class="prog"><span id="pstep"></span><span id="pscen"></span></div>
+      <div class="pbar"><i id="pbar"></i></div>
+      <div id="pbody"></div>
+      <div class="trail"><h4>Trilha percorrida</h4><ol id="ptrail"></ol></div>
+    </aside>
+  </div>
+  <div class="notes"><b>~4 min.</b> Escolher o cenário nas abas do topo. → avança um passo (o clicker funciona), P reproduz automaticamente, V mostra o diagrama inteiro, S muda a velocidade.
+    Sugestão: rodar o "Caminho completo" com P, pausando para comentar em 3 pontos: (1) a decisão automática da liminar; (2) o controle de prazo que só libera quando todos os expedientes fecham; (3) o roteamento recursal que manda a sentença concessiva para a remessa necessária.
+    Se sobrar tempo, mostrar "Embargos" ou "Rede de proteção". Ao terminar o cenário, → segue para o próximo slide.</div>
+</section>
+
+<!-- 10 · ACORDO -->
+<section class="slide">
+  <div class="kicker" data-in="1">04 · Os fluxos</div>
+  <h2 data-in="1">E o fluxo de <em>Acordo</em></h2>
+  <div class="cols" style="grid-template-columns:1fr 1fr">
+    <div class="rows">
+      <div class="row" data-in="2"><div class="ico" style="background:var(--blue)" data-icon="link"></div><div><b>Integrado aos fluxos ativos do PJe</b><span>Entra no ponto em que a conciliação acontece, sem duplicar tarefas.</span></div></div>
+      <div class="row" data-in="3"><div class="ico" style="background:var(--sky)" data-icon="hands"></div><div><b>[o que o fluxo resolve]</b><span>[completar]</span></div></div>
+      <div class="row" data-in="4"><div class="ico" style="background:var(--orange)" data-icon="check"></div><div><b>[ganho para a vara e as partes]</b><span>[completar]</span></div></div>
+    </div>
+    <div class="quote" data-in="3" style="display:grid;place-items:center;min-height:520px;background:var(--soft)"><p style="margin:0;text-align:center;color:var(--muted);font-size:28px">Diagrama do fluxo de Acordo<br><span style="font-size:20px;font-weight:500">aguardando os arquivos para entrar no simulador</span></p></div>
+  </div>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min.</b> [Completar com os destaques do fluxo de Acordo.]</div>
+</section>
+
+<!-- 11 · ENCERRAMENTO -->
+<section class="slide end">
+  <div class="kicker" data-in="1">Obrigado</div>
+  <h1 data-in="2">Fluxos melhores, <em>justiça mais próxima das pessoas</em></h1>
+  <div class="logos" data-in="3"><img class="l1" data-logo="lab" alt="Laboratório de Fluxos"><img class="l2" data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas"></div>
+  <div class="url" data-in="4">justicacentradanaspessoas.jfce.jus.br/laboratorio-de-fluxos</div>
+  <div class="notes"><b>~30 s.</b> Agradecer ao TRF5, à JFCE, ao PNUD / Justiça Centrada nas Pessoas, aos instrutores do TRF1, ao Samuel (TRF5) e à equipe.</div>
+</section>
+
+</div>
+
+<div id="lightbox"><div class="lb"><header><b id="lbcode"></b><span id="lbname"></span><em>Esc ou clique para fechar</em></header><div class="body" id="lbbody"></div></div></div>
+<div id="progress"></div>
+<div id="hud"></div>
+<div id="notes"><header><span id="ntitle"></span><span class="clock" id="clock">00:00 / 15:00</span></header><div id="nbody"></div></div>
+
+<script>
+const FLOWS = {{FLOWS_JSON}};
+const LOGOS = { lab: "{{LOGO_LAB}}", labw: "{{LOGO_LAB_W}}", jcp: "{{LOGO_JCP}}" };
+
+/* ================================================================
+   CENÁRIOS DO SIMULADOR
+   Cada passo: f = fluxo, at = nó onde o processo para, go = trajeto
+   (ids de transições "fN" ou caminho SVG "M..." ) desde o nó anterior.
+   ================================================================ */
+const BUS_ANLIN = "M725,157 L725,490 L182,490 L182,545";
+const SCENARIOS = [
+{ id:"completo", name:"Caminho completo", sub:"Da inicial à remessa necessária ao TRF5", steps:[
+  {f:"MS_ANLIN", at:"n3", t:"Inicial distribuída", d:"O processo da classe Mandado de Segurança (119 ou 120) entra no fluxo de análise da inicial."},
+  {f:"MS_ANLIN", at:"n4", go:["f0"], d:"O sistema vincula automaticamente a etiqueta da classe, para que o processo seja identificado em toda a tramitação."},
+  {f:"MS_ANLIN", at:"n5", go:["f1"], q:"Há pedido de liminar ainda não apreciado?", a:"NÃO", alt:"<b>SIM</b> → vai para “Analisar Inicial urgente”, com encaminhamento a minutar decisão urgente (ELDECURG)."},
+  {f:"MS_ANLIN", at:"n0", go:["f2"], d:"Tarefa do servidor, com avisos de tutela e de documentação da parte. É aqui que se escolhe o encaminhamento."},
+  {f:"MS_ANLIN", at:"n6", go:BUS_ANLIN, q:"Encaminhamento escolhido", a:"Notificar impetrado", alt:"Também disponíveis: minutar sentença, decisão ou despacho, análise de secretaria e Nó de Desvio."},
+  {f:"MS_INTAUTIMPET", at:"n3", t:"Início da notificação"},
+  {f:"MS_INTAUTIMPET", at:"n4", go:["f0"], d:"Notificação automática da autoridade coatora pelo CP_INTAUT, com prazo de 10 dias (modelo 56244, polo passivo)."},
+  {f:"MS_INTAUTIMPET", at:"n5", go:["f1"], q:"O polo passivo tem procuradoria vinculada?", a:"Todas intimadas", alt:"<b>Há pendência</b> → tarefa para preencher a autoridade coatora e tratar a parte sem procuradoria, inclusive por central de mandados."},
+  {f:"MS_INTAUTIMPET", at:"n9", go:["f3"], d:"Com todos intimados, o processo segue direto para o controle de prazo do MS."},
+  {f:"MS_CONTRPRAZ", at:"n2", t:"Início do controle de prazo"},
+  {f:"MS_CONTRPRAZ", at:"n3", go:["f0"], d:"Grava o marco temporal da entrada no controle de prazo (fluxo:dataEntradaControlarPrazo)."},
+  {f:"MS_CONTRPRAZ", at:"n4", go:["f1"], q:"Existe expediente em controle?", a:"SIM"},
+  {f:"MS_CONTRPRAZ", at:"n5", go:["f2"], d:"Grava e atualiza a lista de expedientes a acompanhar (fluxo:idsExpedientes)."},
+  {f:"MS_CONTRPRAZ", at:"n6", go:["f3"], q:"Os expedientes são sem prazo?", a:"NÃO · há prazo", alt:"<b>Sem prazo</b> → tarefa “Comunicação enviada — Sem prazo”."},
+  {f:"MS_CONTRPRAZ", at:"n0", go:["f5"], d:"O processo aguarda a petição, o decurso do prazo e o fechamento dos expedientes. O servidor registra ciência e encerra os expedientes."},
+  {f:"MS_CONTRPRAZ", at:"n7", go:["f6"], q:"Algum expediente ainda está aberto?", a:"NÃO · todos fechados", alt:"<b>SIM</b> → volta à tarefa de controle de prazo. O processo só é liberado quando todos fecham."},
+  {f:"MS_CONTRPRAZ", at:"n8", go:["f8"], d:"Encerrado o prazo das informações, o processo vai para a análise de manifestação."},
+  {f:"MS_ANMANFEST", at:"n2", t:"Início da análise"},
+  {f:"MS_ANMANFEST", at:"n3", go:["f0"], q:"Houve juntada de parte no período? (desconsidera documentos de origem interna)", a:"SIM · informações prestadas", alt:"<b>NÃO</b> → tarefa “Sem manifestação”."},
+  {f:"MS_ANMANFEST", at:"n0", go:["f1"], d:"As informações da autoridade coatora foram juntadas. O servidor analisa e escolhe o encaminhamento."},
+  {f:"MS_ANMANFEST", at:"n4", go:"M730,161 L730,485 L177,485 L177,530", q:"Encaminhamento escolhido", a:"Intimar MPF", alt:"Também: perda do objeto, controle de prazo, elaborar comunicação, conclusão para julgamento, análise de secretaria."},
+  {f:"MS_INTMPF", at:"n3", t:"Início da intimação do MPF"},
+  {f:"MS_INTMPF", at:"n4", go:["f0"], d:"Intima o Ministério Público Federal em 10 dias, como fiscal da ordem jurídica (CP_INTAUT, modelo 56245)."},
+  {f:"MS_INTMPF", at:"n5", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência", alt:"<b>Há pendência</b> → tarefa no miniPAC para tratar partes não intimadas."},
+  {f:"MS_INTMPF", at:"n7", go:["f3"], d:"Gera a etiqueta [A] Prazo MPF, que deixa visível na caixa da vara o prazo em curso do Ministério Público."},
+  {f:"MS_INTMPF", at:"n8", go:["f13"], d:"Devolve o processo ao controle de prazo do MS."},
+  {f:"MS_CONTRPRAZ", at:"n2", t:"Novo ciclo de controle"},
+  {f:"MS_CONTRPRAZ", at:"n0", go:["f0","f1","f2","f3","f5"], pass:["n3","n4","n5","n6"], d:"Novo marco temporal e nova lista de expedientes. Agora o processo aguarda o parecer do MPF."},
+  {f:"MS_CONTRPRAZ", at:"n8", go:["f6","f8"], pass:["n7"], q:"Algum expediente ainda está aberto?", a:"NÃO · parecer juntado"},
+  {f:"MS_ANMANFEST", at:"n2", t:"Nova análise de manifestação"},
+  {f:"MS_ANMANFEST", at:"n0", go:["f0","f1"], pass:["n3"], d:"O parecer do MPF foi juntado no período."},
+  {f:"MS_ANMANFEST", at:"n8", go:"M730,161 L730,485 L1015,485 L1015,530", q:"Encaminhamento escolhido", a:"Conclusão para julgamento", alt:"Lança o movimento 51 (conclusão) e encaminha à elaboração de sentença."},
+  {f:"ELSENT", at:"n11", t:"Sentença assinada", d:"O magistrado assina a sentença — no cenário, concessiva da segurança. Minutar, revisar e assinar seguem o fluxo de sempre."},
+  {f:"ELSENT", at:"n3", go:["f0"], d:"Intima todas as partes automaticamente: 15 dias, em dobro, polos ativo e passivo, e o MPF."},
+  {f:"ELSENT", at:"n4", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência", alt:"<b>Há pendência</b> → tarefa “Elaboração de sentença — Intimar”."},
+  {f:"ELSENT", at:"n6", go:["f3"], q:"É Mandado de Segurança? (classes 119 e 120)", a:"SIM", alt:"<b>NÃO</b> → controle de prazo geral (CONTRPRAZ), como as demais classes."},
+  {f:"ELSENT", at:"n7", go:["f9"], d:"Esse é o desvio por classe: o MS ganha um controle de prazo recursal próprio."},
+  {f:"MS_CONTRPRAZREC-1", at:"n2", t:"Início do prazo recursal"},
+  {f:"MS_CONTRPRAZREC-1", at:"n3", go:["f0"], d:"Grava o marco temporal da entrada."},
+  {f:"MS_CONTRPRAZREC-1", at:"n4", go:["f1"], d:"Registra o tipo da sentença pelos movimentos lançados: <b>concessiva</b>, denegatória ou extinção. Também apura se é o ciclo posterior a embargos."},
+  {f:"MS_CONTRPRAZREC-1", at:"n6", go:["f2","f3"], pass:["n5"], d:"Há expedientes em controle: grava e atualiza a lista."},
+  {f:"MS_CONTRPRAZREC-1", at:"n0", go:["f4","f6"], pass:["n7"], d:"O processo aguarda o prazo recursal: petição, decurso e fechamento dos expedientes."},
+  {f:"MS_CONTRPRAZREC-1", at:"n8", go:["f7"], q:"Algum expediente ainda está aberto?", a:"NÃO · prazo encerrado"},
+  {f:"MS_CONTRPRAZREC-1", at:"n11", go:["f9"], d:"Todos os expedientes fechados: começa o roteamento recursal."},
+  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"As perguntas são avaliadas em ordem de precedência, de cima para baixo."},
+  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
+  {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"NÃO"},
+  {f:"MS_CONTRPRAZREC-2", at:"n3", go:["f2"], q:"Houve apelação?", a:"NÃO"},
+  {f:"MS_CONTRPRAZREC-2", at:"n4", go:["f3"], q:"Houve outra manifestação?", a:"NÃO"},
+  {f:"MS_CONTRPRAZREC-2", at:"n5", go:["f4"], q:"Qual o tipo da sentença?", a:"Concessiva", alt:"<b>Denegatória ou extinção sem mérito</b> → certificação do trânsito em julgado. <b>Indefinido</b> → tarefa para o servidor."},
+  {f:"MS_CONTRPRAZREC-2", at:"n14", go:["f12"], t:"Remessa necessária ao TRF5", d:"Sentença concessiva sem recurso: o sistema aplica a etiqueta [A] Remessa necessária e remete ao TRF5 (REMTRF5) para o reexame. Fim do percurso no 1º grau."},
+]},
+{ id:"embargos", name:"Embargos de declaração", sub:"Contrarrazões, julgamento e retorno ao prazo recursal", steps:[
+  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"A sentença foi intimada e o prazo recursal terminou. Uma das partes opôs embargos de declaração."},
+  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
+  {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"SIM"},
+  {f:"MS_CONTRPRAZREC-2", at:"n12", go:["f6"], d:"Antes de sair, registra se havia apelação pendente, para não perdê-la no retorno."},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n4", t:"Início das contrarrazões"},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n5", go:["f0"], d:"Identifica o polo que embargou: define quem será intimado e se o MPF também será."},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n6", go:["f1"], d:"Intima a parte contrária para contrarrazões: 5 dias, em dobro (modelo 56247)."},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n7", go:["f2"], q:"Pendência de intimação?", a:"Sem pendência", alt:"<b>Há pendência</b> → tarefa no miniPAC (5 dias)."},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n9", go:["f4"], d:"Grava os expedientes das contrarrazões (ms:idsExpedientesContrarrazaoEmbargos)."},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n3", go:"M1420,375 L1510,375 L1510,140 L1290,140", d:"Controle do prazo de contrarrazões em curso: registro de ciência e encerramento dos expedientes."},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n10", go:["f14"], q:"Algum expediente ainda está aberto?", a:"NÃO"},
+  {f:"MS_CONTRPRAZCONTREMB", at:"n11", go:["f16"], d:"Concluso para julgar os embargos, na elaboração de sentença."},
+  {f:"ELSENT", at:"n11", t:"Embargos julgados", d:"A decisão nos embargos é assinada."},
+  {f:"ELSENT", at:"n6", go:["f0","f1","f3"], pass:["n3","n4"], q:"É Mandado de Segurança?", a:"SIM", d:"Intimação automática das partes e desvio por classe."},
+  {f:"ELSENT", at:"n7", go:["f9"]},
+  {f:"MS_CONTRPRAZREC-1", at:"n2", t:"Novo prazo recursal"},
+  {f:"MS_CONTRPRAZREC-1", at:"n4", go:["f0","f1"], pass:["n3"], d:"Reconhece o ciclo posterior aos embargos pelos movimentos 198, 871 e 200."},
+  {f:"MS_CONTRPRAZREC-1", at:"n0", go:["f2","f3","f4","f6"], pass:["n5","n6","n7"], d:"Controla o novo prazo recursal."},
+  {f:"MS_CONTRPRAZREC-1", at:"n11", go:["f7","f9"], pass:["n8"], q:"Expedientes fechados?", a:"SIM · rotear recurso"},
+  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo encerrado"},
+  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"SIM"},
+  {f:"MS_CONTRPRAZREC-2", at:"n8", go:["f5"], t:"[MS] Recursos — Analisar após julgamento dos embargos", d:"Tarefa do servidor: informa se havia apelação no prazo anterior. O encaminhamento é decisão humana, com todos os destinos disponíveis."},
+]},
+{ id:"apelacao", name:"Apelação", sub:"Contrarrazões e remessa ao TRF5", steps:[
+  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"Uma das partes apelou da sentença."},
+  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
+  {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"NÃO"},
+  {f:"MS_CONTRPRAZREC-2", at:"n3", go:["f2"], q:"Houve apelação?", a:"SIM"},
+  {f:"MS_CONTRPRAZREC-2", at:"n6", go:["f7"], d:"Identifica o polo que apelou: define quem é intimado para contrarrazões e se o MPF também será."},
+  {f:"MS_CONTRPRAZREC-2", at:"n11", go:["f8"], d:"Intima para contrarrazões (CP_INTAUT, 15 dias) e controla o prazo, com registro de ciência."},
+  {f:"MS_CONTRPRAZREC-2", at:"n13", go:["f9"], t:"Remessa ao TRF5", d:"Contrarrazões juntadas ou prazo decorrido: o processo é remetido ao TRF5 (REMTRF5)."},
+]},
+{ id:"perda", name:"Perda do objeto", sub:"Quando as informações noticiam a perda superveniente", steps:[
+  {f:"MS_ANMANFEST", at:"n2", t:"Início da análise de manifestação"},
+  {f:"MS_ANMANFEST", at:"n3", go:["f0"], q:"Houve juntada de parte no período?", a:"SIM"},
+  {f:"MS_ANMANFEST", at:"n0", go:["f1"], d:"As informações da autoridade noticiam que o ato impugnado deixou de existir."},
+  {f:"MS_ANMANFEST", at:"n5", go:"M730,161 L730,485 L382,485 L382,530", q:"Encaminhamento escolhido", a:"Intimar impetrante · perda do objeto", alt:"Disponível apenas a partir de “Com manifestação”."},
+  {f:"MS_INTIMPRET", at:"n3", t:"Início da intimação do impetrante"},
+  {f:"MS_INTIMPRET", at:"n4", go:["f0"], d:"Intima o impetrante em 10 dias para se manifestar sobre a perda do objeto (modelo 56243, polo ativo)."},
+  {f:"MS_INTIMPRET", at:"n5", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência"},
+  {f:"MS_INTIMPRET", at:"n7", go:["f3"], d:"Gera a etiqueta [A] Perda do objeto, visível na caixa da vara."},
+  {f:"MS_INTIMPRET", at:"n8", go:["f13"], t:"Volta ao controle de prazo", d:"O processo retorna ao MS_CONTRPRAZ e aguarda a manifestação do impetrante."},
+]},
+{ id:"protecao", name:"Rede de proteção", sub:"Os fluxos gerais devolvem o MS ao trilho certo", steps:[
+  {f:"CONTRPRAZ", at:"n1", t:"Processo de MS no controle de prazo geral", d:"Chegou por ELDEC, ELDECURG, ELDESP, ELCOM, ANSEC ou CONTRDEVEXP — caminhos comuns a todas as classes."},
+  {f:"CONTRPRAZ", at:"n2", go:["f0"], q:"É Mandado de Segurança? (teste acrescentado na entrada)", a:"SIM", alt:"<b>NÃO</b> → segue o controle de prazo geral, sem mudança para as demais classes."},
+  {f:"CONTRPRAZ", at:"n6", go:["f2"], t:"Desvio para o controle de prazo do MS", d:"O processo de MS não fica no trilho geral: é desviado para o MS_CONTRPRAZ."},
+  {f:"CONTRDEVEXP", at:"n0", t:"Expediente físico — Informar prazo", d:"Outro ponto de proteção: quando há expediente físico, como um mandado cumprido por oficial de justiça."},
+  {f:"CONTRDEVEXP", at:"n3", go:["f1"], q:"O fluxo chamador indicou a saída? (variável fluxo:saida)", a:"SIM", alt:"<b>NÃO</b> → segue ao controle de prazo geral, comportamento padrão."},
+  {f:"CONTRDEVEXP", at:"n5", go:["f4"], t:"Devolve ao fluxo chamador", d:"O processo volta exatamente para o fluxo de MS que o chamou. Única alteração neste fluxo geral."},
+]},
+];
+
+/* ================================================================ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+// logos e ícones
+$$("img[data-logo]").forEach(i => i.src = LOGOS[i.dataset.logo]);
+const ICONS = {
+  chat:'<path d="M4 4h16v11H8l-4 4z"/>', tool:'<path d="M21 7.5 17.5 11 13 6.5 16.5 3a5 5 0 0 0-6.3 6.6L3 16.8V21h4.2l7.2-7.2A5 5 0 0 0 21 7.5z"/>',
+  hands:'<path d="M2 12l5-5 4 3 3-3 8 7-6 6-5-4-3 2z"/>', globe:'<circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="#fff" stroke-width="2"/>',
+  gear:'<circle cx="12" cy="12" r="3.5"/><path d="M12 2l2 3 3.5-.8.6 3.6L21 10l-1.6 3.2L21 16l-3 1.6-.6 3.4-3.4-.8L12 22l-2-2.8-3.4.8-.6-3.4L3 16l1.6-3L3 10l2.9-2.2.6-3.6L10 5z" fill="none" stroke="#fff" stroke-width="1.8"/>',
+  board:'<path d="M3 4h18v12H3zM8 20l4-4 4 4" fill="none" stroke="#fff" stroke-width="2"/><path d="M7 12l3-3 3 2 4-4" fill="none" stroke="#fff" stroke-width="2"/>',
+  code:'<path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="#fff" stroke-width="2.4"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="#fff" stroke-width="2.2"/>',
+  check:'<path d="M4 12l5 5L20 6" fill="none" stroke="#fff" stroke-width="3"/>'
+};
+$$("[data-icon]").forEach(e => e.innerHTML = `<svg viewBox="0 0 24 24" fill="#fff">${ICONS[e.dataset.icon]}</svg>`);
+
+/* ---------------- navegação de slides ---------------- */
+const stage = $("#stage"), slides = $$(".slide");
+let cur = 0, started = null;
+function fit() { const s = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transform = `translate(-50%,-50%) scale(${s})`; }
+function go(i) {
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((el, k) => el.classList.toggle("active", k === i));
+  cur = i;
+  $("#hud").textContent = `${i + 1} / ${slides.length}`;
+  $("#progress").style.width = `${(i + 1) / slides.length * 100}%`;
+  const n = $(".notes", slides[i]);
+  $("#ntitle").textContent = `Slide ${i + 1}`; $("#nbody").innerHTML = n ? n.innerHTML : "";
+  try { history.replaceState(null, "", "#" + (i + 1)); } catch (e) {}
+  if (i > 0 && !started) started = Date.now();
+  $$("[data-count]", slides[i]).forEach(countUp);
+  if (slides[i].id === "simSlide") Sim.enter(); else Sim.pause();
+}
+function countUp(el) {
+  const to = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now(), dur = 1400;
+  (function tick(t) { const p = Math.min(1, (t - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+    el.textContent = v.toLocaleString("pt-BR") + suf; if (p < 1) requestAnimationFrame(tick); })(t0);
+}
+
+/* ---------------- mapa do MS ---------------- */
+(function buildMap() {
+  const svg = $("#msmap"), NS = "http://www.w3.org/2000/svg";
+  const W = 290, H = 92;
+  const B = {
+    "MS_ANLIN":[20,80,1,"Análise da inicial"], "MS_INTAUTIMPET":[345,80,2,"Notificação da autoridade"], "MS_CONTRPRAZ":[670,80,3,"Controle de prazo"],
+    "MS_ANMANFEST":[995,80,4,"Análise de manifestação"], "MS_INTMPF":[1350,20,5,"Intimação do MPF"], "MS_INTIMPRET":[1350,140,6,"Perda do objeto"],
+    "ELSENT":[995,330,7,"Elaboração de sentença"], "MS_CONTRPRAZREC-1":[670,330,8,"Prazo recursal"], "MS_CONTRPRAZREC-2":[345,330,9,"Roteamento recursal"],
+    "MS_CONTRPRAZCONTREMB":[345,500,10,"Contrarrazões aos embargos",345], "CONTRPRAZ":[1030,560,11,"Controle de prazo geral"], "CONTRDEVEXP":[1350,560,12,"Devolução de expediente"],
+  };
+  const EXT = { "REMTRF5":[20,280,"Remessa ao TRF5"], "CERTTRANSJULG":[20,410,"Certificação do trânsito"] };
+  const pt = (k, side, off = 0) => { const [x, y] = B[k] || EXT[k];
+    return side === "r" ? [x + W, y + H / 2 + off] : side === "l" ? [x, y + H / 2 + off] : side === "b" ? [x + W / 2 + off, y + H] : [x + W / 2 + off, y]; };
+  const el = (tag, attrs, txt) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (txt) e.textContent = txt; svg.appendChild(e); return e; };
+  const line = (a, b, main, curve) => { const [x1, y1] = a, [x2, y2] = b;
+    const d = curve === "h" ? `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}` : `M${x1},${y1} L${x2},${y2}`;
+    el("path", { d, class: main ? "lk flow" : "lk" }); };
+  el("text", { x: 20, y: 46, class: "zone" }, "FASE DE CONHECIMENTO");
+  el("text", { x: 20, y: 262, class: "zone" }, "SENTENÇA E FASE RECURSAL");
+  el("text", { x: 1030, y: 540, class: "zone" }, "REDE DE PROTEÇÃO · FLUXOS GERAIS");
+  el("text", { x: 1030, y: 685, class: "lbl" }, "devolvem o processo de MS ao trilho próprio");
+  line(pt("MS_ANLIN", "r"), [345 - 6, 126], true);
+  line(pt("MS_INTAUTIMPET", "r"), [670 - 6, 126], true);
+  line(pt("MS_CONTRPRAZ", "r", -14), [995 - 6, 112], true);
+  line([995, 140], [960 + 6, 140], false);
+  line(pt("MS_ANMANFEST", "r", -14), [1350 - 6, 66], true, "h");
+  line(pt("MS_ANMANFEST", "r", 14), [1350 - 6, 186], false, "h");
+  el("path", { d: "M1495,20 C1495,-8 830,-8 815,74", class: "lk flow" });
+  el("text", { x: 1060, y: 50, class: "lbl" }, "volta ao controle de prazo");
+  line(pt("MS_ANMANFEST", "b"), [1140, 330 - 6], true); el("text", { x: 1152, y: 250, class: "lbl" }, "conclusão p/ julgamento");
+  line(pt("ELSENT", "l"), [960 + 6, 376], true);
+  line(pt("MS_CONTRPRAZREC-1", "l"), [635 + 6, 376], true);
+  line(pt("MS_CONTRPRAZREC-2", "l", -14), [310 + 6, 326], true, "h");
+  line(pt("MS_CONTRPRAZREC-2", "l", 14), [310 + 6, 456], false, "h");
+  line(pt("MS_CONTRPRAZREC-2", "b"), [490, 500 - 6], false);
+  el("path", { d: "M690,546 C930,546 1140,520 1140,428", class: "lk" }); el("text", { x: 760, y: 534, class: "lbl" }, "julga os embargos");
+  for (const [k, [x, y, n, name, bw = W]] of Object.entries(B)) {
+    const g = el("g", { class: "box" + (n >= 11 ? " alt" : "") });
+    g.innerHTML = `<rect x="${x}" y="${y}" width="${bw}" height="${H}"/><circle cx="${x + 28}" cy="${y + 30}" r="16" fill="${n >= 11 ? "#5B6B7A" : n >= 7 ? "#2BB5E0" : "#00699F"}"/>
+      <text class="num" x="${x + 28}" y="${y + 36}" text-anchor="middle">${n}</text>
+      <text class="code" x="${x + 54}" y="${y + 36}">${k.replace("-1", " 1/2").replace("-2", " 2/2")}</text>
+      <text class="name" x="${x + 20}" y="${y + 72}">${name}</text>`;
+    g.addEventListener("click", () => openLightbox(k));
+  }
+  for (const [k, [x, y, name]] of Object.entries(EXT)) {
+    const g = el("g", { class: "box ext" });
+    g.innerHTML = `<rect x="${x}" y="${y}" width="${W}" height="${H}"/><text class="code" x="${x + 20}" y="${y + 36}" style="fill:#5B6B7A">${k}</text><text class="name" x="${x + 20}" y="${y + 70}">${name}</text>`;
+  }
+})();
+
+function openLightbox(k) {
+  $("#lbcode").textContent = k; $("#lbname").textContent = FLOWS[k].title;
+  $("#lbbody").innerHTML = FLOWS[k].svg; $("#lightbox").classList.add("on");
+}
+$("#lightbox").addEventListener("click", () => $("#lightbox").classList.remove("on"));
+
+/* ---------------- simulador ---------------- */
+const Sim = (() => {
+  const NS = "http://www.w3.org/2000/svg";
+  const box = $("#svgbox");
+  let sc = SCENARIOS[0], idx = 0, playing = false, timer = null, anim = null, speed = 1, svg = null, flow = null, entered = false;
+
+  $("#scen").innerHTML = SCENARIOS.map(s => `<button data-id="${s.id}">${s.name}</button>`).join("");
+  $$("#scen button").forEach(b => b.addEventListener("click", () => { choose(b.dataset.id); }));
+
+  function choose(id) { sc = SCENARIOS.find(s => s.id === id); idx = 0; stop(); flow = null; $$("#scen button").forEach(b => b.classList.toggle("on", b.dataset.id === id)); render(true); }
+
+  const node = id => svg.querySelector(`#${CSS.escape(flow + "-" + id)}`);
+  const kindOf = el => el ? el.dataset.k : "ev";
+  const KIND = { task:"Tarefa humana · Secretaria", sub:"Subprocesso", auto:"Automático · Sistema", gw:"Decisão automática", ev:"Evento", link:"Continuação" };
+
+  function labelOf(el) {
+    if (!el) return "";
+    const b = el.getBBox(), out = [];
+    $$("text", svg).forEach(t => {
+      const x = +t.getAttribute("x"), y = +t.getAttribute("y"), c = t.getAttribute("class");
+      if (c === "tt" && x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height) out.push(t.textContent);
+    });
+    return out.join(" ").replace(/\s+—\s*/g, " — ");
+  }
+  function pathD(step) {
+    if (!step.go) return null;
+    if (typeof step.go === "string") return step.go;
+    return step.go.map((id, k) => { const d = svg.querySelector(`#${CSS.escape(flow + "-" + id)}`).getAttribute("d"); return k ? d.replace(/^M/, "L") : d; }).join(" ");
+  }
+
+  function load(f) {
+    flow = f; box.innerHTML = FLOWS[f].svg; svg = $("svg", box);
+    svg.removeAttribute("width"); svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    const g = document.createElementNS(NS, "g"); g.id = "ov"; svg.appendChild(g);
+    $("#fcode").textContent = f.replace("-1", " · 1/2").replace("-2", " · 2/2"); $("#fname").textContent = FLOWS[f].title;
+  }
+  // viewBox
+  let vbNow = null;
+  function setVB(v) { vbNow = v; svg.setAttribute("viewBox", v.join(" ")); }
+  function full() { return FLOWS[flow].vb.slice(); }
+  function focusBox(els, extra) {
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    const add = b => { x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.width); y1 = Math.max(y1, b.y + b.height); };
+    els.filter(Boolean).forEach(e => add(e.getBBox())); if (extra) add(extra);
+    const F = full(), cw = box.clientWidth || 1340, ch = box.clientHeight || 860, ar = cw / ch;
+    let w = Math.max(x1 - x0 + 260, 760), h = Math.max(y1 - y0 + 220, 420);
+    if (w / h > ar) h = w / ar; else w = h * ar;
+    if (w >= F[2] && h >= F[3]) return F;
+    let cx = (x0 + x1) / 2, cy = (y0 + y1) / 2 + 10;
+    let x = Math.max(F[0], Math.min(cx - w / 2, F[0] + F[2] - w)), y = Math.max(F[1], Math.min(cy - h / 2, F[1] + F[3] - h));
+    if (w > F[2]) x = F[0] + (F[2] - w) / 2; if (h > F[3]) y = F[1] + (F[3] - h) / 2;
+    return [x, y, w, h];
+  }
+  function tweenVB(to, dur) {
+    const from = vbNow || full(), t0 = performance.now();
+    return new Promise(res => {
+      (function f(t) { const p = Math.min(1, (t - t0) / dur), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+        setVB(from.map((v, i) => v + (to[i] - v) * e)); if (p < 1) anim = requestAnimationFrame(f); else res(); })(t0);
+    });
+  }
+
+  function mark(step, final) {
+    const ov = $("#ov", svg);
+    (step.pass || []).forEach(n => { const e = node(n); e && e.classList.add("vis"); });
+    const d = pathD(step);
+    if (d) { const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("class", "trailp"); ov.appendChild(p); }
+    const e = node(step.at); if (e) e.classList.add(final ? "act" : "vis");
+  }
+  function token(at) {
+    let t = $(".tok", svg);
+    if (!t) { t = document.createElementNS(NS, "g"); t.setAttribute("class", "tok"); t.innerHTML = '<circle class="r" r="10"/><circle class="o" r="10"/>'; $("#ov", svg).appendChild(t); }
+    if (at) t.setAttribute("transform", `translate(${at.x},${at.y})`);
+    return t;
+  }
+  function center(el) { const b = el.getBBox(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }
+  function rest(el, d) {
+    if (d) { const t = document.createElementNS(NS, "path"); t.setAttribute("d", d); const L = t.getTotalLength(); return t.getPointAtLength(L); }
+    const b = el.getBBox(); return el.tagName === "rect" ? { x: b.x, y: b.y + b.height / 2 } : center(el);
+  }
+
+  // estado do passo i: desenha tudo do trecho do mesmo fluxo até i
+  async function render(animate) {
+    stopAnim();
+    const step = sc.steps[idx];
+    const changed = flow !== step.f || !step.go;
+    if (changed) {
+      if (animate && flow) { box.classList.add("fade"); await wait(350); }
+      load(step.f); setVB(full());
+    } else { $$(".act,.vis", svg).forEach(e => e.classList.remove("act", "vis")); $("#ov", svg).innerHTML = ""; }
+    // segmento: do último passo sem "go" (entrada no fluxo) até idx
+    let s0 = idx; while (s0 > 0 && sc.steps[s0].go && sc.steps[s0 - 1].f === step.f) s0--;
+    for (let k = s0; k < idx; k++) mark(sc.steps[k], false);
+    const el = node(step.at), prevEl = idx > s0 ? node(sc.steps[idx - 1].at) : null;
+    panel(step, el);
+    ribbon();
+    if (changed) {
+      box.classList.remove("fade");
+      if (animate) { await banner(step.f); }
+      mark(step, true); token(rest(el));
+      setVB(full());
+      return;
+    }
+    const d = pathD(step);
+    // câmera enquadra origem, destino e trajeto
+    let pb = null; if (d) { const tmp = document.createElementNS(NS, "path"); tmp.setAttribute("d", d); $("#ov", svg).appendChild(tmp); pb = tmp.getBBox(); tmp.remove(); }
+    const target = focusBox([el, prevEl], pb);
+    if (!animate || !d) { mark(step, true); token(rest(el, d)); setVB(target); return; }
+    const cam = tweenVB(target, 650);
+    const ov = $("#ov", svg), p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("class", "trailp hot"); ov.appendChild(p);
+    const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+    const tok = token(); ov.appendChild(tok);
+    (step.pass || []).forEach(n => { const e = node(n); e && e.classList.add("vis"); });
+    await cam;
+    const dur = Math.min(1900, Math.max(550, len * 2.1)) / speed;
+    const t0 = performance.now();
+    await new Promise(res => { (function f(t) { const q = Math.min(1, (t - t0) / dur), e = q < .5 ? 2 * q * q : 1 - Math.pow(-2 * q + 2, 2) / 2;
+      const pt = p.getPointAtLength(len * e); tok.setAttribute("transform", `translate(${pt.x},${pt.y})`); p.style.strokeDashoffset = len * (1 - e);
+      if (q < 1) anim = requestAnimationFrame(f); else res(); })(t0); });
+    p.classList.remove("hot"); p.style.strokeDasharray = ""; p.style.strokeDashoffset = "";
+    if (prevEl) { prevEl.classList.remove("act"); prevEl.classList.add("vis"); }
+    el.classList.add("act"); const rp = rest(el, d); tok.setAttribute("transform", `translate(${rp.x},${rp.y})`);
+  }
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  async function banner(f) {
+    $("#bcode").textContent = f.replace("-1", " · 1/2").replace("-2", " · 2/2"); $("#bname").textContent = FLOWS[f].title; $("#bdesc").textContent = FLOWS[f].desc;
+    const b = $("#banner"); b.classList.add("on"); await wait(1500 / speed); b.classList.remove("on"); await wait(250);
+  }
+  function stopAnim() { if (anim) cancelAnimationFrame(anim); anim = null; }
+
+  function panel(step, el) {
+    const k = kindOf(el);
+    const title = step.t || labelOf(el) || "";
+    let h = `<div class="pin"><span class="kind k-${k}"><i></i>${KIND[k] || ""}</span>
+      <div class="ptitle">${title}</div><div class="pcode">${flow.replace("-1", " 1/2").replace("-2", " 2/2")} · ${FLOWS[flow].title}</div>`;
+    if (step.d) h += `<p class="ptext">${step.d}</p>`;
+    if (step.q) h += `<div class="dec"><div class="q">${step.q}</div><div class="a">✓ ${step.a}</div>${step.alt ? `<div class="alt">${step.alt}</div>` : ""}</div>`;
+    h += "</div>";
+    $("#pbody").innerHTML = h;
+    $("#pstep").textContent = `PASSO ${idx + 1} DE ${sc.steps.length}`;
+    $("#pscen").textContent = sc.sub;
+    $("#pbar").style.width = `${(idx + 1) / sc.steps.length * 100}%`;
+    const items = [];
+    for (let i = Math.max(0, idx - 5); i <= idx; i++) { const s = sc.steps[i]; items.push(`<li><em>${i + 1}</em><span>${trailLabel(s)}</span></li>`); }
+    $("#ptrail").innerHTML = items.join("");
+  }
+  function trailLabel(s) {
+    if (s.t) return s.t;
+    if (s.q) { let q = s.q.replace(/\s*\(.*?\)/g, "").replace(/\?$/, ""); if (q.length > 34) q = q.slice(0, 32) + "…"; return `${q}: <b>${s.a}</b>`; }
+    return shortLabel(s);
+  }
+  const DOCS = {};
+  function shortLabel(s) {
+    const doc = DOCS[s.f] || (DOCS[s.f] = new DOMParser().parseFromString(FLOWS[s.f].svg, "image/svg+xml"));
+    const e = doc.getElementById(`${s.f}-${s.at}`); if (!e || e.tagName !== "rect") return s.f;
+    const [x, y, w, h] = ["x", "y", "width", "height"].map(a => +e.getAttribute(a));
+    const out = Array.from(doc.querySelectorAll("text.tt")).filter(t => { const tx = +t.getAttribute("x"), ty = +t.getAttribute("y"); return tx >= x && tx <= x + w && ty >= y && ty <= y + h; }).map(t => t.textContent);
+    return out.join(" ").replace(/\s+—\s*/g, " — ") || s.f;
+  }
+
+  function ribbon() {
+    const seq = []; sc.steps.forEach((s, i) => { if (!seq.length || seq[seq.length - 1].f !== s.f) seq.push({ f: s.f, i }); });
+    let curSeg = 0; seq.forEach((s, k) => { if (s.i <= idx) curSeg = k; });
+    $("#ribbon").innerHTML = seq.map((s, k) => `${k ? '<span class="ar">›</span>' : ""}<span class="chip ${k < curSeg ? "done" : k === curSeg ? "cur" : ""}">${s.f.replace("-1", " 1/2").replace("-2", " 2/2")}</span>`).join("");
+    const cur = $("#ribbon .chip.cur"); if (cur) { const r = $("#ribbon"); r.scrollLeft = cur.offsetLeft - r.clientWidth / 2; }
+  }
+
+  let busy = false, queued = 0;
+  function setBusy(v) { busy = v; box.dataset.busy = v ? "1" : ""; }
+  async function next() {
+    if (busy) { if (idx + queued < sc.steps.length - 1) { queued++; return true; } return false; }
+    if (idx >= sc.steps.length - 1) return false;
+    setBusy(true); idx++; await render(true); setBusy(false);
+    if (queued) { queued--; next(); }
+    return true;
+  }
+  async function prev() { if (busy) return true; if (idx <= 0) return false; setBusy(true); idx--; await render(false); setBusy(false); return true; }
+  function stop() { queued = 0; playing = false; clearTimeout(timer); $("#playIco").innerHTML = '<path d="M8 5v14l11-7z"/>'; }
+  async function loop() { if (!playing) return; const ok = await next(); if (!ok) { stop(); return; } timer = setTimeout(loop, 1300 / speed); }
+  function play() { if (playing) { stop(); return; } if (idx >= sc.steps.length - 1) { idx = 0; render(false); } playing = true; $("#playIco").innerHTML = '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>'; timer = setTimeout(loop, 400); }
+  function cycleSpeed() { speed = speed === 1 ? 1.6 : speed === 1.6 ? 0.6 : 1; $("#bSpd").textContent = (speed === 1.6 ? "1,6" : speed === 0.6 ? "0,6" : "1") + "×"; }
+  async function overview() { if (!svg) return; const F = full(); const isFull = vbNow && Math.abs(vbNow[2] - F[2]) < 2 && Math.abs(vbNow[3] - F[3]) < 2;
+    await tweenVB(isFull ? focusBox([node(sc.steps[idx].at)]) : F, 700); }
+
+  $("#bNext").onclick = () => { stop(); next(); }; $("#bPrev").onclick = () => { stop(); prev(); };
+  $("#bPlay").onclick = play; $("#bRestart").onclick = () => { stop(); idx = 0; flow = null; render(true); };
+  $("#bFit").onclick = overview; $("#bSpd").onclick = cycleSpeed;
+
+  return {
+    enter() { if (!entered) { entered = true; choose(SCENARIOS[0].id); } },
+    pause: stop,
+    // teclado no slide do simulador: devolve false quando chega ao fim/início (navegação segue para o slide vizinho)
+    async key(e) {
+      switch (e.key) {
+        case "ArrowRight": case "PageDown": case " ": stop(); return await next();
+        case "ArrowLeft": case "PageUp": stop(); return await prev();
+        case "p": case "P": case "Enter": play(); return true;
+        case "v": case "V": overview(); return true;
+        case "s": case "S": cycleSpeed(); return true;
+        case "Home": stop(); idx = 0; flow = null; render(true); return true;
+        case "1": case "2": case "3": case "4": case "5": choose(SCENARIOS[+e.key - 1].id); return true;
+      }
+      return false;
+    }
+  };
+})();
+
+/* ---------------- teclado ---------------- */
+document.addEventListener("keydown", async e => {
+  if ($("#lightbox").classList.contains("on")) { if (e.key === "Escape" || e.key === " ") { $("#lightbox").classList.remove("on"); e.preventDefault(); } return; }
+  if (e.key === "n" || e.key === "N") { $("#notes").classList.toggle("on"); return; }
+  if (e.key === "f" || e.key === "F") { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); return; }
+  if (e.key === "r" || e.key === "R") { started = Date.now(); return; }
+  if (slides[cur].id === "simSlide") {
+    if (["ArrowRight","ArrowLeft","PageDown","PageUp"," ","Home"].includes(e.key)) e.preventDefault();
+    if (await Sim.key(e)) return;
+    if (e.key === "Home") return;
+  }
+  switch (e.key) {
+    case "ArrowRight": case "PageDown": case " ": go(cur + 1); e.preventDefault(); break;
+    case "ArrowLeft": case "PageUp": case "Backspace": go(cur - 1); e.preventDefault(); break;
+    case "Home": go(0); break; case "End": go(slides.length - 1); break;
+  }
+});
+let x0 = null;
+document.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+document.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 60 && slides[cur].id !== "simSlide") go(cur + (dx < 0 ? 1 : -1)); x0 = null; });
+setInterval(() => { const s = started ? Math.floor((Date.now() - started) / 1000) : 0, el = $("#clock");
+  el.textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")} / 15:00`; el.classList.toggle("late", s > 900); }, 1000);
+addEventListener("resize", fit); fit();
+go(Math.max(0, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+</script>
+</body>
+</html>

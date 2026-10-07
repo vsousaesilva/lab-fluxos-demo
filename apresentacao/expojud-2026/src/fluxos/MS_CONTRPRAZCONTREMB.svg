@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 720" width="1800" height="720" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <style>
+      .lane{fill:#fcfcfc;stroke:#9a9a9a;stroke-width:1}.lanealt{fill:#f3f3f3;stroke:#9a9a9a;stroke-width:1}
+      .lanelbl{font-size:12px;font-weight:600;fill:#333;letter-spacing:.1em}
+      .task{fill:#fff;stroke:#333;stroke-width:1.6;rx:8}.sub{fill:#fff;stroke:#333;stroke-width:3;rx:8}
+      .auto{fill:#ededed;stroke:#555;stroke-width:1.2;rx:8}
+      .gw{fill:#fff;stroke:#333;stroke-width:1.6}.ev{fill:#fff;stroke:#333}
+      .tt{font-size:12px;fill:#111;font-weight:600}.ts{font-size:9.5px;fill:#555}
+      .gl{font-size:10.5px;fill:#111;font-weight:600}.el{font-size:10px;fill:#333}
+      .flow{stroke:#333;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .note{font-size:10px;fill:#666;font-style:italic}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1800" height="720" fill="#fff"/>
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">MS_CONTRPRAZCONTREMB — [MS] Contrarrazões aos embargos de declaração</text>
+  <text x="24" y="48" class="note">Contorno grosso = subprocesso · caixa cinza = automático · caixa branca = tarefa humana</text>
+
+  <rect class="lane" x="24" y="70" width="1752" height="190"/>
+  <rect class="lanealt" x="24" y="260" width="1752" height="240"/>
+  <rect class="lane" x="24" y="500" width="1752" height="160"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="190"/><rect class="lane" x="24" y="260" width="34" height="240"/><rect class="lanealt" x="24" y="500" width="34" height="160"/>
+  <text class="lanelbl" transform="translate(46,210) rotate(-90)">SECRETARIA</text>
+  <text class="lanelbl" transform="translate(46,415) rotate(-90)">SISTEMA</text>
+  <text class="lanelbl" transform="translate(46,610) rotate(-90)">SAÍDAS</text>
+
+  <!-- SECRETARIA -->
+  <rect class="task" x="360" y="105" width="200" height="70"/>
+  <text x="460" y="131" class="tt" text-anchor="middle">[MS] Embargos — Analisar</text>
+  <text x="460" y="147" class="tt" text-anchor="middle">pendência de intimação</text>
+  <text x="460" y="164" class="ts" text-anchor="middle">miniPAC · 5 dias</text>
+
+  <rect class="sub" x="700" y="105" width="200" height="70"/>
+  <text x="800" y="133" class="tt" text-anchor="middle">Análise de comunicação</text>
+  <text x="800" y="150" class="ts" text-anchor="middle">subprocesso ANCOM</text>
+  <text x="800" y="164" class="ts" text-anchor="middle">despacha e devolve</text>
+
+  <rect class="sub" x="990" y="105" width="200" height="70"/>
+  <text x="1090" y="133" class="tt" text-anchor="middle">Controle de devolução</text>
+  <text x="1090" y="150" class="ts" text-anchor="middle">subprocesso CONTRDEVEXP</text>
+  <text x="1090" y="164" class="ts" text-anchor="middle">devolve ao fluxo</text>
+
+  <rect class="task" x="1290" y="105" width="220" height="70"/>
+  <text x="1400" y="131" class="tt" text-anchor="middle">[MS] Controle de prazo para</text>
+  <text x="1400" y="147" class="tt" text-anchor="middle">contrarrazões — em curso</text>
+  <text x="1400" y="164" class="ts" text-anchor="middle">registro de ciência · encerrar expedientes</text>
+
+  <!-- SISTEMA -->
+  <circle class="ev" cx="110" cy="375" r="16" stroke-width="1.8"/>
+  <text x="110" y="410" class="ts" text-anchor="middle">Início</text>
+
+  <rect class="auto" x="158" y="330" width="180" height="76"/>
+  <text x="248" y="353" class="tt" text-anchor="middle">Identificar polo</text>
+  <text x="248" y="369" class="tt" text-anchor="middle">que embargou</text>
+  <text x="248" y="385" class="ts" text-anchor="middle">define polos a intimar</text>
+  <text x="248" y="398" class="ts" text-anchor="middle">e se o MPF é intimado</text>
+
+  <rect class="auto" x="380" y="330" width="180" height="76"/>
+  <text x="470" y="353" class="tt" text-anchor="middle">Intimar para</text>
+  <text x="470" y="369" class="tt" text-anchor="middle">contrarrazões</text>
+  <text x="470" y="385" class="ts" text-anchor="middle">CP_INTAUT · 5 dias, em dobro</text>
+  <text x="470" y="398" class="ts" text-anchor="middle">modelo 56247 · tipo 225</text>
+  <rect x="380" y="330" width="180" height="76" fill="none" stroke="#333" stroke-width="3" rx="8"/>
+
+  <path class="gw" d="M660,331 L705,375 L660,419 L615,375 z"/>
+  <rect x="600" y="436" width="126" height="26" fill="#fff"/>
+  <text x="603" y="446" class="gl">Pendência</text>
+  <text x="603" y="459" class="gl">de intimação?</text>
+
+  <path class="gw" d="M880,241 L925,285 L880,329 L835,285 z"/>
+  <rect x="932" y="268" width="152" height="26" fill="#fff"/>
+  <text x="935" y="278" class="gl">Expediente físico</text>
+  <text x="935" y="291" class="gl">a devolver?</text>
+
+  <rect class="auto" x="1230" y="344" width="190" height="62"/>
+  <text x="1325" y="367" class="tt" text-anchor="middle">Gravar expedientes</text>
+  <text x="1325" y="383" class="ts" text-anchor="middle">das contrarrazões</text>
+  <text x="1325" y="396" class="ts" text-anchor="middle">ms:idsExpedientesContrarrazaoEmbargos</text>
+
+  <path class="gw" d="M1610,331 L1655,375 L1610,419 L1565,375 z"/>
+  <rect x="1490" y="436" width="130" height="26" fill="#fff"/>
+  <text x="1616" y="446" class="gl" text-anchor="end">Expediente</text>
+  <text x="1616" y="459" class="gl" text-anchor="end">ainda aberto?</text>
+
+  <!-- SAÍDAS -->
+  <rect class="auto" x="180" y="545" width="200" height="55"/>
+  <text x="280" y="570" class="tt" text-anchor="middle">Elaboração de sentença</text>
+  <text x="280" y="586" class="ts" text-anchor="middle">ELSENT · julga os embargos</text>
+
+  <rect class="auto" x="430" y="545" width="180" height="55"/>
+  <text x="520" y="570" class="tt" text-anchor="middle">Análise de comunicação</text>
+  <text x="520" y="586" class="ts" text-anchor="middle">ANCOM</text>
+
+  <rect class="auto" x="660" y="545" width="180" height="55"/>
+  <text x="750" y="570" class="tt" text-anchor="middle">Análise de secretaria</text>
+  <text x="750" y="586" class="ts" text-anchor="middle">ANSEC</text>
+
+  <rect class="task" x="890" y="545" width="170" height="55"/>
+  <text x="975" y="570" class="tt" text-anchor="middle">Nó de Desvio</text>
+  <text x="975" y="586" class="ts" text-anchor="middle">reposicionamento</text>
+
+  <circle class="ev" cx="1730" cy="572" r="16" stroke-width="3.4"/>
+  <text x="1730" y="606" class="ts" text-anchor="middle">Término</text>
+
+  <!-- FLUXOS -->
+  <path class="flow" d="M126,375 L158,375"/>
+  <path class="flow" d="M338,368 L380,368"/>
+  <path class="flow" d="M560,375 L615,375"/>
+
+  <path class="flow" d="M660,331 L660,140 L560,140"/>
+  <rect x="566" y="248" width="98" height="14" fill="#fff"/>
+  <text x="569" y="259" class="el">T1 · há pendência</text>
+
+  <path class="flow" d="M705,375 L1230,375"/>
+  <rect x="800" y="358" width="112" height="14" fill="#fff"/>
+  <text x="803" y="369" class="el">T2 · sem pendência</text>
+
+  <path class="flow" d="M560,120 L700,120"/>
+  <rect x="572" y="101" width="116" height="14" fill="#fff"/>
+  <text x="575" y="112" class="el">análise de comunicação</text>
+
+  <path class="flow" d="M800,175 L800,215 L880,215 L880,241"/>
+  <path class="flow" d="M925,285 L1090,285 L1090,175"/>
+  <rect x="958" y="268" width="26" height="14" fill="#fff"/>
+  <text x="961" y="279" class="el">SIM</text>
+
+  <path class="flow" d="M1190,140 L1270,140 L1270,344"/>
+  <rect x="1196" y="121" width="60" height="14" fill="#fff"/>
+  <text x="1199" y="132" class="el">devolvido</text>
+
+  <path class="flow" d="M880,329 L880,470 L1370,470 L1370,406"/>
+  <rect x="1010" y="454" width="152" height="14" fill="#fff"/>
+  <text x="1013" y="465" class="el">NÃO · sem expediente físico</text>
+
+  <path class="flow" d="M480,105 L480,86 L1325,86 L1325,344"/>
+  <rect x="820" y="68" width="172" height="14" fill="#fff"/>
+  <text x="823" y="79" class="el">prosseguir para controle de prazo</text>
+
+  <path class="flow" d="M360,125 L300,125 L300,300 L470,300 L470,330"/>
+  <rect x="308" y="284" width="100" height="14" fill="#fff"/>
+  <text x="311" y="295" class="el">intimar novamente</text>
+
+  <path class="flow" d="M1420,375 L1510,375 L1510,140 L1510,140"/>
+  <path class="flow" d="M1510,140 L1290,140"/>
+  <rect x="1330" y="121" width="150" height="14" fill="#fff"/>
+  <text x="1333" y="132" class="el">controle de prazo em curso</text>
+
+  <path class="flow" d="M1400,175 L1400,240 L1610,240 L1610,331"/>
+  <rect x="1440" y="224" width="150" height="14" fill="#fff"/>
+  <text x="1443" y="235" class="el">expedientes fecharam · reavaliar</text>
+
+  <path class="flow" d="M1655,375 L1700,375 L1700,210 L1450,210 L1450,175"/>
+  <rect x="1470" y="194" width="128" height="14" fill="#fff"/>
+  <text x="1473" y="205" class="el">SIM · volta à tarefa</text>
+
+  <path class="flow" d="M1610,419 L1610,510 L280,510 L280,545"/>
+  <rect x="900" y="494" width="196" height="14" fill="#fff"/>
+  <text x="903" y="505" class="el">NÃO · concluso para julgar os embargos</text>
+
+  <path class="flow" d="M420,175 L420,520 L520,520 L520,545"/>
+  <path class="flow" d="M500,175 L500,530 L750,530 L750,545"/>
+  <rect x="660" y="514" width="118" height="14" fill="#fff"/>
+  <text x="663" y="525" class="el">analisar — secretaria</text>
+  <path class="flow" d="M540,175 L540,540 L975,540 L975,545"/>
+
+  <path class="flow" d="M380,572 L430,572"/>
+  <path class="flow" d="M610,572 L660,572"/>
+  <path class="flow" d="M840,572 L890,572"/>
+  <path class="flow" d="M1060,572 L1714,572"/>
+
+  <text x="24" y="700" class="note">Fonte: MS_CONTRPRAZCONTREMB.xml · revisão de 10/09/2026. O ELSENT devolve o processo ao MS_CONTRPRAZREC, que reconhece o ciclo pós-embargos pelos movimentos 198, 871 e 200.</text>
+</svg>

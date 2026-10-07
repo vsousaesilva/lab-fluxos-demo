@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 720" width="1800" height="720" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <style>
+      .lane   { fill:#fcfcfc; stroke:#9a9a9a; stroke-width:1; }
+      .lanealt{ fill:#f3f3f3; stroke:#9a9a9a; stroke-width:1; }
+      .lanelbl{ font-size:12px; font-weight:600; fill:#333; letter-spacing:.1em; }
+      .task   { fill:#fff; stroke:#333; stroke-width:1.6; rx:8; }
+      .sub    { fill:#fff; stroke:#333; stroke-width:3; rx:8; }
+      .auto   { fill:#ededed; stroke:#555; stroke-width:1.2; rx:8; }
+      .gw     { fill:#fff; stroke:#333; stroke-width:1.6; }
+      .ev     { fill:#fff; stroke:#333; }
+      .tt     { font-size:12px; fill:#111; font-weight:600; }
+      .ts     { font-size:9.5px; fill:#555; }
+      .gl     { font-size:10.5px; fill:#111; font-weight:600; }
+      .el     { font-size:10px; fill:#333; }
+      .flow   { stroke:#333; stroke-width:1.4; fill:none; marker-end:url(#a); }
+      .note   { font-size:10px; fill:#666; font-style:italic; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1800" height="720" fill="#fff"/>
+
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">MS_INTMPF — [MS] Intimar MPF · 10 dias</text>
+  <text x="24" y="48" class="note">Contorno grosso = subprocesso · caixa cinza = automático · caixa branca = tarefa humana</text>
+
+  <rect class="lane"    x="24" y="70"  width="1752" height="180"/>
+  <rect class="lanealt" x="24" y="250" width="1752" height="250"/>
+  <rect class="lane"    x="24" y="500" width="1752" height="160"/>
+  <rect class="lanealt" x="24" y="70"  width="34" height="180"/>
+  <rect class="lane"    x="24" y="250" width="34" height="250"/>
+  <rect class="lanealt" x="24" y="500" width="34" height="160"/>
+  <text class="lanelbl" transform="translate(46,205) rotate(-90)">SECRETARIA</text>
+  <text class="lanelbl" transform="translate(46,410) rotate(-90)">SISTEMA</text>
+  <text class="lanelbl" transform="translate(46,610) rotate(-90)">SAÍDAS</text>
+
+  <!-- SECRETARIA -->
+  <rect class="task" x="360" y="120" width="200" height="70"/>
+  <text x="460" y="145" class="tt" text-anchor="middle">[MS] MPF — Analisar</text>
+  <text x="460" y="161" class="tt" text-anchor="middle">pendência de intimação</text>
+  <text x="460" y="178" class="ts" text-anchor="middle">miniPAC · aviso de partes não intimadas</text>
+
+  <rect class="sub" x="710" y="120" width="200" height="70"/>
+  <text x="810" y="148" class="tt" text-anchor="middle">Análise de comunicação</text>
+  <text x="810" y="165" class="ts" text-anchor="middle">subprocesso ANCOM</text>
+  <text x="810" y="179" class="ts" text-anchor="middle">despacha e devolve</text>
+
+  <rect class="sub" x="1000" y="120" width="200" height="70"/>
+  <text x="1100" y="148" class="tt" text-anchor="middle">Controle de devolução</text>
+  <text x="1100" y="165" class="ts" text-anchor="middle">subprocesso CONTRDEVEXP</text>
+  <text x="1100" y="179" class="ts" text-anchor="middle">devolve ao fluxo</text>
+
+  <!-- SISTEMA -->
+  <circle class="ev" cx="110" cy="375" r="16" stroke-width="1.8"/>
+  <text x="110" y="410" class="ts" text-anchor="middle">Início</text>
+
+  <rect class="auto" x="160" y="344" width="170" height="62"/>
+  <text x="245" y="367" class="tt" text-anchor="middle">Intimar MPF</text>
+  <text x="245" y="383" class="ts" text-anchor="middle">CP_INTAUT · 10 dias</text>
+  <text x="245" y="396" class="ts" text-anchor="middle">modelo 56245 · polos T</text>
+
+  <path class="gw" d="M400,331 L445,375 L400,419 L355,375 z"/>
+  <rect x="452" y="418" width="126" height="26" fill="#fff"/>
+  <text x="455" y="428" class="gl">Pendência</text>
+  <text x="455" y="441" class="gl">de intimação?</text>
+
+  <path class="gw" d="M900,251 L945,295 L900,339 L855,295 z"/>
+  <rect x="952" y="278" width="152" height="26" fill="#fff"/>
+  <text x="955" y="288" class="gl">Expediente físico</text>
+  <text x="955" y="301" class="gl">a devolver?</text>
+
+  <rect class="auto" x="1250" y="344" width="170" height="62"/>
+  <text x="1335" y="370" class="tt" text-anchor="middle">Gerar etiqueta</text>
+  <text x="1335" y="388" class="ts" text-anchor="middle">[A] Prazo MPF</text>
+
+  <rect class="auto" x="1490" y="344" width="180" height="62"/>
+  <text x="1580" y="370" class="tt" text-anchor="middle">Controle de prazo</text>
+  <text x="1580" y="388" class="ts" text-anchor="middle">MS_CONTRPRAZ</text>
+
+  <!-- SAÍDAS -->
+  <rect class="auto" x="180" y="545" width="180" height="55"/>
+  <text x="270" y="570" class="tt" text-anchor="middle">Análise de secretaria</text>
+  <text x="270" y="586" class="ts" text-anchor="middle">ANSEC</text>
+
+  <rect class="task" x="450" y="545" width="180" height="55"/>
+  <text x="540" y="570" class="tt" text-anchor="middle">Nó de Desvio</text>
+  <text x="540" y="586" class="ts" text-anchor="middle">reposicionamento</text>
+
+  <circle class="ev" cx="1730" cy="572" r="16" stroke-width="3.4"/>
+  <text x="1730" y="606" class="ts" text-anchor="middle">Término</text>
+
+  <!-- FLUXOS -->
+  <path class="flow" d="M126,375 L160,375"/>
+  <path class="flow" d="M330,375 L355,375"/>
+
+  <path class="flow" d="M400,331 L400,190"/>
+  <rect x="404" y="248" width="98" height="14" fill="#fff"/>
+  <text x="407" y="259" class="el">T1 · há pendência</text>
+
+  <path class="flow" d="M445,375 L1250,375"/>
+  <rect x="600" y="358" width="112" height="14" fill="#fff"/>
+  <text x="603" y="369" class="el">T2 · sem pendência</text>
+
+  <path class="flow" d="M560,145 L710,145"/>
+  <rect x="578" y="126" width="116" height="14" fill="#fff"/>
+  <text x="581" y="137" class="el">análise de comunicação</text>
+
+  <path class="flow" d="M810,190 L810,225 L900,225 L900,251"/>
+
+  <path class="flow" d="M945,295 L1100,295 L1100,190"/>
+  <rect x="978" y="278" width="26" height="14" fill="#fff"/>
+  <text x="981" y="289" class="el">SIM</text>
+
+  <path class="flow" d="M1200,145 L1300,145 L1300,344"/>
+  <rect x="1214" y="126" width="60" height="14" fill="#fff"/>
+  <text x="1217" y="137" class="el">devolvido</text>
+
+  <path class="flow" d="M900,339 L900,450 L1290,450 L1290,406"/>
+  <rect x="1010" y="434" width="152" height="14" fill="#fff"/>
+  <text x="1013" y="445" class="el">NÃO · sem expediente físico</text>
+
+  <path class="flow" d="M480,120 L480,92 L1370,92 L1370,344"/>
+  <rect x="820" y="74" width="172" height="14" fill="#fff"/>
+  <text x="823" y="85" class="el">prosseguir para controle de prazo</text>
+
+  <path class="flow" d="M360,140 L300,140 L300,320 L245,320 L245,344"/>
+  <rect x="252" y="303" width="100" height="14" fill="#fff"/>
+  <text x="255" y="314" class="el">intimar novamente</text>
+
+  <path class="flow" d="M400,190 L400,480 L270,480 L270,545"/>
+  <rect x="290" y="464" width="118" height="14" fill="#fff"/>
+  <text x="293" y="475" class="el">analisar — secretaria</text>
+
+  <path class="flow" d="M540,190 L540,545"/>
+  <rect x="546" y="466" width="42" height="14" fill="#fff"/>
+  <text x="549" y="477" class="el">desvio</text>
+
+  <path class="flow" d="M1420,375 L1490,375"/>
+  <path class="flow" d="M1580,406 L1580,572 L1714,572"/>
+  <path class="flow" d="M360,572 L450,572"/>
+  <path class="flow" d="M630,572 L1714,572"/>
+
+  <text x="24" y="700" class="note">Fonte: MS_INTMPF.xml · revisão de 10/09/2026. Toda tarefa tem saída para o Nó de Desvio; representada uma única vez para não poluir o desenho.</text>
+</svg>

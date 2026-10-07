@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1620 660" width="1620" height="660" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <style>
+      .lane{fill:#fcfcfc;stroke:#9a9a9a;stroke-width:1}.lanealt{fill:#f3f3f3;stroke:#9a9a9a;stroke-width:1}
+      .lanelbl{font-size:12px;font-weight:600;fill:#333;letter-spacing:.1em}
+      .task{fill:#fff;stroke:#333;stroke-width:1.6;rx:8}.auto{fill:#ededed;stroke:#555;stroke-width:1.2;rx:8}
+      .gw{fill:#fff;stroke:#333;stroke-width:1.6}.ev{fill:#fff;stroke:#333}
+      .link{fill:#fff;stroke:#333;stroke-width:1.6;stroke-dasharray:5 3;rx:8}
+      .tt{font-size:12px;fill:#111;font-weight:600}.ts{font-size:9.5px;fill:#555}
+      .gl{font-size:10.5px;fill:#111;font-weight:600}.el{font-size:10px;fill:#333}
+      .flow{stroke:#333;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .note{font-size:10px;fill:#666;font-style:italic}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1620" height="660" fill="#fff"/>
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">MS_CONTRPRAZREC · 1 de 2 — Controle de prazo recursal</text>
+  <text x="24" y="48" class="note">Caixa cinza = automático · caixa branca = tarefa humana · caixa tracejada = continua no desenho 2</text>
+
+  <rect class="lane" x="24" y="70" width="1572" height="170"/>
+  <rect class="lanealt" x="24" y="240" width="1572" height="240"/>
+  <rect class="lane" x="24" y="480" width="1572" height="130"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="170"/><rect class="lane" x="24" y="240" width="34" height="240"/><rect class="lanealt" x="24" y="480" width="34" height="130"/>
+  <text class="lanelbl" transform="translate(46,200) rotate(-90)">SECRETARIA</text>
+  <text class="lanelbl" transform="translate(46,395) rotate(-90)">SISTEMA</text>
+  <text class="lanelbl" transform="translate(46,570) rotate(-90)">SAÍDAS</text>
+
+  <!-- SECRETARIA -->
+  <rect class="task" x="880" y="100" width="230" height="76"/>
+  <text x="995" y="126" class="tt" text-anchor="middle">[MS] Controle de prazo</text>
+  <text x="995" y="142" class="tt" text-anchor="middle">para recurso — em curso</text>
+  <text x="995" y="159" class="ts" text-anchor="middle">registro de ciência · encerrar expedientes</text>
+  <text x="995" y="171" class="ts" text-anchor="middle">aguarda petição, decurso e fechamento</text>
+
+  <rect class="task" x="1200" y="100" width="210" height="76"/>
+  <text x="1305" y="130" class="tt" text-anchor="middle">[MS] Comunicação</text>
+  <text x="1305" y="146" class="tt" text-anchor="middle">enviada — Sem prazo</text>
+  <text x="1305" y="164" class="ts" text-anchor="middle">não há prazo recursal a controlar</text>
+
+  <!-- SISTEMA -->
+  <circle class="ev" cx="105" cy="350" r="16" stroke-width="1.8"/>
+  <text x="105" y="385" class="ts" text-anchor="middle">Início</text>
+
+  <rect class="auto" x="150" y="319" width="175" height="62"/>
+  <text x="237" y="342" class="tt" text-anchor="middle">Registrar entrada</text>
+  <text x="237" y="358" class="ts" text-anchor="middle">grava o marco temporal</text>
+  <text x="237" y="371" class="ts" text-anchor="middle">fluxo:dataEntradaControlarPrazo</text>
+
+  <rect class="auto" x="360" y="310" width="200" height="80"/>
+  <text x="460" y="332" class="tt" text-anchor="middle">Registrar tipo da sentença</text>
+  <text x="460" y="348" class="ts" text-anchor="middle">concessiva · denegatória · extinção</text>
+  <text x="460" y="361" class="ts" text-anchor="middle">só sobrescreve se resultado definido</text>
+  <text x="460" y="376" class="ts" text-anchor="middle">apura também o ciclo pós-embargos</text>
+
+  <path class="gw" d="M650,306 L695,350 L650,394 L605,350 z"/>
+  <rect x="590" y="410" width="150" height="26" fill="#fff"/>
+  <text x="593" y="420" class="gl">Existe expediente</text>
+  <text x="593" y="433" class="gl">em controle?</text>
+
+  <rect class="auto" x="750" y="319" width="180" height="62"/>
+  <text x="840" y="345" class="tt" text-anchor="middle">Gravar / atualizar</text>
+  <text x="840" y="361" class="ts" text-anchor="middle">lista de expedientes</text>
+  <text x="840" y="374" class="ts" text-anchor="middle">fluxo:idsExpedientes</text>
+
+  <path class="gw" d="M1030,306 L1075,350 L1030,394 L985,350 z"/>
+  <rect x="1082" y="336" width="128" height="26" fill="#fff"/>
+  <text x="1085" y="346" class="gl">Expedientes</text>
+  <text x="1085" y="359" class="gl">sem prazo?</text>
+
+  <path class="gw" d="M1400,306 L1445,350 L1400,394 L1355,350 z"/>
+  <rect x="1290" y="410" width="122" height="26" fill="#fff"/>
+  <text x="1406" y="420" class="gl" text-anchor="end">Expediente</text>
+  <text x="1406" y="433" class="gl" text-anchor="end">ainda aberto?</text>
+
+  <!-- SAÍDAS -->
+  <rect class="auto" x="200" y="515" width="185" height="55"/>
+  <text x="292" y="540" class="tt" text-anchor="middle">Análise de secretaria</text>
+  <text x="292" y="556" class="ts" text-anchor="middle">ANSEC</text>
+
+  <rect class="task" x="440" y="515" width="170" height="55"/>
+  <text x="525" y="540" class="tt" text-anchor="middle">Nó de Desvio</text>
+  <text x="525" y="556" class="ts" text-anchor="middle">reposicionamento</text>
+
+  <rect class="link" x="700" y="515" width="290" height="55"/>
+  <text x="845" y="540" class="tt" text-anchor="middle">Roteamento recursal</text>
+  <text x="845" y="556" class="ts" text-anchor="middle">continua no desenho 2 de 2</text>
+
+  <!-- FLUXOS -->
+  <path class="flow" d="M121,350 L150,350"/>
+  <path class="flow" d="M325,350 L360,350"/>
+  <path class="flow" d="M560,350 L605,350"/>
+  <path class="flow" d="M695,350 L750,350"/>
+  <path class="flow" d="M930,350 L985,350"/>
+
+  <path class="flow" d="M1030,306 L1030,270 L1305,270 L1305,176"/>
+  <rect x="1060" y="254" width="70" height="14" fill="#fff"/>
+  <text x="1063" y="265" class="el">sem prazo</text>
+
+  <path class="flow" d="M1075,350 L1120,350 L1120,290 L995,290 L995,176"/>
+  <rect x="1000" y="274" width="112" height="14" fill="#fff"/>
+  <text x="1003" y="285" class="el">controle de prazo</text>
+
+  <path class="flow" d="M995,176 L995,220 L1400,220 L1400,306"/>
+  <rect x="1120" y="204" width="150" height="14" fill="#fff"/>
+  <text x="1123" y="215" class="el">expedientes fecharam · reavaliar</text>
+
+  <path class="flow" d="M1445,350 L1500,350 L1500,250 L1060,250 L1060,190 L1050,190 L1050,176"/>
+  <rect x="1180" y="234" width="128" height="14" fill="#fff"/>
+  <text x="1183" y="245" class="el">SIM · volta à tarefa</text>
+
+  <path class="flow" d="M1400,394 L1400,460 L845,460 L845,515"/>
+  <rect x="1000" y="444" width="182" height="14" fill="#fff"/>
+  <text x="1003" y="455" class="el">NÃO · todos fechados · rotear recurso</text>
+
+  <path class="flow" d="M920,176 L920,480 L292,480 L292,515"/>
+  <rect x="500" y="464" width="118" height="14" fill="#fff"/>
+  <text x="503" y="475" class="el">analisar — secretaria</text>
+
+  <path class="flow" d="M960,176 L960,495 L525,495 L525,515"/>
+  <rect x="640" y="479" width="42" height="14" fill="#fff"/>
+  <text x="643" y="490" class="el">desvio</text>
+
+  <text x="24" y="636" class="note">Fonte: MS_CONTRPRAZREC.xml · revisão de 10/09/2026. A tarefa sem prazo também oferece a análise de secretaria e o Nó de Desvio.</text>
+</svg>

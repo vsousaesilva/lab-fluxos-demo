@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 740" width="1800" height="740" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+    <style>
+      .lane{fill:#fcfcfc;stroke:#9a9a9a;stroke-width:1}.lanealt{fill:#f3f3f3;stroke:#9a9a9a;stroke-width:1}
+      .lanelbl{font-size:12px;font-weight:600;fill:#333;letter-spacing:.1em}
+      .task{fill:#fff;stroke:#333;stroke-width:1.6;rx:8}.sub{fill:#fff;stroke:#333;stroke-width:3;rx:8}
+      .auto{fill:#ededed;stroke:#555;stroke-width:1.2;rx:8}
+      .gw{fill:#fff;stroke:#333;stroke-width:1.6}.ev{fill:#fff;stroke:#333}
+      .tt{font-size:12px;fill:#111;font-weight:600}.ts{font-size:9.5px;fill:#555}
+      .gl{font-size:10.5px;fill:#111;font-weight:600}.el{font-size:10px;fill:#333}
+      .flow{stroke:#333;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .note{font-size:10px;fill:#666;font-style:italic}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1800" height="740" fill="#fff"/>
+  <text x="24" y="30" font-size="16" font-weight="700" fill="#111">MS_INTAUTIMPET — [MS] Notificação da autoridade coatora</text>
+  <text x="24" y="48" class="note">Contorno grosso = subprocesso · caixa cinza = automático · caixa branca = tarefa humana</text>
+
+  <rect class="lane" x="24" y="70" width="1752" height="210"/>
+  <rect class="lanealt" x="24" y="280" width="1752" height="220"/>
+  <rect class="lane" x="24" y="500" width="1752" height="160"/>
+  <rect class="lanealt" x="24" y="70" width="34" height="210"/><rect class="lane" x="24" y="280" width="34" height="220"/><rect class="lanealt" x="24" y="500" width="34" height="160"/>
+  <text class="lanelbl" transform="translate(46,220) rotate(-90)">SECRETARIA</text>
+  <text class="lanelbl" transform="translate(46,420) rotate(-90)">SISTEMA</text>
+  <text class="lanelbl" transform="translate(46,610) rotate(-90)">SAÍDAS</text>
+
+  <!-- SECRETARIA -->
+  <rect class="task" x="470" y="100" width="215" height="76"/>
+  <text x="577" y="126" class="tt" text-anchor="middle">[MS] Analisar pendência</text>
+  <text x="577" y="142" class="tt" text-anchor="middle">de intimação automática</text>
+  <text x="577" y="159" class="ts" text-anchor="middle">preencher autoridade coatora e órgão</text>
+  <text x="577" y="171" class="ts" text-anchor="middle">selecionar só a parte sem procuradoria</text>
+
+  <rect class="task" x="770" y="100" width="200" height="76"/>
+  <text x="870" y="130" class="tt" text-anchor="middle">[MS] Pendência na</text>
+  <text x="870" y="146" class="tt" text-anchor="middle">seleção de partes</text>
+  <text x="870" y="164" class="ts" text-anchor="middle">comunicação não vinculada ao documento</text>
+
+  <rect class="task" x="1230" y="100" width="200" height="76"/>
+  <text x="1330" y="130" class="tt" text-anchor="middle">Selecionar central</text>
+  <text x="1330" y="146" class="tt" text-anchor="middle">de mandados</text>
+  <text x="1330" y="164" class="ts" text-anchor="middle">quando há mais de uma vinculada</text>
+
+  <!-- SISTEMA -->
+  <circle class="ev" cx="110" cy="385" r="16" stroke-width="1.8"/>
+  <text x="110" y="420" class="ts" text-anchor="middle">Início</text>
+
+  <rect class="auto" x="158" y="354" width="185" height="62"/>
+  <text x="250" y="377" class="tt" text-anchor="middle">Notificar impetrado</text>
+  <text x="250" y="393" class="ts" text-anchor="middle">CP_INTAUT · 10 dias</text>
+  <text x="250" y="406" class="ts" text-anchor="middle">modelo 56244 · tipo 791 · polo P</text>
+
+  <path class="gw" d="M420,341 L465,385 L420,429 L375,385 z"/>
+  <rect x="380" y="446" width="150" height="26" fill="#fff"/>
+  <text x="383" y="456" class="gl">Polo passivo tem</text>
+  <text x="383" y="469" class="gl">procuradoria vinculada?</text>
+
+  <path class="gw" d="M1050,341 L1095,385 L1050,429 L1005,385 z"/>
+  <rect x="1010" y="446" width="140" height="26" fill="#fff"/>
+  <text x="1013" y="456" class="gl">Comunicações</text>
+  <text x="1013" y="469" class="gl">configuradas?</text>
+
+  <path class="gw" d="M1330,341 L1375,385 L1330,429 L1285,385 z"/>
+  <rect x="1180" y="326" width="100" height="26" fill="#fff"/>
+  <text x="1276" y="336" class="gl" text-anchor="end">Via central</text>
+  <text x="1276" y="349" class="gl" text-anchor="end">de mandados?</text>
+
+  <rect class="auto" x="1560" y="354" width="200" height="62"/>
+  <text x="1660" y="377" class="tt" text-anchor="middle">Controle de devolução</text>
+  <text x="1660" y="393" class="ts" text-anchor="middle">subprocesso CONTRDEVEXP</text>
+  <text x="1660" y="406" class="ts" text-anchor="middle">devolve ao fluxo</text>
+  <rect x="1560" y="354" width="200" height="62" fill="none" stroke="#333" stroke-width="3" rx="8"/>
+
+  <!-- SAÍDAS -->
+  <rect class="auto" x="470" y="545" width="185" height="55"/>
+  <text x="562" y="570" class="tt" text-anchor="middle">Controle de prazo</text>
+  <text x="562" y="586" class="ts" text-anchor="middle">MS_CONTRPRAZ</text>
+
+  <rect class="auto" x="720" y="545" width="185" height="55"/>
+  <text x="812" y="570" class="tt" text-anchor="middle">Análise de comunicação</text>
+  <text x="812" y="586" class="ts" text-anchor="middle">ANCOM</text>
+
+  <rect class="auto" x="960" y="545" width="180" height="55"/>
+  <text x="1050" y="570" class="tt" text-anchor="middle">Análise de secretaria</text>
+  <text x="1050" y="586" class="ts" text-anchor="middle">ANSEC</text>
+
+  <rect class="task" x="1200" y="545" width="170" height="55"/>
+  <text x="1285" y="570" class="tt" text-anchor="middle">Nó de Desvio</text>
+  <text x="1285" y="586" class="ts" text-anchor="middle">reposicionamento</text>
+
+  <circle class="ev" cx="1700" cy="572" r="16" stroke-width="3.4"/>
+  <text x="1700" y="606" class="ts" text-anchor="middle">Término</text>
+
+  <!-- FLUXOS -->
+  <path class="flow" d="M126,385 L158,385"/>
+  <path class="flow" d="M343,385 L375,385"/>
+
+  <path class="flow" d="M420,341 L420,138 L470,138"/>
+  <rect x="308" y="248" width="106" height="14" fill="#fff"/>
+  <text x="311" y="259" class="el" text-anchor="end">T2 · há pendência</text>
+
+  <path class="flow" d="M420,429 L420,505 L562,505 L562,545"/>
+  <rect x="430" y="489" width="118" height="14" fill="#fff"/>
+  <text x="433" y="500" class="el">T1 · todas intimadas</text>
+
+  <path class="flow" d="M685,138 L770,138"/>
+  <path class="flow" d="M577,176 L577,310 L1050,310 L1050,341"/>
+  <rect x="740" y="294" width="164" height="14" fill="#fff"/>
+  <text x="743" y="305" class="el">comunicações configuradas?</text>
+
+  <path class="flow" d="M1050,429 L1050,240 L970,240 L970,176"/>
+  <rect x="978" y="224" width="90" height="14" fill="#fff"/>
+  <text x="981" y="235" class="el">T2 · pendência</text>
+
+  <path class="flow" d="M1095,385 L1285,385"/>
+  <rect x="1150" y="368" width="88" height="14" fill="#fff"/>
+  <text x="1153" y="379" class="el">T1 · configuradas</text>
+
+  <path class="flow" d="M1330,341 L1330,176"/>
+  <rect x="1338" y="248" width="30" height="14" fill="#fff"/>
+  <text x="1341" y="259" class="el">SIM</text>
+
+  <path class="flow" d="M1430,138 L1490,138 L1490,385 L1560,385"/>
+  <path class="flow" d="M1375,385 L1420,385 L1420,470 L1660,470 L1660,416"/>
+  <rect x="1470" y="454" width="148" height="14" fill="#fff"/>
+  <text x="1473" y="465" class="el">encaminha à central</text>
+
+  <path class="flow" d="M1660,416 L1660,505 L1420,505 L1420,530 L620,530 L620,545"/>
+  <rect x="900" y="514" width="204" height="14" fill="#fff"/>
+  <text x="903" y="525" class="el">devolvido · segue ao controle de prazo</text>
+
+  <path class="flow" d="M1330,429 L1330,505 L1290,505 L1290,470 L640,470 L640,545"/>
+  <rect x="700" y="454" width="152" height="14" fill="#fff"/>
+  <text x="703" y="465" class="el">NÃO · sem expediente físico</text>
+
+  <path class="flow" d="M520,176 L520,320 L812,320 L812,545"/>
+  <rect x="820" y="424" width="136" height="14" fill="#fff"/>
+  <text x="823" y="435" class="el">análise de comunicação</text>
+
+  <path class="flow" d="M640,176 L640,240 L1050,240"/>
+  <path class="flow" d="M900,176 L900,210 L1050,210 L1050,545"/>
+  <rect x="1056" y="424" width="118" height="14" fill="#fff"/>
+  <text x="1059" y="435" class="el">analisar — secretaria</text>
+
+  <path class="flow" d="M940,176 L940,196 L1285,196 L1285,545"/>
+  <rect x="1291" y="424" width="42" height="14" fill="#fff"/>
+  <text x="1294" y="435" class="el">desvio</text>
+
+  <path class="flow" d="M655,572 L720,572"/>
+  <path class="flow" d="M905,572 L960,572"/>
+  <path class="flow" d="M1140,572 L1200,572"/>
+  <path class="flow" d="M1370,572 L1684,572"/>
+
+  <text x="24" y="712" class="note">Fonte: MS_INTAUTIMPET.xml · revisão de 10/09/2026. Após a correção, o controle de devolução é subprocesso e devolve o processo ao MS_CONTRPRAZ.</text>
+</svg>
