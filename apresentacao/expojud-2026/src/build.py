@@ -1,6 +1,6 @@
 """Gera a apresentação em um único HTML autônomo (funciona offline).
 
-Uso: python build.py   (antes, se mudar os diagramas do acordo: python gen_acordo.py)
+Uso: python build.py   (antes, se mudar os diagramas-resumo: python gen_resumo.py)
 Lê template.html, os diagramas em fluxos/*.svg e as logos, e grava
 ../Lab-Fluxos-ExpoJud.html. Os SVGs recebem ids estáveis (n0.. para nós,
 f0.. para transições, na ordem do documento) usados pelos cenários do simulador.
@@ -15,6 +15,8 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "Lab-Fluxos-ExpoJud.html"
 
 FLOWS = {
+    "RESUMO_ACORDO": ("Proposta de acordo", "Resumo em uma tela."),
+    "RESUMO_MS": ("Mandado de Segurança", "Resumo em uma tela."),
     "MS_ANLIN": ("Análise da inicial", "Vincula a etiqueta da classe, identifica pedido de liminar não apreciado e oferece os encaminhamentos ao magistrado."),
     "MS_INTAUTIMPET": ("Notificação da autoridade coatora", "Notifica o polo passivo em 10 dias, trata parte sem procuradoria vinculada e despacho por central de mandados."),
     "MS_CONTRPRAZ": ("Controle de prazo", "Grava o marco temporal, controla os expedientes e só libera o processo quando todos estiverem fechados."),
@@ -32,6 +34,9 @@ FLOWS = {
     "JFCE_SENTACORDO": ("Sentença homologatória de acordo", "Minuta, assinatura, homologação dos movimentos, trânsito em julgado e fork para o cumprimento."),
     "CONTRDEVEXP": ("Devolução de expediente · recorte", "A saída para controle de prazo passou a respeitar a variável indicada pelo fluxo chamador."),
 }
+
+# Diagramas embutidos na apresentação (os detalhados ficam em fluxos/ como referência)
+EMBED = ("RESUMO_ACORDO", "RESUMO_MS")
 
 NODE_RECT = {"task", "sub", "auto", "link"}
 
@@ -88,12 +93,13 @@ def b64(name: str) -> str:
 
 
 def main() -> None:
-    flows = {k: process_svg(k) for k in FLOWS}
+    flows = {k: process_svg(k) for k in EMBED}
     html = (HERE / "template.html").read_text(encoding="utf-8")
     html = html.replace("{{FLOWS_JSON}}", json.dumps(flows, ensure_ascii=False).replace("</", "<\\/"))
     html = html.replace("{{LOGO_LAB}}", b64("logo-lab.png"))
     html = html.replace("{{LOGO_LAB_W}}", b64("logo-lab-branco.png"))
     html = html.replace("{{LOGO_JCP}}", b64("logo-jcp.png"))
+    html = html.replace("{{LOGO_TRF5}}", b64("logo-trf5.png"))
     OUT.write_text(html, encoding="utf-8")
     print(f"ok {OUT} ({OUT.stat().st_size // 1024} KB)")
 

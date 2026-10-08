@@ -9,10 +9,8 @@
 <style>
 :root{
   --blue:#00699F; --navy:#0B2A45; --sky:#2BB5E0; --orange:#F59C2C; --red:#E8512C; --green:#1E9E6A;
-  --ink:#13212E; --muted:#5B6B7A; --paper:#FFFFFF; --soft:#EEF5FA; --line:#DCE6EE;
-  --grad:linear-gradient(90deg,var(--blue),var(--sky));
+  --ink:#13212E; --muted:#5B6B7A; --soft:#EEF5FA; --line:#DCE6EE;
   --warm:linear-gradient(90deg,var(--red),var(--orange));
-  --ease:cubic-bezier(.22,.8,.24,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#08131d;overflow:hidden}
@@ -20,32 +18,24 @@ body{font-family:"Montserrat","Segoe UI",system-ui,sans-serif;color:var(--ink);-
 button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
 #stage{position:absolute;width:1920px;height:1080px;left:50%;top:50%;transform-origin:center}
-.slide{position:absolute;inset:0;background:var(--paper);padding:96px 130px 120px;display:flex;flex-direction:column;
-  opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s;overflow:hidden}
-.slide.active{opacity:1;visibility:visible;transition:opacity .5s var(--ease),visibility 0s}
-/* entrada em cascata */
-.slide [data-in]{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.slide.active [data-in]{opacity:1;transform:none}
-.slide.active [data-in="1"]{transition-delay:.08s}.slide.active [data-in="2"]{transition-delay:.18s}
-.slide.active [data-in="3"]{transition-delay:.28s}.slide.active [data-in="4"]{transition-delay:.38s}
-.slide.active [data-in="5"]{transition-delay:.48s}.slide.active [data-in="6"]{transition-delay:.58s}
-.slide.active [data-in="7"]{transition-delay:.68s}
-
+.slide{position:absolute;inset:0;background:#fff;padding:90px 130px 120px;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s;overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transition:opacity .3s ease,visibility 0s}
 .foot{position:absolute;left:130px;right:130px;bottom:40px;display:flex;align-items:center;justify-content:space-between;font-size:19px;color:var(--muted);font-weight:500}
 .foot img{height:44px}
+.dark{background:radial-gradient(900px 600px at 82% 18%,rgba(43,181,224,.28),transparent 60%),radial-gradient(800px 520px at 8% 100%,rgba(245,156,44,.2),transparent 60%),var(--navy);color:#fff}
 .dark .foot{color:#8FB0C8}
-.status{position:absolute;right:130px;top:92px;display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700;color:var(--navy);background:var(--soft);border-radius:999px;padding:12px 22px}
-.status i{width:14px;height:14px;border-radius:50%}
-.kicker{font-size:22px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:18px}
-h1{font-size:92px;line-height:1.03;font-weight:900;color:var(--navy);letter-spacing:-.02em}
-h2{font-size:62px;line-height:1.1;font-weight:800;color:var(--navy);letter-spacing:-.015em;margin-bottom:46px}
-h2 em,h1 em{font-style:normal;color:var(--blue)}
-h3{font-size:32px;font-weight:700;color:var(--navy)}
-p,li{font-size:30px;line-height:1.45}
-.muted{color:var(--muted)}
+.kicker{font-size:22px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:18px}
+.moment{display:inline-flex;align-items:center;gap:14px}
+.moment b{background:var(--orange);color:#fff;border-radius:999px;padding:6px 18px;letter-spacing:.14em}
+h1{font-size:92px;line-height:1.04;font-weight:900;color:var(--navy);letter-spacing:-.02em}
+h2{font-size:60px;line-height:1.1;font-weight:800;color:var(--navy);letter-spacing:-.015em;margin-bottom:40px}
+h1 em,h2 em{font-style:normal;color:var(--blue)}
+.dark h1,.dark h2{color:#fff}.dark h1 em,.dark h2 em{color:var(--sky)}
+.ico{flex:none;width:80px;height:80px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.ico svg{width:38px;height:38px}
 
-/* ===== capa ===== */
-.cover{padding-top:80px}
+/* capa */
 .cover .top{display:flex;justify-content:space-between;align-items:flex-start}
 .cover .top img{height:118px}
 .cover .event{text-align:right;font-size:26px;font-weight:600;color:var(--navy);line-height:1.55}
@@ -57,247 +47,141 @@ p,li{font-size:30px;line-height:1.45}
 .cover .speaker i{width:22px;height:22px;border-radius:50%;background:var(--orange);flex:none}
 .cover .speaker b{font-size:36px;color:var(--navy);display:block}
 .cover .speaker span{font-size:22px;color:var(--muted);font-weight:500;display:block;margin-top:6px;line-height:1.45}
-.orbit{position:absolute;right:90px;top:270px;width:580px;height:580px}
-.orbit .disc{position:absolute;inset:0;border-radius:50%;background:var(--soft)}
+.orbit{position:absolute;right:90px;top:270px;width:580px;height:580px;border-radius:50%;background:var(--soft)}
 .orbit img{position:absolute;left:50%;top:50%;width:370px;transform:translate(-50%,-50%)}
-.orbit .dot{position:absolute;border-radius:50%;animation:float 6s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-14px)}}
+.orbit i{position:absolute;border-radius:50%}
 
-/* ===== roteiro ===== */
-.agenda{display:grid;grid-template-columns:repeat(4,1fr);gap:34px;margin-top:20px}
-.agenda .step{background:var(--soft);border-radius:30px;padding:44px 40px;min-height:470px;display:flex;flex-direction:column}
-.agenda .num{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:34px}
-.agenda h3{margin-top:40px;font-size:38px}
-.agenda p{font-size:25px;color:var(--muted);margin-top:14px;flex:1}
-.agenda .t{font-size:22px;font-weight:800;margin-top:20px}
+/* dor */
+.pain{justify-content:center}
+.pain h1{font-size:84px;max-width:1500px}
+.pains{margin-top:64px;display:flex;flex-direction:column;gap:26px}
+.pains div{font-size:40px;font-weight:600;color:#D6E8F3;display:flex;gap:26px;align-items:center}
+.pains div::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--orange);flex:none}
+.pain .punch{margin-top:64px;font-size:46px;font-weight:800;color:#fff}
+.pain .punch em{font-style:normal;color:var(--orange)}
 
-/* ===== ideia ===== */
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.quote{background:var(--soft);border-radius:32px;padding:60px 64px;position:relative}
-.quote::before{content:"“";position:absolute;left:52px;top:-6px;font-size:190px;font-weight:900;color:var(--orange);line-height:1}
-.quote p{font-size:38px;line-height:1.38;font-weight:700;color:var(--navy);margin-top:70px}
-.rows{display:flex;flex-direction:column;gap:42px;padding-top:20px}
-.row{display:flex;gap:30px;align-items:flex-start}
-.ico{flex:none;width:86px;height:86px;border-radius:50%;display:grid;place-items:center;color:#fff}
-.ico svg{width:40px;height:40px}
-.row b{display:block;font-size:30px;color:var(--navy)}
-.row span{display:block;font-size:24px;color:var(--muted);margin-top:6px;line-height:1.45}
+/* proposta de valor */
+.lead{font-size:34px;line-height:1.4;color:var(--ink);max-width:1450px;margin-top:-14px}
+.lead b{color:var(--blue)}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:60px}
+.pillar{background:var(--soft);border-radius:30px;padding:46px 44px}
+.pillar b{display:block;font-size:34px;color:var(--navy);margin-top:30px}
+.pillar span{display:block;font-size:23px;color:var(--muted);margin-top:12px;line-height:1.45}
+.note{margin-top:44px;font-size:24px;color:var(--muted);font-weight:600}
+.note b{color:var(--orange)}
 
-/* ===== linha do tempo ===== */
-.tl{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:26px;margin-top:60px}
-.tl::before{content:"";position:absolute;left:44px;right:180px;top:42px;height:6px;border-radius:3px;background:var(--line)}
-.tl .bar{position:absolute;left:44px;top:42px;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--sky),var(--orange),var(--red));width:0;transition:width 2.2s var(--ease) .3s}
-.slide.active .tl .bar{width:calc(100% - 224px)}
-.ev{position:relative}
-.ev .c{width:90px;height:90px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:32px;font-weight:900;position:relative;z-index:1;box-shadow:0 0 0 10px #fff}
-.ev h3{font-size:28px;margin-top:34px;line-height:1.2}
-.ev p{font-size:22px;color:var(--muted);margin-top:12px;line-height:1.45}
-.ev.now h3{color:var(--red)}
+/* antes */
+.antes{display:grid;grid-template-columns:600px 1fr;gap:70px;align-items:start}
+.steps{display:flex;flex-direction:column;position:relative}
+.steps::before{content:"";position:absolute;left:37px;top:40px;bottom:40px;width:5px;border-radius:3px;background:linear-gradient(var(--blue),var(--sky),var(--orange))}
+.st{display:flex;gap:28px;align-items:flex-start;padding:16px 0}
+.st .n{flex:none;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:30px;position:relative;box-shadow:0 0 0 8px #fff}
+.st b{display:block;font-size:30px;color:var(--navy);margin-top:6px}
+.st span{display:block;font-size:22px;color:var(--muted);margin-top:6px;line-height:1.4}
+.cards{display:flex;flex-direction:column;gap:24px}
+.card{background:var(--soft);border-radius:26px;padding:30px 36px;display:flex;gap:28px;align-items:flex-start}
+.card h4{font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:800}
+.card p{font-size:24px;line-height:1.45;margin-top:8px;color:var(--ink)}
+.card p small{display:block;font-size:19px;color:var(--muted);margin-top:2px}
+.card img{height:110px;flex:none}
 
-/* ===== JCP ===== */
-.jcp{display:grid;grid-template-columns:680px 1fr;gap:90px;align-items:center;flex:1}
-.jcp img{width:640px}
+/* hoje */
+.hoje{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+.box{background:var(--soft);border-radius:28px;padding:34px 40px}
+.box h4{font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:800;margin-bottom:14px}
+.box p{font-size:24px;line-height:1.45}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.people div{display:flex;gap:14px;align-items:center;font-size:21px;font-weight:700;color:var(--navy)}
+.people i{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-style:normal;font-size:16px;font-weight:800;flex:none}
+.plus{margin-top:16px;font-size:21px;color:var(--muted);font-weight:600}
+.plus b{color:var(--green)}
+.box.ia{background:var(--navy);color:#fff}
+.box.ia h4{color:var(--sky)}
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px}
+.chain span{background:rgba(255,255,255,.1);border-radius:10px;padding:8px 14px;font-size:19px;font-weight:700}
+.chain i{color:var(--orange);font-style:normal;font-weight:900}
+.nums{display:flex;gap:44px;margin-top:22px}
+.nums b{display:block;font-size:52px;font-weight:900;color:var(--orange);line-height:1}
+.nums span{font-size:18px;color:#BFD3E2}
+.ia .claim{margin-top:20px;font-size:24px;font-weight:800}
+.deliv{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.dv{display:flex;gap:18px;align-items:center;border:2px solid var(--line);border-radius:22px;padding:22px 26px}
+.dv i{width:16px;height:16px;border-radius:50%;flex:none}
+.dv b{display:block;font-size:24px;color:var(--navy)}
+.dv span{display:block;font-size:18px;color:var(--muted);margin-top:2px}
 
-/* ===== equipe ===== */
-.team{display:grid;grid-template-columns:1fr 1fr;gap:60px}
-.team h3{font-size:28px;color:var(--blue);margin-bottom:24px}
-.people{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.person{display:flex;gap:22px;align-items:center;background:var(--soft);border-radius:22px;padding:24px 26px}
-.person .av{flex:none;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px}
-.person b{font-size:25px;color:var(--navy)}
-.dev{background:var(--navy);border-radius:30px;padding:46px 50px;color:#fff;display:flex;gap:32px;align-items:center;min-height:262px}
-.dev p{font-size:32px;font-weight:700;line-height:1.35}
-.train{display:grid;grid-template-columns:1fr 70px 1fr;gap:20px;align-items:stretch;margin-top:10px}
-.tcard{background:var(--soft);border-radius:30px;padding:44px 46px;position:relative}
-.tstep{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:28px}
-.tkind{font-size:32px;font-weight:800;margin-top:26px;line-height:1.2}
-.tdesc{font-size:23px;color:var(--muted);margin-top:10px}
-.tpeople{display:flex;flex-direction:column;gap:16px;margin-top:34px}
-.tpeople .person{background:#fff}
-.tpeople .person b{display:block;font-size:26px}.tpeople .person span{display:block;font-size:19px;color:var(--muted);margin-top:4px}
-.tarrow{display:grid;place-items:center}.tarrow::before{content:"›";font-size:90px;font-weight:300;color:#9DB2C3}
-.lead-dark{font-size:28px;color:#BFD3E2;margin-top:-26px}
-.inst{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:70px}
-.icard{background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.14);border-radius:30px;padding:46px 44px}
-.icard b{display:block;font-size:34px;color:#fff;margin-top:30px}
-.icard span{display:block;font-size:22px;color:#BFD3E2;margin-top:12px;line-height:1.45}
-.support{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.support div{border:2px solid var(--line);border-radius:22px;padding:24px 28px}
-.support b{display:block;font-size:24px;color:var(--navy)}
-.support span{display:block;font-size:20px;color:var(--muted);margin-top:6px;line-height:1.4}
-
-/* ===== método ===== */
-.pipe{display:flex;margin-top:10px}
-.pipe .st{flex:1;height:120px;margin-right:-22px;display:grid;place-items:center;text-align:center;color:#fff;font-weight:800;font-size:23px;padding:0 44px 0 52px;
-  clip-path:polygon(0 0,calc(100% - 40px) 0,100% 50%,calc(100% - 40px) 100%,0 100%,40px 50%)}
-.pipe .st:first-child{clip-path:polygon(0 0,calc(100% - 40px) 0,100% 50%,calc(100% - 40px) 100%,0 100%);padding-left:30px}
-.pipe-d{display:flex;margin-top:16px}.pipe-d span{flex:1;text-align:center;font-size:19px;color:var(--muted);padding:0 10px;line-height:1.35}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:64px}
-.stat{background:var(--soft);border-radius:26px;padding:36px 40px}
-.stat .v{font-size:78px;font-weight:900;line-height:1}
-.stat .l{font-size:23px;color:var(--ink);margin-top:14px;line-height:1.4}
-
-/* ===== mapa do MS ===== */
-.map-wrap{flex:1;position:relative;margin-top:-10px}
-#msmap{width:100%;height:100%}
-#msmap .box rect{fill:#fff;stroke:var(--blue);stroke-width:2.5;rx:16;transition:fill .2s}
-#msmap .box.alt rect{stroke:var(--muted);stroke-dasharray:7 5}
-#msmap .box.ext rect{fill:var(--soft);stroke:var(--line)}
-#msmap .box{cursor:pointer}
-#msmap .box:hover rect{fill:#E3F3FA}
-#msmap .box.ext{cursor:default}
-#msmap .box.ext:hover rect{fill:var(--soft)}
-#msmap .code{font:800 17px Montserrat,Segoe UI,sans-serif;fill:var(--blue);letter-spacing:.02em}
-#msmap .name{font:600 20px Montserrat,Segoe UI,sans-serif;fill:var(--navy)}
-#msmap .num{font:900 17px Montserrat,sans-serif;fill:#fff}
-#msmap .lk{fill:none;stroke:#9DB2C3;stroke-width:3;marker-end:url(#mArr)}
-#msmap .lk.flow{stroke:var(--orange);stroke-dasharray:10 12;animation:dash 1.2s linear infinite}
-@keyframes dash{to{stroke-dashoffset:-22}}
-#msmap .lbl{font:600 16px Montserrat,sans-serif;fill:var(--muted)}
-#msmap .zone{font:800 15px Montserrat,sans-serif;fill:var(--muted);letter-spacing:.18em}
-
-/* ===== simulador ===== */
+/* simulador */
 .sim{padding:34px 40px 30px;background:#F6FAFD}
-.sim-head{display:flex;align-items:center;gap:26px;height:70px}
-.sim-head .k{font-size:18px;font-weight:800;letter-spacing:.2em;color:var(--orange);text-transform:uppercase;white-space:nowrap}
-.sim-head h2{font-size:34px;margin:0;white-space:nowrap}
-.scen{display:flex;gap:10px;margin-left:auto;flex-wrap:nowrap}
-.scen button{font-size:17px;font-weight:700;padding:12px 20px;border-radius:999px;background:#fff;border:2px solid var(--line);color:var(--navy);white-space:nowrap;transition:.2s}
-.scen button:hover{border-color:var(--sky)}
-.scen button.on{background:var(--navy);border-color:var(--navy);color:#fff}
-.ribbon{display:flex;align-items:center;gap:8px;height:58px;margin:14px 0 16px;overflow:hidden}
-.chip{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-size:15px;font-weight:700;color:var(--muted);white-space:nowrap;transition:.35s var(--ease)}
-.chip.done{border-color:#A9D3EA;color:var(--blue);background:#EAF5FB}
-.chip.cur{background:var(--orange);border-color:var(--orange);color:#fff;transform:scale(1.06);box-shadow:0 6px 18px rgba(245,156,44,.35)}
-.ribbon .ar{color:#B7C6D3;font-weight:900;font-size:18px}
-.sim-main{display:grid;grid-template-columns:1fr 520px;gap:22px;height:860px}
+.sim-head{display:flex;align-items:center;gap:24px;height:84px}
+.sim-head h2{font-size:44px;margin:4px 0 0}
+.sim-head .kicker{margin:0;font-size:18px}
+.status{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700;color:var(--navy);background:#fff;border:2px solid var(--line);border-radius:999px;padding:12px 22px}
+.status i{width:14px;height:14px;border-radius:50%}
+.sim-main{display:grid;grid-template-columns:1fr 470px;gap:22px;height:920px;margin-top:14px}
 .canvas{position:relative;background:#fff;border-radius:24px;box-shadow:0 2px 0 var(--line),0 10px 40px rgba(11,42,69,.07);overflow:hidden}
-.canvas .ftitle{position:absolute;left:26px;top:20px;z-index:3;display:flex;gap:14px;align-items:baseline;background:rgba(255,255,255,.92);padding:8px 16px;border-radius:12px}
-.canvas .ftitle b{font-size:18px;color:var(--blue);font-weight:800;letter-spacing:.02em}
-.canvas .ftitle span{font-size:22px;font-weight:700;color:var(--navy)}
-.svgbox{position:absolute;inset:0;transition:opacity .45s var(--ease)}
-.svgbox.fade{opacity:0}
+.svgbox{position:absolute;inset:6px 6px 84px}
 .svgbox svg{width:100%;height:100%;display:block}
-.ctrl{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:var(--navy);padding:8px;border-radius:999px;z-index:4;box-shadow:0 10px 30px rgba(11,42,69,.3)}
-.ctrl button{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;transition:background .2s}
+.ctrl{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:var(--navy);padding:7px;border-radius:999px;z-index:4}
+.ctrl button{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;color:#fff}
 .ctrl button:hover{background:rgba(255,255,255,.14)}
-.ctrl button.play{background:var(--orange);width:60px;height:60px}
+.ctrl button.play{background:var(--orange);width:58px;height:58px}
 .ctrl svg{width:24px;height:24px;fill:currentColor}
-.ctrl .spd{color:#BFD3E2;font-size:15px;font-weight:700;padding:0 14px 0 6px;width:auto;border-radius:999px}
-.banner{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);z-index:5;background:var(--navy);color:#fff;border-radius:26px;padding:34px 46px;
-  min-width:620px;opacity:0;pointer-events:none;transition:.4s var(--ease);box-shadow:0 30px 80px rgba(11,42,69,.35)}
-.banner.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.banner small{display:block;font-size:16px;letter-spacing:.2em;font-weight:800;color:var(--orange);text-transform:uppercase}
-.banner b{display:block;font-size:22px;color:var(--sky);margin-top:14px;font-weight:800}
-.banner span{display:block;font-size:34px;font-weight:800;margin-top:4px}
-.banner p{font-size:19px;color:#BFD3E2;margin-top:12px;line-height:1.45;max-width:620px}
-
+.ctrl .spd{color:#BFD3E2;font-size:15px;font-weight:700;width:auto;padding:0 14px 0 6px;border-radius:999px}
 .panel{background:#fff;border-radius:24px;box-shadow:0 2px 0 var(--line),0 10px 40px rgba(11,42,69,.07);padding:30px 32px;display:flex;flex-direction:column;overflow:hidden}
-.prog{display:flex;flex-direction:column;gap:4px;font-size:15px;font-weight:700;color:var(--muted);letter-spacing:.05em}.prog .pscen{font-weight:600;letter-spacing:0;font-size:16px;color:var(--navy)}
+.pstep{font-size:15px;font-weight:700;color:var(--muted);letter-spacing:.06em}
 .pbar{height:8px;background:var(--soft);border-radius:4px;margin:10px 0 24px;overflow:hidden}
-.pbar i{display:block;height:100%;width:0;background:var(--warm);border-radius:4px;transition:width .5s var(--ease)}
-.kind{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:10px;align-self:flex-start}
+.pbar i{display:block;height:100%;width:0;background:var(--warm);border-radius:4px;transition:width .4s}
+.kind{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:10px}
 .kind i{width:12px;height:12px;border-radius:3px;background:currentColor}
-.k-task{background:#FFF1E0;color:#B5650A}.k-auto{background:#E3F3FA;color:var(--blue)}.k-gw{background:#FDE8E2;color:#C23D1C}
-.k-sub{background:#E8EEF4;color:var(--navy)}.k-ev{background:#E5F5EE;color:#137A50}.k-link{background:#F1F3F5;color:var(--muted)}
-.ptitle{font-size:31px;font-weight:800;color:var(--navy);line-height:1.2;margin-top:16px}
-.pcode{font-size:16px;font-weight:700;color:var(--blue);margin-top:8px}
-.ptext{font-size:20px;line-height:1.48;color:var(--ink);margin-top:16px}
-.dec{margin-top:20px;border-radius:18px;background:var(--soft);padding:20px 22px}
-.dec .q{font-size:17px;font-weight:700;color:var(--muted)}
-.dec .a{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--green);color:#fff;font-weight:800;font-size:20px;padding:9px 16px;border-radius:12px}
+.k-task{background:#FFF1E0;color:#B5650A}.k-auto{background:#E3F3FA;color:var(--blue)}.k-gw{background:#FDE8E2;color:#C23D1C}.k-sub{background:#E3F3FA;color:var(--blue)}
+.ptitle{font-size:32px;font-weight:800;color:var(--navy);line-height:1.2;margin-top:16px}
+.ptext{font-size:21px;line-height:1.5;margin-top:14px}
+.dec{margin-top:18px;border-radius:18px;background:var(--soft);padding:18px 20px}
+.dec .q{font-size:18px;font-weight:700;color:var(--muted)}
+.dec .a{display:inline-block;margin-top:10px;background:var(--green);color:#fff;font-weight:800;font-size:20px;padding:8px 16px;border-radius:12px}
 .dec .alt{margin-top:12px;font-size:17px;color:var(--muted);line-height:1.45}
-.dec .alt b{color:var(--ink);font-weight:700}
-.trail{margin-top:auto;border-top:2px solid var(--soft);padding-top:16px}
-.trail h4{font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.trail ol{list-style:none;display:flex;flex-direction:column;gap:6px}
-.trail li{font-size:16px;line-height:1.35;display:flex;gap:10px;color:var(--muted);white-space:nowrap}.trail li span{overflow:hidden;text-overflow:ellipsis}
-.trail li em{font-style:normal;font-weight:800;color:var(--blue);min-width:30px}
-.trail li:last-child{color:var(--navy);font-weight:700}
-.panel .pin{animation:pin .45s var(--ease)}
-@keyframes pin{from{opacity:0;transform:translateY(12px)}}
-
-/* restyle dos diagramas */
-.fsvg text{font-family:"Segoe UI",Arial,sans-serif}
-.fsvg .lane{fill:#FBFDFF;stroke:#DCE6EE}.fsvg .lanealt{fill:#F3F8FC;stroke:#DCE6EE}
-.fsvg .lanelbl{font-size:12px;font-weight:700;fill:var(--blue);letter-spacing:.12em}
-.fsvg .task{fill:#fff;stroke:#0B2A45;stroke-width:1.6}
-.fsvg .sub{fill:#fff;stroke:#0B2A45;stroke-width:3.2}
-.fsvg .auto{fill:#EAF4FA;stroke:#86B9D6;stroke-width:1.3}
-.fsvg .link{fill:#fff;stroke:#7F93A5;stroke-width:1.6;stroke-dasharray:5 3}
-.fsvg .gw{fill:#FFF5E6;stroke:#F59C2C;stroke-width:2}
-.fsvg .ev{fill:#fff;stroke:#0B2A45}
-.fsvg .tt{font-size:12px;fill:#0B2A45;font-weight:600}.fsvg .ts{font-size:9.5px;fill:#5B6B7A}
-.fsvg .gl{font-size:10.5px;fill:#0B2A45;font-weight:700}.fsvg .el{font-size:10px;fill:#4A5B6B}
-.fsvg .flow{stroke:#9AAAB8;stroke-width:1.4;fill:none;marker-end:url(#arrG)}
-.fsvg .bus{stroke:#9AAAB8;stroke-width:1.4;fill:none}
-.fsvg [data-k]{transition:fill .35s,stroke .35s,stroke-width .35s}
-.fsvg .vis{fill:#DDEFF9!important;stroke:var(--blue)!important}
-.fsvg .act{fill:#FFE9CC!important;stroke:var(--red)!important;stroke-width:3.4!important;filter:drop-shadow(0 0 7px rgba(232,81,44,.55))}
-.fsvg .gw.act{fill:#FFD9A8!important}
-.fsvg .trailp{fill:none;stroke:var(--blue);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
-.fsvg .trailp.hot{stroke:var(--orange);stroke-width:4}
-.fsvg .tok circle.o{fill:var(--red);stroke:#fff;stroke-width:3}
-.fsvg .tok circle.r{fill:none;stroke:var(--red);stroke-width:2;animation:ring 1.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes ring{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(2.6)}}
-
-/* paralelismo e estado do processo */
-.fsvg .par{stroke:var(--sky);stroke-width:1.6;fill:none;stroke-dasharray:6 4;marker-end:url(#arrS)}
-.fsvg .grp{fill:rgba(43,181,224,.05);stroke:var(--sky);stroke-dasharray:5 4;stroke-width:1.4}
-.fsvg .trailp.par2{stroke:var(--sky);stroke-dasharray:7 5;stroke-width:3}
-.fsvg .tok2 circle.o{fill:var(--sky);stroke:#fff;stroke-width:3}
-.fsvg .tok2 circle.r{fill:none;stroke:var(--sky);stroke-width:2;animation:ring 1.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
-.state{margin-top:18px;background:var(--soft);border-radius:16px;padding:14px 18px 16px;display:none}
-.state.on{display:block}
+.dec .alt b{color:var(--ink)}
+.state{margin-top:auto;border-top:2px solid var(--soft);padding-top:16px}
 .state h5{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:12px 0 7px}
 .state h5:first-child{margin-top:0}
-.state .row2{display:flex;flex-wrap:wrap;gap:7px}
-.tag{font-size:14px;font-weight:700;padding:5px 10px;border-radius:8px;background:#FFF1E0;color:#A55A06;border:1.5px solid #F5C27A}
-.mv{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:800;padding:5px 12px;border-radius:999px;background:var(--navy);color:#fff;border:2px solid var(--navy)}
+.row2{display:flex;flex-wrap:wrap;gap:7px}
+.tag{font-size:15px;font-weight:700;padding:5px 10px;border-radius:8px;background:#FFF1E0;color:#A55A06;border:1.5px solid #F5C27A}
+.mv{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:800;padding:5px 12px;border-radius:999px;background:var(--navy);color:#fff;border:2px solid var(--navy)}
 .mv small{font-weight:600;font-size:12px;opacity:.85}
 .mv.tmp{background:#fff;color:var(--navy);border-style:dashed;opacity:.8}
 .pfl{display:flex;flex-direction:column;gap:5px}
-.pf{font-size:14px;font-weight:700;color:var(--navy);display:flex;gap:9px;align-items:center}
+.pf{font-size:15px;font-weight:700;color:var(--navy);display:flex;gap:9px;align-items:center}
 .pf i{width:10px;height:10px;border-radius:50%;background:var(--green);flex:none}
-.new{animation:pop .7s var(--ease)}
-.gone{opacity:.45;text-decoration:line-through}
-.gone i{background:#9AAAB8!important}
-@keyframes pop{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:none}}
+.gone{opacity:.45;text-decoration:line-through}.gone i{background:#9AAAB8!important}
 
-/* ===== acordo: visão geral ===== */
-.ac{display:grid;grid-template-columns:1fr 660px;gap:80px;align-items:start}
-.ac .rows{gap:34px;padding-top:0}
-.ac .row b{font-size:29px}.ac .row span{font-size:22px}
-.acmap{display:flex;flex-direction:column}
-.fc{border:2.5px solid var(--blue);border-radius:18px;padding:20px 26px;background:#fff;cursor:pointer;transition:background .2s}
-.fc:hover{background:#E3F3FA}
-.fc b{display:block;font-size:17px;color:var(--blue);font-weight:800;letter-spacing:.02em}
-.fc span{display:block;font-size:23px;font-weight:700;color:var(--navy);margin-top:2px}
-.fc.par{border-style:dashed;border-color:var(--sky)}
-.fc.ext{border-color:var(--line);background:var(--soft);cursor:default}
-.dn{height:52px;display:flex;align-items:center;justify-content:center;gap:12px;color:#9DB2C3;font-weight:800;font-size:15px}
-.dn::before{content:"↓";font-size:24px;font-weight:900}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tagline{margin-top:30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:20px;color:#9DB2C3;font-weight:900}
-.tagline .tag{font-size:18px;padding:7px 12px}
+/* diagramas */
+.fsvg text{font-family:"Segoe UI",Arial,sans-serif}
+.fsvg .lane{fill:#FBFDFF;stroke:#DCE6EE}.fsvg .lanealt{fill:#F3F8FC;stroke:#DCE6EE}
+.fsvg .lanelbl{font-size:15px;font-weight:800;fill:var(--blue);letter-spacing:.12em}
+.fsvg .task{fill:#fff;stroke:#0B2A45;stroke-width:2}
+.fsvg .sub{fill:#fff;stroke:var(--sky);stroke-width:3;stroke-dasharray:8 5}
+.fsvg .auto{fill:#EAF4FA;stroke:#86B9D6;stroke-width:1.6}
+.fsvg .gw{fill:#FFF5E6;stroke:#F59C2C;stroke-width:2.4}
+.fsvg .tt{font-size:17px;fill:#0B2A45;font-weight:700}.fsvg .ts{font-size:14px;fill:#5B6B7A}
+.fsvg .gl{font-size:15px;fill:#0B2A45;font-weight:700}.fsvg .el{font-size:13px;fill:#4A5B6B;font-weight:600}
+.fsvg .flow{stroke:#A5B4C1;stroke-width:2;fill:none;marker-end:url(#arrG)}
+.fsvg .par{stroke:var(--sky);stroke-width:2;fill:none;stroke-dasharray:7 5;marker-end:url(#arrS)}
+.fsvg .vis{fill:#DDEFF9!important;stroke:var(--blue)!important}
+.fsvg .act{fill:#FFE9CC!important;stroke:var(--red)!important;stroke-width:4!important}
+.fsvg .trailp{fill:none;stroke:var(--blue);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.fsvg .trailp.hot{stroke:var(--orange);stroke-width:5}
+.fsvg .trailp.par2{stroke:var(--sky);stroke-dasharray:9 6}
+.fsvg .tok circle{fill:var(--red);stroke:#fff;stroke-width:3.5}
+.fsvg .tok2 circle{fill:var(--sky);stroke:#fff;stroke-width:3.5}
 
-/* ===== demais ===== */
-.dark{background:radial-gradient(900px 600px at 82% 18%,rgba(43,181,224,.32),transparent 60%),radial-gradient(800px 520px at 8% 100%,rgba(245,156,44,.22),transparent 60%),var(--navy);color:#fff}
-.dark h1,.dark h2{color:#fff}
+/* futuro */
 .end{justify-content:center;align-items:center;text-align:center}
-.end h1{font-size:96px;max-width:1500px}
-.end .logos{margin-top:80px;display:flex;gap:110px;align-items:center;justify-content:center}
-.end .logos .l1{height:124px}.end .logos .l2{height:230px}
-.end .url{margin-top:44px;font-size:26px;color:var(--blue);font-weight:700}
-
-#lightbox{position:fixed;inset:0;z-index:60;background:rgba(8,19,29,.82);display:none;align-items:center;justify-content:center;padding:3vh 3vw;cursor:zoom-out}
-#lightbox.on{display:flex}
-#lightbox .lb{background:#fff;border-radius:20px;width:100%;height:100%;display:flex;flex-direction:column;padding:2vh 2vw}
-#lightbox .lb header{display:flex;gap:16px;align-items:baseline;font-size:clamp(14px,1.5vw,24px)}
-#lightbox .lb header b{color:var(--blue)}#lightbox .lb header span{font-weight:700;color:var(--navy)}
-#lightbox .lb header em{font-style:normal;color:var(--muted);font-size:.75em;margin-left:auto}
-#lightbox .lb .body{flex:1;min-height:0;margin-top:1vh}
-#lightbox .lb svg{width:100%;height:100%}
+.end h1{font-size:78px;max-width:1560px}
+.end .sub{margin-top:34px;font-size:32px;line-height:1.45;color:#D6E8F3;max-width:1300px}
+.end .logos{margin-top:70px;display:flex;gap:70px;align-items:center;justify-content:center;background:#fff;border-radius:30px;padding:30px 60px}
+.end .logos .l1{height:104px}.end .logos .l2{height:170px}.end .logos .l3{height:120px}
+.end .thanks{margin-top:40px;font-size:24px;color:#BFD3E2;font-weight:600}
+.end .thanks b{color:var(--orange);letter-spacing:.2em;margin-right:16px}
 
 #progress{position:fixed;left:0;bottom:0;height:4px;background:var(--orange);z-index:40;transition:width .3s}
 #hud{position:fixed;right:16px;bottom:12px;color:#7d97ab;font:600 12px system-ui,sans-serif;z-index:40;opacity:.65}
@@ -309,482 +193,347 @@ p,li{font-size:30px;line-height:1.45}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9AAAB8"/></marker>
-    <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2BB5E0"/></marker>
-    <marker id="mArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9DB2C3"/></marker>
-  </defs>
-</svg>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A5B4C1"/></marker>
+  <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2BB5E0"/></marker>
+</defs></svg>
 
 <div id="stage">
 
 <!-- 1 · CAPA -->
 <section class="slide cover active">
-  <div class="top" data-in="1"><img data-logo="lab" alt="Laboratório de Fluxos">
+  <div class="top"><img data-logo="lab" alt="Laboratório de Fluxos">
     <div class="event">PJe Summit · <b>10ª ExpoJud</b><br>06 a 08 de outubro · Brasília – DF</div></div>
-  <div class="title" data-in="2"><h1>Da criação do Laboratório de Fluxos à entrega dos fluxos de <span>Acordo</span> e <span>Mandado de Segurança</span> no TRF5</h1></div>
-  <div class="speaker" data-in="3"><i></i><div><b>Vinícius Sousa e Silva</b>
+  <div class="title"><h1>Da criação do Laboratório de Fluxos à entrega dos fluxos de <span>Acordo</span> e <span>Mandado de Segurança</span> no TRF5</h1></div>
+  <div class="speaker"><i></i><div><b>Vinícius Sousa e Silva</b>
     <span>Diretor de Secretaria da 35ª Vara Federal do Ceará<br>Coordenador Executivo do INOVAJUS e do Laboratório de Fluxos da SJCE</span></div></div>
-  <div class="orbit" data-in="4"><div class="disc"></div><img data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas">
-    <i class="dot" style="left:-20px;top:30px;width:58px;height:58px;background:var(--orange)"></i>
-    <i class="dot" style="right:10px;top:70px;width:34px;height:34px;background:var(--sky);animation-delay:-2s"></i>
-    <i class="dot" style="left:30px;bottom:30px;width:40px;height:40px;background:var(--blue);animation-delay:-4s"></i>
-    <i class="dot" style="right:40px;bottom:10px;width:26px;height:26px;background:var(--red);animation-delay:-1s"></i></div>
-  <div class="notes"><b>~30 s.</b> Cumprimentar a organização e o público. Apresentar-se em uma frase.
-    "Em 15 minutos vou contar como um grupo da área fim da Justiça Federal no Ceará virou um laboratório que hoje entrega fluxos completos para o PJe da 5ª Região — e mostrar um deles funcionando, passo a passo."</div>
+  <div class="orbit"><img data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas">
+    <i style="left:-20px;top:30px;width:58px;height:58px;background:var(--orange)"></i>
+    <i style="right:10px;top:70px;width:34px;height:34px;background:var(--sky)"></i>
+    <i style="left:30px;bottom:30px;width:40px;height:40px;background:var(--blue)"></i>
+    <i style="right:40px;bottom:10px;width:26px;height:26px;background:var(--red)"></i></div>
+  <div class="notes"><b>~30 s.</b> Cumprimentar a organização e o público. Apresentar-se em uma frase e ir direto para a dor.</div>
 </section>
 
-<!-- 2 · ROTEIRO -->
-<section class="slide">
-  <div class="kicker" data-in="1">Roteiro</div>
-  <h2 data-in="1">15 minutos, <em>quatro paradas</em></h2>
-  <div class="agenda">
-    <div class="step" data-in="2"><div class="num" style="background:var(--blue)">01</div><h3>A ideia</h3><p>Uma necessidade percebida na área fim</p><div class="t" style="color:var(--blue)">2 min</div></div>
-    <div class="step" data-in="3"><div class="num" style="background:var(--sky)">02</div><h3>A construção</h3><p>Equipe, parcerias e as primeiras entregas</p><div class="t" style="color:#1C93BC">4 min</div></div>
-    <div class="step" data-in="4"><div class="num" style="background:var(--orange)">03</div><h3>O método</h3><p>Como uma demanda vira fluxo no PJe</p><div class="t" style="color:#D07E12">2 min</div></div>
-    <div class="step" data-in="5"><div class="num" style="background:var(--red)">04</div><h3>Os fluxos</h3><p>Acordo e Mandado de Segurança, percorridos passo a passo</p><div class="t" style="color:var(--red)">6 min</div></div>
+<!-- 2 · A DOR -->
+<section class="slide dark pain">
+  <div class="kicker">Tudo começa com uma dor</div>
+  <h1>Quem trabalha com o PJe <em>conhece esta sensação.</em></h1>
+  <div class="pains">
+    <div>O processo parado na tarefa errada.</div>
+    <div>O prazo controlado de memória.</div>
+    <div>O mesmo clique, repetido o dia inteiro.</div>
   </div>
-  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~30 s.</b> Passar rápido. O centro da fala é a simulação (parte 4).</div>
-</section>
-
-<!-- 3 · A IDEIA -->
-<section class="slide">
-  <div class="kicker" data-in="1">01 · A ideia</div>
-  <h2 data-in="1">Quem usa o fluxo todo dia <em>sabe onde ele trava</em></h2>
-  <div class="cols">
-    <div class="quote" data-in="2"><p>O Laboratório nasceu da área fim da Seção Judiciária do Ceará, de quem percebeu, no dia a dia das varas, a necessidade de melhorar os fluxos do PJe.</p></div>
-    <div class="rows">
-      <div class="row" data-in="3"><div class="ico" style="background:var(--blue)" data-icon="chat"></div><div><b>Diálogo com o TRF5</b><span>O Tribunal coordena o PJe na 5ª Região. A proposta foi oferecer apoio.</span></div></div>
-      <div class="row" data-in="4"><div class="ico" style="background:var(--sky)" data-icon="tool"></div><div><b>Melhorias pontuais</b><span>Primeiro passo: ajustes em fluxos que já existiam.</span></div></div>
-      <div class="row" data-in="5"><div class="ico" style="background:var(--orange)" data-icon="hands"></div><div><b>Apoio, não caminho paralelo</b><span>Somar esforços com a Região, a partir de quem opera o processo.</span></div></div>
-    </div>
-  </div>
-  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min 30 s.</b> Servidores da área fim, na SJCE, perceberam gargalos nos fluxos do PJe. Em vez de esperar, buscaram o TRF5 para oferecer ajuda.
-    Começou pequeno: ajustes em fluxos que já existiam. Mensagem-chave: a iniciativa veio de quem opera o processo.</div>
-</section>
-
-<!-- 4 · LINHA DO TEMPO -->
-<section class="slide">
-  <div class="kicker" data-in="1">02 · A construção</div>
-  <h2 data-in="1">De ajustes pontuais a <em>fluxos completos</em></h2>
-  <div class="tl"><div class="bar"></div>
-    <div class="ev" data-in="2"><div class="c" style="background:var(--blue)">1</div><h3>Melhorias pontuais</h3><p>Ajustes em fluxos existentes, em diálogo com o TRF5</p></div>
-    <div class="ev" data-in="3"><div class="c" style="background:#1584BB">2</div><h3>Equipe formada</h3><p>Área fim + tecnologia, capacitadas por instrutores do TRF1</p></div>
-    <div class="ev" data-in="4"><div class="c" style="background:var(--sky)">3</div><h3>Execução Fiscal</h3><p>Primeiro fluxo completo entregue à Justiça Federal da 5ª Região</p></div>
-    <div class="ev" data-in="5"><div class="c" style="background:#7FB27A">4</div><h3>Entregas ao TRF5</h3><p>Sob coordenação do Tribunal, atendendo às demandas solicitadas</p></div>
-    <div class="ev" data-in="6"><div class="c" style="background:var(--orange)">5</div><h3>Justiça Centrada nas Pessoas</h3><p>Aporte do programa (TRF5 · JFCE · PNUD) e capacitação em PJe</p></div>
-    <div class="ev now" data-in="7"><div class="c" style="background:var(--red)">6</div><h3>Acordo e Mandado de Segurança</h3><p>Acordo em produção no TRF5 · MS validado pelo grupo regional</p></div>
-  </div>
-  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min 30 s.</b> Percorrer da esquerda para a direita.
-    (2) A equipe juntou gente de negócio e de tecnologia. Agradecer a Anderson de Sousa Peres e Erick Gama Touret de Faria, servidores do TRF1, que foram os instrutores dos treinamentos iniciais de formação do Laboratório.
-    (3) Execução Fiscal: primeiro fluxo completo para a JF5. (4) Primeiras entregas ao TRF5, sob coordenação do Tribunal. (5) Aporte do JCP. (6) Acordo em produção no TRF5; MS finalizado e validado pelo grupo regional, a caminho do envio formal.</div>
-</section>
-
-<!-- 5 · JCP -->
-<section class="slide">
-  <div class="kicker" data-in="1">02 · A construção</div>
-  <h2 data-in="1">O aporte do <em>Justiça Centrada nas Pessoas</em></h2>
-  <div class="jcp">
-    <img data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas" data-in="2">
-    <div class="rows">
-      <div class="row" data-in="3"><div class="ico" style="background:var(--blue)" data-icon="globe"></div><div><b>Convênio com as Nações Unidas</b><span>TRF5 e JFCE em parceria com o PNUD.</span></div></div>
-      <div class="row" data-in="4"><div class="ico" style="background:var(--sky)" data-icon="gear"></div><div><b>Suporte técnico especializado</b><span>Mais estrutura e método para a equipe do Laboratório.</span></div></div>
-    </div>
-  </div>
-  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> O programa Justiça Centrada nas Pessoas (convênio TRF5 + JFCE + PNUD) trouxe suporte técnico ainda mais especializado para a equipe.</div>
-</section>
-
-<!-- 6 · EQUIPE -->
-<section class="slide">
-  <div class="kicker" data-in="1">02 · A construção</div>
-  <h2 data-in="1">Hoje: <em>negócio e desenvolvimento</em> no mesmo time</h2>
-  <div class="team">
-    <div data-in="2"><h3>Equipe de negócio</h3>
-      <div class="people">
-        <div class="person"><div class="av" style="background:var(--blue)">IM</div><b>Italo Martins</b></div>
-        <div class="person"><div class="av" style="background:var(--red)">DL</div><b>Danielle Lira</b></div>
-        <div class="person"><div class="av" style="background:var(--sky)">GS</div><b>Gabriela de Sousa</b></div>
-        <div class="person"><div class="av" style="background:var(--orange)">VS</div><b>Vinícius Sousa e Silva</b></div>
-      </div></div>
-    <div data-in="3"><h3>Equipe de desenvolvimento</h3>
-      <div class="dev"><div class="ico" style="background:var(--orange);width:96px;height:96px" data-icon="code"></div>
-        <p>Capaz de entregar, com qualidade, fluxos e serviços voltados para o PJe.</p></div></div>
-  </div>
-  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> Apresentar a equipe de negócio pelo nome. O diferencial é ter área fim e desenvolvimento juntos: quem conhece a regra e quem escreve o fluxo trabalham na mesma sprint.</div>
-</section>
-
-<!-- 7 · TREINAMENTOS -->
-<section class="slide">
-  <div class="kicker" data-in="1">02 · A construção</div>
-  <h2 data-in="1">Quem nos <em>formou</em></h2>
-  <div class="train">
-    <div class="tcard" data-in="2">
-      <div class="tstep" style="background:var(--blue)">1</div>
-      <div class="tkind" style="color:var(--blue)">Treinamentos iniciais</div>
-      <p class="tdesc">A formação que deu origem à equipe do Laboratório de Fluxos.</p>
-      <div class="tpeople">
-        <div class="person"><div class="av" style="background:var(--blue)">AP</div><div><b>Anderson de Sousa Peres</b><span>Servidor do TRF1 · instrutor</span></div></div>
-        <div class="person"><div class="av" style="background:var(--sky)">EF</div><div><b>Erick Gama Touret de Faria</b><span>Servidor do TRF1 · instrutor</span></div></div>
-      </div>
-    </div>
-    <div class="tarrow" data-in="3"></div>
-    <div class="tcard" data-in="4">
-      <div class="tstep" style="background:var(--orange)">2</div>
-      <div class="tkind" style="color:#C9730C">Treinamento exclusivo de desenvolvimento</div>
-      <p class="tdesc">Capacitação dedicada ao desenvolvimento de fluxos no PJe.</p>
-      <div class="tpeople">
-        <div class="person"><div class="av" style="background:var(--orange)">SR</div><div><b>Samuel de Aguiar Rodrigues</b><span>Servidor do TRF5 · instrutor</span></div></div>
-      </div>
-    </div>
-  </div>
-  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~40 s.</b> Agradecer nominalmente. Anderson de Sousa Peres e Erick Gama Touret de Faria, servidores do TRF1, conduziram os treinamentos iniciais que formaram a equipe do Laboratório.
-    Samuel de Aguiar Rodrigues, servidor do TRF5, conduziu um treinamento exclusivo de desenvolvimento no PJe — foi o que permitiu à equipe de tecnologia entregar fluxos completos.</div>
-</section>
-
-<!-- 8 · APOIO INSTITUCIONAL -->
-<section class="slide dark">
-  <div class="kicker" data-in="1">02 · A construção</div>
-  <h2 data-in="1">Um resultado construído <em style="color:var(--sky)">com o TRF5</em></h2>
-  <p class="lead-dark" data-in="1">O sucesso do projeto passa pelo apoio de quem coordena o PJe na 5ª Região.</p>
-  <div class="inst">
-    <div class="icard" data-in="2"><div class="ico" style="background:var(--orange)" data-icon="shield"></div><b>Corregedoria</b><span>Respaldo institucional e coordenação das entregas na Região.</span></div>
-    <div class="icard" data-in="3"><div class="ico" style="background:var(--sky)" data-icon="code"></div><b>Tecnologia da Informação</b><span>Parceria técnica para levar os fluxos à produção do PJe.</span></div>
-    <div class="icard" data-in="4"><div class="ico" style="background:var(--red)" data-icon="scale"></div><b>Secretaria Judiciária</b><span>Visão de negócio e validação junto às unidades judiciárias.</span></div>
-  </div>
+  <p class="punch">E, do outro lado, <em>alguém esperando por justiça.</em></p>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="labw" alt=""></div>
-  <div class="notes"><b>~40 s.</b> Enaltecer o apoio da Corregedoria, da TI e da Secretaria Judiciária do TRF5: sem esse apoio, as entregas não chegariam à produção.
-    [Ajustar os textos de cada card ao papel exato de cada unidade, se quiser.]</div>
+  <div class="notes"><b>~1 min.</b> Falar devagar, olhando para a plateia. Perguntar: "Quem aqui já procurou um processo que deveria estar numa tarefa e estava em outra?"
+    Cada item é uma dor que todo usuário do PJe reconhece. A última frase é o gancho: o fluxo não é burocracia, é o tempo de alguém que espera.</div>
 </section>
 
-<!-- 9 · MÉTODO -->
+<!-- 3 · PROPOSTA DE VALOR -->
 <section class="slide">
-  <div class="kicker" data-in="1">03 · O método</div>
-  <h2 data-in="1">Da demanda ao fluxo, <em>sob Scrum e com IA de apoio</em></h2>
-  <div data-in="2">
-    <div class="pipe">
-      <div class="st" style="background:var(--blue)">Demanda</div><div class="st" style="background:var(--blue)">Análise</div>
-      <div class="st" style="background:var(--blue)">História de Usuário</div><div class="st" style="background:var(--blue)">Sprint</div>
-      <div class="st" style="background:var(--sky)">BPMN</div><div class="st" style="background:var(--sky)">XML jPDL</div>
-      <div class="st" style="background:var(--orange)">Validação</div>
-    </div>
-    <div class="pipe-d"><span>registrada pela área fim</span><span>backlog e critérios de aceite</span><span>BDD + regras de negócio</span><span>planejamento e ritos</span><span>desenho do fluxo</span><span>fluxo pronto para o PJe</span><span>regras automáticas + homologação</span></div>
+  <div class="kicker">A nossa resposta</div>
+  <h2>O <em>Laboratório de Fluxos</em></h2>
+  <p class="lead">Uma estrutura <b>contínua</b> — não um projeto pontual — criada para aliviar as dores do processo eletrônico e levar a <b>Inteligência Artificial</b> para o dia a dia do PJe.</p>
+  <div class="pillars">
+    <div class="pillar"><div class="ico" style="background:var(--blue)" data-icon="ear"></div><b>Ouvir quem usa</b><span>As ideias nascem de quem vive o processo todos os dias.</span></div>
+    <div class="pillar"><div class="ico" style="background:var(--sky)" data-icon="flow"></div><b>Redesenhar os fluxos</b><span>Melhorias e fluxos novos para toda a Justiça Federal da 5ª Região.</span></div>
+    <div class="pillar"><div class="ico" style="background:var(--orange)" data-icon="spark"></div><b>Impulsionar a IA</b><span>A inteligência artificial acelera cada etapa. Quem decide é a equipe.</span></div>
   </div>
-  <div class="stats">
-    <div class="stat" data-in="3"><div class="v" style="color:var(--blue)" data-count="212">212</div><div class="l">fluxos do PJe indexados como base de consulta</div></div>
-    <div class="stat" data-in="4"><div class="v" style="color:#1C93BC" data-count="2713">2.713</div><div class="l">expressões (EL) catalogadas e descritas</div></div>
-    <div class="stat" data-in="5"><div class="v" style="color:#D07E12" data-count="6">6</div><div class="l">regras automáticas de validação do XML</div></div>
-    <div class="stat" data-in="6"><div class="v" style="color:var(--red)" data-count="100" data-suffix="%">100%</div><div class="l">das saídas da IA passam por aprovação humana</div></div>
+  <p class="note"><b>●</b> Os fluxos que vou mostrar são demonstrações do que essa estrutura já entrega.</p>
+  <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
+  <div class="notes"><b>~1 min 30 s.</b> Posicionar o Laboratório como estrutura permanente, não como projeto de um fluxo só. Três verbos: ouvir, redesenhar, impulsionar a IA.
+    Deixar claro que Acordo e MS são exemplos, não o objetivo final.</div>
+</section>
+
+<!-- 4 · ANTES -->
+<section class="slide">
+  <div class="kicker moment"><b>ANTES</b> Origem e construção</div>
+  <h2>De uma ideia na área fim <em>a uma equipe preparada</em></h2>
+  <div class="antes">
+    <div class="steps">
+      <div class="st"><div class="n" style="background:var(--blue)">1</div><div><b>A ideia</b><span>Servidores da área fim da SJCE propõem ao TRF5 apoiar a melhoria dos fluxos do PJe.</span></div></div>
+      <div class="st"><div class="n" style="background:#1584BB">2</div><div><b>Equipe inicial: 4 pessoas</b><span>Área fim e tecnologia, lado a lado.</span></div></div>
+      <div class="st"><div class="n" style="background:var(--sky)">3</div><div><b>Primeiras entregas</b><span>Melhorias pontuais e o primeiro fluxo completo: Execução Fiscal.</span></div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="ico" style="background:var(--orange)" data-icon="board"></div><div><h4>Formação</h4>
+        <p>Treinamentos iniciais com <b>Anderson de Sousa Peres</b> e <b>Erick Gama Touret de Faria</b><small>servidores do TRF1</small></p>
+        <p>Treinamento de desenvolvimento com <b>Samuel de Aguiar Rodrigues</b><small>servidor do TRF5</small></p></div></div>
+      <div class="card"><div class="ico" style="background:var(--blue)" data-icon="shield"></div><div><h4>Apoio do TRF5</h4>
+        <p>Corregedoria · Diretoria Judiciária · Diretoria de Tecnologia da Informação</p></div></div>
+      <div class="card"><img data-logo="jcp" alt="Justiça Centrada nas Pessoas"><div><h4>Justiça Centrada nas Pessoas</h4>
+        <p>Convênio do TRF5 e da JFCE com o PNUD, com suporte técnico especializado.</p></div></div>
+    </div>
   </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~2 min.</b> Cada etapa tem um agente de IA que gera um rascunho (análise, HU, sprint, BPMN, XML), mas nada avança sem aprovação humana.
-    A IA consulta os 212 fluxos existentes do PJe para gerar XML coerente com o padrão da Região. O validador verifica início, fim, becos sem saída, nós inalcançáveis, transições quebradas e expressões EL.
-    Frase-chave: "A IA acelera; quem decide é a equipe."</div>
+  <div class="notes"><b>~2 min.</b> Contar rápido, sem detalhar fluxos. (1) A ideia veio da área fim e foi levada ao TRF5. (2) Equipe inicial de 4 pessoas, negócio e tecnologia juntos.
+    (3) Primeiras entregas até a Execução Fiscal. À direita, agradecer: os treinamentos iniciais de Anderson e Erick (TRF1) e o treinamento de desenvolvimento do Samuel (TRF5);
+    o apoio da Corregedoria, da Diretoria Judiciária e da Diretoria de TI do TRF5; e o Justiça Centrada nas Pessoas (PNUD).</div>
 </section>
 
-<!-- 10 · ACORDO: VISÃO GERAL -->
-<section class="slide">
-  <div class="kicker" data-in="1">04 · Os fluxos</div>
-  <div class="status" data-in="1"><i style="background:var(--green)"></i>Em produção no TRF5</div>
-  <h2 data-in="1">Proposta de acordo: <em>quatro momentos</em></h2>
-  <div class="ac">
-    <div class="rows">
-      <div class="row" data-in="2"><div class="ico" style="background:var(--blue)" data-icon="bolt"></div><div><b>O gatilho é automático</b><span>A petição do tipo 40 cria o fluxo sozinha. Ninguém na secretaria precisa perceber que chegou uma proposta.</span></div></div>
-      <div class="row" data-in="3"><div class="ico" style="background:var(--sky)" data-icon="collect"></div><div><b>O fluxo recolhe o processo</b><span>As tarefas abertas são encerradas: o processo não tramita em dois lugares com entendimentos diferentes.</span></div></div>
-      <div class="row" data-in="4"><div class="ico" style="background:var(--orange)" data-icon="loop"></div><div><b>O anel de espera</b><span>Intimar → esperar → ler a manifestação → intimar de novo. A espera escuta petição, prazo e expediente.</span></div></div>
-      <div class="row" data-in="5"><div class="ico" style="background:var(--red)" data-icon="fork"></div><div><b>A homologação se desdobra</b><span>Depois do trânsito em julgado, cumprimento de sentença e obrigação de fazer seguem em paralelo.</span></div></div>
-    </div>
-    <div data-in="3">
-      <div class="acmap">
-        <div class="fc" data-flow="SJP"><b>SJP</b><span>Sinalizar Juntada de Petição</span></div>
-        <div class="dn">petição tipo 40</div>
-        <div class="split">
-          <div class="fc" data-flow="JFCE_FLUXO_ACORDO"><b>JFCE_FLUXO_ACORDO</b><span>Fluxo de proposta de acordo</span></div>
-          <div class="fc par" data-flow="JEF_INAUTJUNACORD"><b>JEF_INAUTJUNACORD</b><span>Intimação · em paralelo</span></div>
-        </div>
-        <div class="dn">sentença homologatória</div>
-        <div class="fc" data-flow="JFCE_SENTACORDO"><b>JFCE_SENTACORDO</b><span>Elaboração de sentença de acordo</span></div>
-        <div class="dn">fork</div>
-        <div class="split">
-          <div class="fc ext"><b>JEF_CUMPRSENT</b><span>Cumprimento de sentença</span></div>
-          <div class="fc ext"><b>JEF_INTOBRFAZ</b><span>Obrigação de fazer</span></div>
-        </div>
+<!-- 5 · HOJE -->
+<section class="slide" style="padding-top:70px">
+  <div class="kicker moment"><b>HOJE</b> Situação atual</div>
+  <h2 style="margin-bottom:30px">Uma estrutura que <em>já entrega</em></h2>
+  <div class="hoje">
+    <div class="box"><h4>Estrutura e coordenação</h4>
+      <p>Coordenação executiva na Justiça Federal no Ceará, com entregas coordenadas pelo TRF5 para toda a 5ª Região.</p>
+      <div class="people" style="margin-top:20px">
+        <div><i style="background:var(--blue)">IM</i>Italo Martins</div><div><i style="background:var(--red)">DL</i>Danielle Lira</div>
+        <div><i style="background:var(--sky)">GS</i>Gabriela de Sousa</div><div><i style="background:var(--orange)">VS</i>Vinícius Sousa e Silva</div>
       </div>
-      <div class="tagline"><span class="tag">[A] Proposta de acordo</span>›<span class="tag">[A] Homologar acordo</span>›<span class="tag">[A] Acordo homologado</span></div>
+      <p class="plus">+ equipe de desenvolvimento · <b>e novos servidores chegando</b></p></div>
+    <div class="box ia"><h4>Inteligência Artificial no método</h4>
+      <div class="chain"><span>Demanda</span><i>›</i><span>Análise</span><i>›</i><span>História</span><i>›</i><span>Desenho</span><i>›</i><span>Fluxo PJe</span><i>›</i><span>Validação</span></div>
+      <div class="nums"><div><b>212</b><span>fluxos do PJe como base</span></div><div><b>2.713</b><span>expressões catalogadas</span></div></div>
+      <p class="claim">A IA acelera. A equipe decide.</p></div>
+    <div class="deliv">
+      <div class="dv"><i style="background:var(--blue)"></i><div><b>Execução Fiscal</b><span>entregue à 5ª Região</span></div></div>
+      <div class="dv"><i style="background:var(--green)"></i><div><b>Proposta de Acordo</b><span>em produção no TRF5</span></div></div>
+      <div class="dv"><i style="background:var(--orange)"></i><div><b>Mandado de Segurança</b><span>validado pelo grupo regional · envio formal ao TRF5</span></div></div>
     </div>
   </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> Status: o fluxo de acordo já foi entregue, implantado e está em produção no TRF5. Os quatro momentos que o público precisa guardar, em ordem de importância: (1) o gatilho é automático — o tipo de documento 40 cria o fluxo; (2) o fluxo recolhe o processo, encerrando as tarefas abertas; (3) o anel de espera; (4) a homologação se desdobra em dois fluxos.
-    À direita, os fluxos envolvidos (clique para ampliar). Embaixo, as etiquetas que a secretaria vê no PJe — a forma mais honesta de mostrar o progresso.</div>
+  <div class="notes"><b>~2 min.</b> Hoje: coordenação executiva na JFCE, com entregas coordenadas pelo TRF5; equipe de negócio (citar os nomes), equipe de desenvolvimento e a chegada de novos servidores.
+    IA: cada etapa — da demanda ao fluxo pronto — tem apoio de IA, com 212 fluxos do PJe como base de consulta; mas nada avança sem aprovação humana.
+    Embaixo, as entregas. "Vou mostrar duas delas funcionando."</div>
 </section>
 
-<!-- 11 · SIMULADOR DO ACORDO -->
-<section class="slide sim" data-sim="acordo" data-title="Proposta de acordo: o caminho do processo">
-  <div class="notes"><b>~3 min.</b> Rodar o "Caminho feliz" com P (ou → passo a passo). Pontos para pausar:
-    (1) o SJP emite o sinal genérico ANTES de criar o fluxo de acordo; (2) o marcador azul nasce ao lado — é o incluirNovoFluxo, fluxo paralelo, não substituição;
-    (3) na intimação, o processo sai do fluxo em que estava (veja o quadro "O processo está em"); (4) o movimento 466 aparece tracejado (temporário) e vira definitivo após a assinatura;
-    (5) o fork no final. Se sobrar tempo: "Anel de espera" ou "Sem acordo". Teclas 1–5 trocam o cenário.</div>
+<!-- 6 · CASO 1: ACORDO -->
+<section class="slide sim" data-flow="RESUMO_ACORDO" data-scen="acordo">
+  <div class="sim-head"><div><div class="kicker">Hoje · caso prático 1</div><h2>Proposta de <em>acordo</em></h2></div>
+    <div class="status"><i style="background:var(--green)"></i>Em produção no TRF5</div></div>
+  <div class="notes"><b>~3 min.</b> P reproduz sozinho; → avança passo a passo (o clicker funciona). Pontos para comentar:
+    (1) o gatilho é automático: a petição do tipo 40 cria o fluxo; (2) o fluxo recolhe o processo e a intimação corre em paralelo (marcador azul);
+    (3) a espera acorda sozinha — e o anel "intimar de novo"; (4) a minuta vem pronta e o movimento 466 nasce temporário (selo tracejado) e vira definitivo após a assinatura;
+    (5) no fim, um fluxo vira dois: cumprimento e obrigação de fazer. Ao terminar, → vai para o próximo slide.</div>
 </section>
 
-<!-- 12 · MAPA DO MS -->
-<section class="slide" style="padding-bottom:90px">
-  <div class="kicker" data-in="1">04 · Os fluxos</div>
-  <div class="status" data-in="1"><i style="background:var(--orange)"></i>Finalizado · apresentado ao grupo regional de validação · envio formal ao TRF5</div>
-  <h2 data-in="1" style="margin-bottom:10px">Mandado de Segurança: <em>12 fluxos conectados</em></h2>
-  <p class="muted" data-in="1" style="font-size:22px">Classes 119 e 120 · do protocolo da inicial ao trânsito em julgado ou à remessa ao TRF5 · clique em um fluxo para ampliar</p>
-  <div class="map-wrap" data-in="2"><svg id="msmap" viewBox="0 -14 1660 720"></svg></div>
-  <div class="foot" style="bottom:30px"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min.</b> Status: o fluxo de MS foi finalizado, apresentado ao grupo regional de validação e será enviado formalmente ao TRF5. Visão geral antes da simulação. Linha de cima: o processo na fase de conhecimento — inicial, notificação da autoridade, controle de prazo, análise de manifestação, MPF.
-    Linha do meio: sentença e fase recursal. Embaixo: a rede de proteção — os fluxos gerais (CONTRPRAZ e CONTRDEVEXP) foram ajustados para devolver o MS ao trilho certo.
-    Clique num fluxo para mostrar o diagrama ampliado (Esc fecha).</div>
+<!-- 7 · CASO 2: MS -->
+<section class="slide sim" data-flow="RESUMO_MS" data-scen="ms">
+  <div class="sim-head"><div><div class="kicker">Hoje · caso prático 2</div><h2>Mandado de <em>Segurança</em></h2></div>
+    <div class="status"><i style="background:var(--orange)"></i>Validado pelo grupo regional · envio formal ao TRF5</div></div>
+  <div class="notes"><b>~3 min.</b> Pontos para comentar: (1) a classe é reconhecida e etiquetada sozinha; (2) o controle de prazo só libera quando todos os expedientes fecham;
+    (3) o MPF é intimado automaticamente e o processo volta ao mesmo controle; (4) depois da sentença, o MS ganha um prazo recursal próprio, que identifica o tipo da sentença;
+    (5) sem recurso, a concessiva segue sozinha para a remessa necessária. Ao terminar, → vai para o encerramento.</div>
 </section>
 
-<!-- 13 · SIMULADOR DO MS -->
-<section class="slide sim" data-sim="ms" data-title="Mandado de Segurança: o processo percorrendo o fluxo">
-  <div class="notes"><b>~3 min.</b> Escolher o cenário nas abas do topo (ou teclas 1–5). → avança um passo (o clicker funciona), P reproduz automaticamente, V mostra o diagrama inteiro, S muda a velocidade.
-    Sugestão: rodar o "Caminho completo" com P, pausando em 3 pontos: (1) a decisão automática da liminar; (2) o controle de prazo que só libera quando todos os expedientes fecham; (3) o roteamento recursal que manda a sentença concessiva para a remessa necessária.
-    Ao terminar o cenário, → segue para o próximo slide.</div>
-</section>
-
-<!-- 14 · ENCERRAMENTO -->
-<section class="slide end">
-  <div class="kicker" data-in="1">Obrigado</div>
-  <h1 data-in="2">Fluxos melhores, <em>justiça mais próxima das pessoas</em></h1>
-  <div class="logos" data-in="3"><img class="l1" data-logo="lab" alt="Laboratório de Fluxos"><img class="l2" data-logo="jcp" alt="Projeto Justiça Centrada nas Pessoas"></div>
-  <div class="url" data-in="4">justicacentradanaspessoas.jfce.jus.br/laboratorio-de-fluxos</div>
-  <div class="notes"><b>~30 s.</b> Agradecer à Corregedoria, à TI e à Secretaria Judiciária do TRF5, à JFCE, ao PNUD / Justiça Centrada nas Pessoas, aos instrutores Anderson, Erick (TRF1) e Samuel (TRF5) e à equipe.</div>
+<!-- 8 · FUTURO -->
+<section class="slide dark end">
+  <div class="kicker moment"><b>FUTURO</b></div>
+  <h1>Cada fluxo redesenhado <em>devolve tempo</em> a quem trabalha — e a quem espera.</h1>
+  <p class="sub">Um PJe em que as pessoas cuidam do que exige gente, e o sistema cuida do resto. Esse é o caminho que seguimos construindo, juntos.</p>
+  <div class="logos"><img class="l1" data-logo="lab" alt="Laboratório de Fluxos"><img class="l2" data-logo="jcp" alt="Justiça Centrada nas Pessoas"><img class="l3" data-logo="trf5" alt="TRF5"></div>
+  <p class="thanks"><b>OBRIGADO</b>justicacentradanaspessoas.jfce.jus.br/laboratorio-de-fluxos</p>
+  <div class="notes"><b>~1 min.</b> Mensagem final de esperança para o usuário do PJe. Agradecer ao TRF5 (Corregedoria, Diretoria Judiciária e Diretoria de TI), à JFCE, ao PNUD / Justiça Centrada nas Pessoas, aos instrutores e à equipe.</div>
 </section>
 
 </div>
 
-<div id="lightbox"><div class="lb"><header><b id="lbcode"></b><span id="lbname"></span><em>Esc ou clique para fechar</em></header><div class="body" id="lbbody"></div></div></div>
 <div id="progress"></div>
 <div id="hud"></div>
 <div id="notes"><header><span id="ntitle"></span><span class="clock" id="clock">00:00 / 15:00</span></header><div id="nbody"></div></div>
 
 <script>
 const FLOWS = {{FLOWS_JSON}};
-const LOGOS = { lab: "{{LOGO_LAB}}", labw: "{{LOGO_LAB_W}}", jcp: "{{LOGO_JCP}}" };
+const LOGOS = { lab: "{{LOGO_LAB}}", labw: "{{LOGO_LAB_W}}", jcp: "{{LOGO_JCP}}", trf5: "{{LOGO_TRF5}}" };
 
 /* ================================================================
-   CENÁRIOS DO SIMULADOR
-   Cada passo: f = fluxo, at = nó onde o processo para, go = trajeto
-   (ids de transições "fN" ou caminho SVG "M..." ) desde o nó anterior.
+   CENÁRIOS (um por fluxo, numa única tela)
+   at = nó onde o processo para · go = trajeto desde o passo anterior
+   sp = ramos paralelos · tg/mv/pf = etiquetas, movimentos e fluxos
    ================================================================ */
-const BUS_ANLIN = "M725,157 L725,490 L182,490 L182,545";
-const SCEN_MS = [
-{ id:"completo", name:"Caminho completo", sub:"Da inicial à remessa necessária ao TRF5", steps:[
-  {f:"MS_ANLIN", at:"n3", t:"Inicial distribuída", d:"O processo da classe Mandado de Segurança (119 ou 120) entra no fluxo de análise da inicial."},
-  {f:"MS_ANLIN", at:"n4", go:["f0"], tg:["+[A] Mandado de segurança"], d:"O sistema vincula automaticamente a etiqueta da classe, para que o processo seja identificado em toda a tramitação."},
-  {f:"MS_ANLIN", at:"n5", go:["f1"], q:"Há pedido de liminar ainda não apreciado?", a:"NÃO", alt:"<b>SIM</b> → vai para “Analisar Inicial urgente”, com encaminhamento a minutar decisão urgente (ELDECURG)."},
-  {f:"MS_ANLIN", at:"n0", go:["f2"], d:"Tarefa do servidor, com avisos de tutela e de documentação da parte. É aqui que se escolhe o encaminhamento."},
-  {f:"MS_ANLIN", at:"n6", go:BUS_ANLIN, q:"Encaminhamento escolhido", a:"Notificar impetrado", alt:"Também disponíveis: minutar sentença, decisão ou despacho, análise de secretaria e Nó de Desvio."},
-  {f:"MS_INTAUTIMPET", at:"n3", t:"Início da notificação"},
-  {f:"MS_INTAUTIMPET", at:"n4", go:["f0"], d:"Notificação automática da autoridade coatora pelo CP_INTAUT, com prazo de 10 dias (modelo 56244, polo passivo)."},
-  {f:"MS_INTAUTIMPET", at:"n5", go:["f1"], q:"O polo passivo tem procuradoria vinculada?", a:"Todas intimadas", alt:"<b>Há pendência</b> → tarefa para preencher a autoridade coatora e tratar a parte sem procuradoria, inclusive por central de mandados."},
-  {f:"MS_INTAUTIMPET", at:"n9", go:["f3"], d:"Com todos intimados, o processo segue direto para o controle de prazo do MS."},
-  {f:"MS_CONTRPRAZ", at:"n2", t:"Início do controle de prazo"},
-  {f:"MS_CONTRPRAZ", at:"n3", go:["f0"], d:"Grava o marco temporal da entrada no controle de prazo (fluxo:dataEntradaControlarPrazo)."},
-  {f:"MS_CONTRPRAZ", at:"n4", go:["f1"], q:"Existe expediente em controle?", a:"SIM"},
-  {f:"MS_CONTRPRAZ", at:"n5", go:["f2"], d:"Grava e atualiza a lista de expedientes a acompanhar (fluxo:idsExpedientes)."},
-  {f:"MS_CONTRPRAZ", at:"n6", go:["f3"], q:"Os expedientes são sem prazo?", a:"NÃO · há prazo", alt:"<b>Sem prazo</b> → tarefa “Comunicação enviada — Sem prazo”."},
-  {f:"MS_CONTRPRAZ", at:"n0", go:["f5"], d:"O processo aguarda a petição, o decurso do prazo e o fechamento dos expedientes. O servidor registra ciência e encerra os expedientes."},
-  {f:"MS_CONTRPRAZ", at:"n7", go:["f6"], q:"Algum expediente ainda está aberto?", a:"NÃO · todos fechados", alt:"<b>SIM</b> → volta à tarefa de controle de prazo. O processo só é liberado quando todos fecham."},
-  {f:"MS_CONTRPRAZ", at:"n8", go:["f8"], d:"Encerrado o prazo das informações, o processo vai para a análise de manifestação."},
-  {f:"MS_ANMANFEST", at:"n2", t:"Início da análise"},
-  {f:"MS_ANMANFEST", at:"n3", go:["f0"], q:"Houve juntada de parte no período? (desconsidera documentos de origem interna)", a:"SIM · informações prestadas", alt:"<b>NÃO</b> → tarefa “Sem manifestação”."},
-  {f:"MS_ANMANFEST", at:"n0", go:["f1"], d:"As informações da autoridade coatora foram juntadas. O servidor analisa e escolhe o encaminhamento."},
-  {f:"MS_ANMANFEST", at:"n4", go:"M730,161 L730,485 L177,485 L177,530", q:"Encaminhamento escolhido", a:"Intimar MPF", alt:"Também: perda do objeto, controle de prazo, elaborar comunicação, conclusão para julgamento, análise de secretaria."},
-  {f:"MS_INTMPF", at:"n3", t:"Início da intimação do MPF"},
-  {f:"MS_INTMPF", at:"n4", go:["f0"], d:"Intima o Ministério Público Federal em 10 dias, como fiscal da ordem jurídica (CP_INTAUT, modelo 56245)."},
-  {f:"MS_INTMPF", at:"n5", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência", alt:"<b>Há pendência</b> → tarefa no miniPAC para tratar partes não intimadas."},
-  {f:"MS_INTMPF", at:"n7", go:["f3"], d:"Gera a etiqueta [A] Prazo MPF, que deixa visível na caixa da vara o prazo em curso do Ministério Público."},
-  {f:"MS_INTMPF", at:"n8", go:["f13"], d:"Devolve o processo ao controle de prazo do MS."},
-  {f:"MS_CONTRPRAZ", at:"n2", t:"Novo ciclo de controle"},
-  {f:"MS_CONTRPRAZ", at:"n0", go:["f0","f1","f2","f3","f5"], pass:["n3","n4","n5","n6"], d:"Novo marco temporal e nova lista de expedientes. Agora o processo aguarda o parecer do MPF."},
-  {f:"MS_CONTRPRAZ", at:"n8", go:["f6","f8"], pass:["n7"], q:"Algum expediente ainda está aberto?", a:"NÃO · parecer juntado"},
-  {f:"MS_ANMANFEST", at:"n2", t:"Nova análise de manifestação"},
-  {f:"MS_ANMANFEST", at:"n0", go:["f0","f1"], pass:["n3"], d:"O parecer do MPF foi juntado no período."},
-  {f:"MS_ANMANFEST", at:"n8", go:"M730,161 L730,485 L1015,485 L1015,530", mv:["+51 concluso"], q:"Encaminhamento escolhido", a:"Conclusão para julgamento", alt:"Lança o movimento 51 (conclusão) e encaminha à elaboração de sentença."},
-  {f:"ELSENT", at:"n11", t:"Sentença assinada", d:"O magistrado assina a sentença — no cenário, concessiva da segurança. Minutar, revisar e assinar seguem o fluxo de sempre."},
-  {f:"ELSENT", at:"n3", go:["f0"], d:"Intima todas as partes automaticamente: 15 dias, em dobro, polos ativo e passivo, e o MPF."},
-  {f:"ELSENT", at:"n4", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência", alt:"<b>Há pendência</b> → tarefa “Elaboração de sentença — Intimar”."},
-  {f:"ELSENT", at:"n6", go:["f3"], q:"É Mandado de Segurança? (classes 119 e 120)", a:"SIM", alt:"<b>NÃO</b> → controle de prazo geral (CONTRPRAZ), como as demais classes."},
-  {f:"ELSENT", at:"n7", go:["f9"], d:"Esse é o desvio por classe: o MS ganha um controle de prazo recursal próprio."},
-  {f:"MS_CONTRPRAZREC-1", at:"n2", t:"Início do prazo recursal"},
-  {f:"MS_CONTRPRAZREC-1", at:"n3", go:["f0"], d:"Grava o marco temporal da entrada."},
-  {f:"MS_CONTRPRAZREC-1", at:"n4", go:["f1"], d:"Registra o tipo da sentença pelos movimentos lançados: <b>concessiva</b>, denegatória ou extinção. Também apura se é o ciclo posterior a embargos."},
-  {f:"MS_CONTRPRAZREC-1", at:"n6", go:["f2","f3"], pass:["n5"], d:"Há expedientes em controle: grava e atualiza a lista."},
-  {f:"MS_CONTRPRAZREC-1", at:"n0", go:["f4","f6"], pass:["n7"], d:"O processo aguarda o prazo recursal: petição, decurso e fechamento dos expedientes."},
-  {f:"MS_CONTRPRAZREC-1", at:"n8", go:["f7"], q:"Algum expediente ainda está aberto?", a:"NÃO · prazo encerrado"},
-  {f:"MS_CONTRPRAZREC-1", at:"n11", go:["f9"], d:"Todos os expedientes fechados: começa o roteamento recursal."},
-  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"As perguntas são avaliadas em ordem de precedência, de cima para baixo."},
-  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
-  {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"NÃO"},
-  {f:"MS_CONTRPRAZREC-2", at:"n3", go:["f2"], q:"Houve apelação?", a:"NÃO"},
-  {f:"MS_CONTRPRAZREC-2", at:"n4", go:["f3"], q:"Houve outra manifestação?", a:"NÃO"},
-  {f:"MS_CONTRPRAZREC-2", at:"n5", go:["f4"], q:"Qual o tipo da sentença?", a:"Concessiva", alt:"<b>Denegatória ou extinção sem mérito</b> → certificação do trânsito em julgado. <b>Indefinido</b> → tarefa para o servidor."},
-  {f:"MS_CONTRPRAZREC-2", at:"n14", go:["f12"], tg:["+[A] Remessa necessária"], t:"Remessa necessária ao TRF5", d:"Sentença concessiva sem recurso: o sistema aplica a etiqueta [A] Remessa necessária e remete ao TRF5 (REMTRF5) para o reexame. Fim do percurso no 1º grau."},
+const SCEN = {
+acordo: { init:{pf:["Fluxo em que o processo estava"]}, steps:[
+  {at:"P0", t:"A proposta chega", d:"O advogado junta ao processo uma petição de proposta de acordo."},
+  {at:"SJP", go:["e_p0"], tg:["+[A] Proposta de acordo"], pf:["+Fluxo de acordo"], t:"O PJe reconhece sozinho", d:"Pelo tipo do documento, o sistema cria o fluxo de acordo e etiqueta o processo. Ninguém na secretaria precisou perceber."},
+  {at:"D1", go:["e_d1"], q:"O processo está concluso no gabinete?", a:"NÃO", alt:"<b>SIM</b> → antes de intimar, gera um despacho de vista sobre a proposta."},
+  {at:"N2", go:["e_n2"], sp:["p_int"], also:["INT"], pf:["+Intimação · em paralelo","-Fluxo em que o processo estava"], t:"Intima e recolhe o processo", d:"As tarefas abertas são encerradas: o processo passa a tramitar só no fluxo de acordo. A intimação corre em paralelo."},
+  {at:"ESP", go:["e_esp"], t:"Espera sem vigilância", d:"Ninguém precisa ficar de olho: o processo acorda sozinho com uma nova petição, com o prazo vencido ou com o expediente fechado."},
+  {at:"P1", pf:["-Intimação · em paralelo"], t:"A outra parte responde", d:"Uma nova petição é juntada ao processo."},
+  {at:"ESP", go:["p_sig"], t:"O processo acorda", d:"O PJe sinaliza a juntada e o fluxo de acordo retoma."},
+  {at:"D2", go:["e_acordou"], q:"Por que acordou?", a:"Chegou petição", alt:"<b>Prazo vencido</b> → tarefa “sem manifestação”, com as mesmas opções."},
+  {at:"D3", go:["e_d2"], q:"A petição é do tipo 190?", a:"NÃO", alt:"<b>SIM</b> → atalho direto para a homologação."},
+  {at:"TC", go:["e_tc"], t:"A secretaria lê e decide", d:"Pode homologar, ou intimar de novo e voltar à espera — o anel do acordo gira quantas vezes for preciso."},
+  {at:"SENT", go:["e_homolog"], tg:["+[A] Homologar acordo"], pf:["+Fluxo de homologação","-Fluxo de acordo"], q:"Encaminhamento escolhido", a:"Gerar sentença homologatória"},
+  {at:"MIN", go:["e_min"], mv:["~466 homologação"], t:"A minuta vem pronta", d:"O sistema gera a minuta da sentença e já lança o movimento de homologação — por enquanto, temporário."},
+  {at:"MAG", go:["e_mag"], tg:["-[A] Homologar acordo"], t:"O juiz assina", d:"O magistrado aparece uma única vez: para assinar."},
+  {at:"HOM", go:["e_ass"], mv:["!466"], t:"O 466 vira definitivo", d:"Com a sentença assinada, o movimento de homologação deixa de ser provisório."},
+  {at:"TRA", go:["e_tra"], mv:["+848 trânsito em julgado"], tg:["-[A] Proposta de acordo","+[A] Acordo homologado"], t:"Trânsito em julgado", d:"Certificado automaticamente, com a certidão e a troca de etiquetas."},
+  {at:"FORK", go:["e_fork"], t:"Um fluxo vira dois"},
+  {at:"CUM", go:["e_cum"], sp:["e_obr"], also:["OBR"], pf:["+Cumprimento de sentença","+Obrigação de fazer","-Fluxo de homologação"], t:"Cumprimento e obrigação de fazer", d:"O acordo homologado já segue, em paralelo, para o cumprimento — sem ninguém abrir tarefas à mão."},
 ]},
-{ id:"embargos", init:{tg:["[A] Mandado de segurança"]}, name:"Embargos de declaração", sub:"Contrarrazões, julgamento e retorno ao prazo recursal", steps:[
-  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"A sentença foi intimada e o prazo recursal terminou. Uma das partes opôs embargos de declaração."},
-  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
-  {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"SIM"},
-  {f:"MS_CONTRPRAZREC-2", at:"n12", go:["f6"], d:"Antes de sair, registra se havia apelação pendente, para não perdê-la no retorno."},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n4", t:"Início das contrarrazões"},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n5", go:["f0"], d:"Identifica o polo que embargou: define quem será intimado e se o MPF também será."},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n6", go:["f1"], d:"Intima a parte contrária para contrarrazões: 5 dias, em dobro (modelo 56247)."},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n7", go:["f2"], q:"Pendência de intimação?", a:"Sem pendência", alt:"<b>Há pendência</b> → tarefa no miniPAC (5 dias)."},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n9", go:["f4"], d:"Grava os expedientes das contrarrazões (ms:idsExpedientesContrarrazaoEmbargos)."},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n3", go:"M1420,375 L1510,375 L1510,140 L1290,140", d:"Controle do prazo de contrarrazões em curso: registro de ciência e encerramento dos expedientes."},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n10", go:["f14"], q:"Algum expediente ainda está aberto?", a:"NÃO"},
-  {f:"MS_CONTRPRAZCONTREMB", at:"n11", go:["f16"], d:"Concluso para julgar os embargos, na elaboração de sentença."},
-  {f:"ELSENT", at:"n11", t:"Embargos julgados", d:"A decisão nos embargos é assinada."},
-  {f:"ELSENT", at:"n6", go:["f0","f1","f3"], pass:["n3","n4"], q:"É Mandado de Segurança?", a:"SIM", d:"Intimação automática das partes e desvio por classe."},
-  {f:"ELSENT", at:"n7", go:["f9"]},
-  {f:"MS_CONTRPRAZREC-1", at:"n2", t:"Novo prazo recursal"},
-  {f:"MS_CONTRPRAZREC-1", at:"n4", go:["f0","f1"], pass:["n3"], d:"Reconhece o ciclo posterior aos embargos pelos movimentos 198, 871 e 200."},
-  {f:"MS_CONTRPRAZREC-1", at:"n0", go:["f2","f3","f4","f6"], pass:["n5","n6","n7"], d:"Controla o novo prazo recursal."},
-  {f:"MS_CONTRPRAZREC-1", at:"n11", go:["f7","f9"], pass:["n8"], q:"Expedientes fechados?", a:"SIM · rotear recurso"},
-  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo encerrado"},
-  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"SIM"},
-  {f:"MS_CONTRPRAZREC-2", at:"n8", go:["f5"], t:"[MS] Recursos — Analisar após julgamento dos embargos", d:"Tarefa do servidor: informa se havia apelação no prazo anterior. O encaminhamento é decisão humana, com todos os destinos disponíveis."},
+ms: { init:{}, steps:[
+  {at:"A1", tg:["+[A] Mandado de segurança"], t:"Chega um mandado de segurança", d:"O PJe identifica a classe e já marca o processo com a etiqueta própria."},
+  {at:"G1", go:["e1"], q:"Há pedido de liminar ainda não apreciado?", a:"NÃO", alt:"<b>SIM</b> → análise urgente, com minuta de decisão urgente."},
+  {at:"T1", go:["e2"], t:"A secretaria analisa a inicial", d:"E escolhe o encaminhamento."},
+  {at:"A2", go:["e3"], t:"Notifica a autoridade coatora", d:"Notificação automática, prazo de 10 dias. Se faltar procuradoria vinculada, o fluxo abre uma tarefa para resolver."},
+  {at:"CP", go:["e4"], t:"Controle de prazo", d:"O processo só sai daqui quando todos os expedientes estiverem fechados. Nada se perde no caminho."},
+  {at:"G2", go:["e5"], q:"Houve manifestação no prazo?", a:"SIM · informações prestadas", alt:"Documentos internos não contam como manifestação."},
+  {at:"T2", go:["e6"], t:"A secretaria analisa", d:"E escolhe o próximo passo."},
+  {at:"A4", go:["e7"], t:"Intima o MPF", d:"Intimação automática do Ministério Público Federal, com prazo de 10 dias."},
+  {at:"CP", go:["e8"], t:"De volta ao controle de prazo", d:"O mesmo controle cuida agora do prazo do MPF."},
+  {at:"T2", go:["e5","e6"], pass:["G2"], q:"Houve manifestação no prazo?", a:"SIM · parecer juntado"},
+  {at:"SENT", go:["e9"], mv:["+51 concluso"], t:"Concluso para julgamento", d:"O juiz profere a sentença — no exemplo, concessiva da segurança."},
+  {at:"A5", go:["e10"], t:"Intima todas as partes", d:"Automaticamente: 15 dias, em dobro, e o MPF."},
+  {at:"G4", go:["e11"], q:"É Mandado de Segurança?", a:"SIM", alt:"As demais classes seguem o controle de prazo comum."},
+  {at:"A6", go:["e12"], t:"Prazo recursal próprio", d:"O MS ganha um controle recursal só dele, que identifica sozinho o tipo da sentença."},
+  {at:"G5", go:["e13"], q:"Houve recurso?", a:"NÃO", alt:"<b>Embargos</b> → contrarrazões em 5 dias e novo julgamento. <b>Apelação</b> → contrarrazões e remessa ao TRF5."},
+  {at:"G6", go:["e14"], q:"A sentença é concessiva?", a:"SIM", alt:"<b>Denegatória ou extinção</b> → certifica o trânsito em julgado."},
+  {at:"REM", go:["e15"], tg:["+[A] Remessa necessária"], t:"Remessa necessária ao TRF5", d:"Sem recurso, a sentença concessiva segue sozinha para o reexame no Tribunal."},
 ]},
-{ id:"apelacao", init:{tg:["[A] Mandado de segurança"]}, name:"Apelação", sub:"Contrarrazões e remessa ao TRF5", steps:[
-  {f:"MS_CONTRPRAZREC-2", at:"n0", t:"Prazo recursal encerrado", d:"Uma das partes apelou da sentença."},
-  {f:"MS_CONTRPRAZREC-2", at:"n1", go:["f0"], q:"É o ciclo posterior a embargos?", a:"NÃO"},
-  {f:"MS_CONTRPRAZREC-2", at:"n2", go:["f1"], q:"Houve embargos de declaração?", a:"NÃO"},
-  {f:"MS_CONTRPRAZREC-2", at:"n3", go:["f2"], q:"Houve apelação?", a:"SIM"},
-  {f:"MS_CONTRPRAZREC-2", at:"n6", go:["f7"], d:"Identifica o polo que apelou: define quem é intimado para contrarrazões e se o MPF também será."},
-  {f:"MS_CONTRPRAZREC-2", at:"n11", go:["f8"], d:"Intima para contrarrazões (CP_INTAUT, 15 dias) e controla o prazo, com registro de ciência."},
-  {f:"MS_CONTRPRAZREC-2", at:"n13", go:["f9"], t:"Remessa ao TRF5", d:"Contrarrazões juntadas ou prazo decorrido: o processo é remetido ao TRF5 (REMTRF5)."},
-]},
-{ id:"perda", init:{tg:["[A] Mandado de segurança"]}, name:"Perda do objeto", sub:"Quando as informações noticiam a perda superveniente", steps:[
-  {f:"MS_ANMANFEST", at:"n2", t:"Início da análise de manifestação"},
-  {f:"MS_ANMANFEST", at:"n3", go:["f0"], q:"Houve juntada de parte no período?", a:"SIM"},
-  {f:"MS_ANMANFEST", at:"n0", go:["f1"], d:"As informações da autoridade noticiam que o ato impugnado deixou de existir."},
-  {f:"MS_ANMANFEST", at:"n5", go:"M730,161 L730,485 L382,485 L382,530", q:"Encaminhamento escolhido", a:"Intimar impetrante · perda do objeto", alt:"Disponível apenas a partir de “Com manifestação”."},
-  {f:"MS_INTIMPRET", at:"n3", t:"Início da intimação do impetrante"},
-  {f:"MS_INTIMPRET", at:"n4", go:["f0"], d:"Intima o impetrante em 10 dias para se manifestar sobre a perda do objeto (modelo 56243, polo ativo)."},
-  {f:"MS_INTIMPRET", at:"n5", go:["f1"], q:"Pendência de intimação?", a:"Sem pendência"},
-  {f:"MS_INTIMPRET", at:"n7", go:["f3"], tg:["+[A] Perda do objeto"], d:"Gera a etiqueta [A] Perda do objeto, visível na caixa da vara."},
-  {f:"MS_INTIMPRET", at:"n8", go:["f13"], t:"Volta ao controle de prazo", d:"O processo retorna ao MS_CONTRPRAZ e aguarda a manifestação do impetrante."},
-]},
-{ id:"protecao", init:{tg:["[A] Mandado de segurança"]}, name:"Rede de proteção", sub:"Os fluxos gerais devolvem o MS ao trilho certo", steps:[
-  {f:"CONTRPRAZ", at:"n1", t:"Processo de MS no controle de prazo geral", d:"Chegou por ELDEC, ELDECURG, ELDESP, ELCOM, ANSEC ou CONTRDEVEXP — caminhos comuns a todas as classes."},
-  {f:"CONTRPRAZ", at:"n2", go:["f0"], q:"É Mandado de Segurança? (teste acrescentado na entrada)", a:"SIM", alt:"<b>NÃO</b> → segue o controle de prazo geral, sem mudança para as demais classes."},
-  {f:"CONTRPRAZ", at:"n6", go:["f2"], t:"Desvio para o controle de prazo do MS", d:"O processo de MS não fica no trilho geral: é desviado para o MS_CONTRPRAZ."},
-  {f:"CONTRDEVEXP", at:"n0", t:"Expediente físico — Informar prazo", d:"Outro ponto de proteção: quando há expediente físico, como um mandado cumprido por oficial de justiça."},
-  {f:"CONTRDEVEXP", at:"n3", go:["f1"], q:"O fluxo chamador indicou a saída? (variável fluxo:saida)", a:"SIM", alt:"<b>NÃO</b> → segue ao controle de prazo geral, comportamento padrão."},
-  {f:"CONTRDEVEXP", at:"n5", go:["f4"], t:"Devolve ao fluxo chamador", d:"O processo volta exatamente para o fluxo de MS que o chamou. Única alteração neste fluxo geral."},
-]},
-];
-
-const SCEN_ACORDO = [
-{ id:"feliz", name:"Caminho feliz", sub:"Da petição de acordo à homologação e ao cumprimento", init:{pf:["Fluxo em que o processo estava"]}, steps:[
-  {f:"SJP", at:"P0", t:"Proposta de acordo protocolada", d:"O advogado — ou o procurador do INSS ou da União — junta ao processo uma petição do <b>tipo de documento 40</b>: proposta de acordo."},
-  {f:"SJP", at:"INI", go:["f_p0"], pf:["+SJP · serviço"], t:"SJP: o porteiro", d:"Toda juntada por usuário externo dispara automaticamente o SJP — Sinalizar Juntada de Petição. Ele olha o tipo do documento e avisa quem precisa saber."},
-  {f:"SJP", at:"EXT", go:["f_ext"], q:"Juntado por usuário externo?", a:"SIM", alt:"<b>NÃO</b> → documento tipo 40 juntado internamente não cria o fluxo de acordo."},
-  {f:"SJP", at:"SIG", go:["f_sig"], sp:["p_sig"], d:"Primeiro, o sinal genérico <b>sjp:aguardaPeticao</b> acorda qualquer fluxo que estivesse dormindo à espera de petição. Ele sai <b>antes</b> da criação do fluxo de acordo."},
-  {f:"SJP", at:"LAUDO", go:["f_laudo"], q:"É laudo pericial?", a:"NÃO"},
-  {f:"SJP", at:"ENT", go:["f_ent"], sp:["p_ent"], also:["ACORDO"], pf:["+JFCE_FLUXO_ACORDO"], t:"Proposta de Acordo?", d:"Reconhece o tipo 40 e cria o <b>JFCE_FLUXO_ACORDO ao lado</b> do que já existia — não no lugar. O processo passa a estar em dois fluxos."},
-  {f:"SJP", at:"FIM", go:["f_fim"], pf:["-SJP · serviço"], t:"O SJP termina", d:"O serviço cumpriu o papel de porteiro."},
-  {f:"JFCE_FLUXO_ACORDO", at:"INI", t:"Nasce o fluxo de proposta de acordo", d:"Ninguém na secretaria precisou perceber que chegou uma proposta: o tipo do documento criou o fluxo sozinho."},
-  {f:"JFCE_FLUXO_ACORDO", at:"ET1", go:["f_ini"], tg:["+[A] Proposta de acordo"], d:"Cola a etiqueta que a secretaria usa para achar esses processos."},
-  {f:"JFCE_FLUXO_ACORDO", at:"D1", go:["f_et"], q:"Está concluso para julgamento? (há movimento CNJ 51)", a:"NÃO · está na secretaria", alt:"<b>SIM · está no gabinete</b> → não se intima direto: gera despacho de vista (movimento 11022) e manda intimar."},
-  {f:"JFCE_FLUXO_ACORDO", at:"N2", go:["f_d1nao"], sp:["p_n2"], also:["INT"], pf:["+JEF_INAUTJUNACORD · intimação","-Fluxo em que o processo estava"], t:"Intimar polo ativo via DJEN", d:"Intima o polo ativo com modelo pronto, cria o ramo paralelo de intimação e <b>encerra à força todas as tarefas abertas</b>: o processo passa a viver no fluxo de acordo."},
-  {f:"JFCE_FLUXO_ACORDO", at:"ESP", go:["f_n2esp"], t:"[JFCE] Controle de prazo — proposta de acordo", d:"O coração do fluxo: o processo dorme aqui, escutando três gatilhos — nova petição, prazo vencido e expediente fechado."},
-  {f:"JEF_INAUTJUNACORD", at:"INI", t:"Enquanto isso, no ramo paralelo", d:"O JEF_INAUTJUNACORD chama o subfluxo padrão [CP] Intimação automática."},
-  {f:"JEF_INAUTJUNACORD", at:"C1", go:["f_ini"], mv:["+581"], d:"Gera o documento da intimação a partir do modelo, junta aos autos e lança o movimento 581."},
-  {f:"JEF_INAUTJUNACORD", at:"C2", go:["f_c1"], d:"Monta os destinatários por polo: advogados pelo <b>DJEN</b>; órgãos públicos, defensoria e partes com intimação eletrônica possível <b>pelo sistema</b> — prazo em dobro onde cabe. E dispara as comunicações."},
-  {f:"JEF_INAUTJUNACORD", at:"C3", go:["f_c2"], q:"A intimação se concretizou?", a:"SIM"},
-  {f:"JEF_INAUTJUNACORD", at:"C4", go:["f_c3sim"], d:"Gera e junta a certidão de intimação."},
-  {f:"JEF_INAUTJUNACORD", at:"C5", go:["f_c4"], d:"Monta a lista de partes que não foi possível intimar."},
-  {f:"JEF_INAUTJUNACORD", at:"PEND", go:["f_c5"], q:"Sobrou alguém sem intimar?", a:"NÃO", alt:"<b>SIM</b> → tarefa “[JEF] Acordo — Analisar pendência de intimação” para a secretaria resolver à mão (prazo sugerido de 5 dias)."},
-  {f:"JEF_INAUTJUNACORD", at:"FIM", go:["f_vazia"], pf:["-JEF_INAUTJUNACORD · intimação"], t:"O ramo paralelo termina em silêncio", d:"Sucesso invisível: ninguém precisou agir."},
-  {f:"JFCE_FLUXO_ACORDO", at:"ESP", t:"Chega a manifestação", d:"A parte junta nova petição. O SJP emite <b>sjp:aguardaPeticao</b> e o processo acorda na tarefa de espera."},
-  {f:"JFCE_FLUXO_ACORDO", at:"D2", go:["f_espd2"], q:"Por que acordou?", a:"Chegou petição", alt:"<b>Prazo vencido ou expediente fechado</b> → “Expediente de acordo — sem manifestação”."},
-  {f:"JFCE_FLUXO_ACORDO", at:"D3", go:["f_d2sim"], q:"A petição é do tipo 190?", a:"NÃO · outra petição", alt:"<b>SIM</b> → atalho direto para a sentença homologatória."},
-  {f:"JFCE_FLUXO_ACORDO", at:"TC", go:["f_d3nao"], d:"A secretaria lê o que a parte disse. Aqui mora a discricionariedade: homologar, intimar a parte contrária e voltar à espera, elaborar comunicação ou mandar à análise de secretaria."},
-  {f:"JFCE_FLUXO_ACORDO", at:"SENT", go:"M1530,135 L1570,135 L1570,706 L1530,706", pf:["+JFCE_SENTACORDO · homologação","-JFCE_FLUXO_ACORDO"], q:"Encaminhamento escolhido", a:"Gerar sentença homologatória", alt:"Cria o fluxo de homologação e o fluxo de acordo termina."},
-  {f:"JFCE_SENTACORDO", at:"INI", t:"Elaboração de sentença — proposta de acordo"},
-  {f:"JFCE_SENTACORDO", at:"S1", go:["f_ini"], tg:["+[A] Homologar acordo"], d:"Nova etiqueta: o processo está pronto para homologar."},
-  {f:"JFCE_SENTACORDO", at:"S2", go:["f_s1"], q:"Já está concluso para julgamento? (último movimento de Conclusão × de Magistrado)", a:"NÃO", alt:"<b>SIM</b> → não repete o movimento e vai direto minutar."},
-  {f:"JFCE_SENTACORDO", at:"S3", go:["f_s2nao"], mv:["+51 concluso"], d:"Lança o movimento 51: concluso para julgamento."},
-  {f:"JFCE_SENTACORDO", at:"MIN", go:["f_s3"], mv:["~466 homologação"], d:"Ao abrir a tarefa, o sistema <b>já gera a minuta</b> a partir do modelo e <b>pré-lança o movimento 466</b> (homologação) <b>de forma temporária</b> — veja o selo tracejado."},
-  {f:"JFCE_SENTACORDO", at:"ASS", go:["f_minass"], tg:["-[A] Homologar acordo"], d:"Encaminha para assinatura, com a opção “Intimar para obrigação de fazer — CEAB?”. Ao sair, desvincula a etiqueta [A] Homologar acordo."},
-  {f:"JFCE_SENTACORDO", at:"MAG", go:["f_assmag"], d:"O magistrado aparece uma única vez: para assinar. Se precisar, devolve para correção."},
-  {f:"JFCE_SENTACORDO", at:"HOM", go:["f_maghom"], mv:["!466"], t:"Homologar movimentos temporários", d:"O movimento 466 <b>deixa de ser provisório</b> e passa a valer, associado ao documento assinado."},
-  {f:"JFCE_SENTACORDO", at:"TRA", go:["f_homtra"], mv:["+848 trânsito em julgado"], tg:["-[A] Proposta de acordo","+[A] Acordo homologado"], d:"Grava a data do trânsito, gera e junta a certidão, lança os movimentos 848 e 581 e troca as etiquetas."},
-  {f:"JFCE_SENTACORDO", at:"FORK", go:["f_trafork"], t:"Fork: um fluxo vira dois", d:"A homologação se desdobra."},
-  {f:"JFCE_SENTACORDO", at:"CUM", go:["f_forkcum"], sp:["f_forkobr"], also:["OBR"], pf:["+JEF_CUMPRSENT · cumprimento","+JEF_INTOBRFAZ · obrigação de fazer"], t:"Dois fluxos em paralelo", d:"Cumprimento de sentença e intimação para obrigação de fazer nascem ao mesmo tempo."},
-  {f:"JFCE_SENTACORDO", at:"FIM", go:["f_cumfim"], sp:["f_obrfim"], pf:["-JFCE_SENTACORDO · homologação"], t:"Join e término", d:"Os dois ramos se reencontram no join e o fluxo de homologação termina. O processo segue no cumprimento de sentença e na obrigação de fazer."},
-]},
-{ id:"gabinete", name:"Processo no gabinete", sub:"Concluso para julgamento: despacho de vista", init:{pf:["Fluxo em que o processo estava","JFCE_FLUXO_ACORDO"]}, steps:[
-  {f:"JFCE_FLUXO_ACORDO", at:"INI", t:"Fluxo de acordo criado pelo SJP", d:"Desta vez, o processo já estava concluso no gabinete quando chegou a proposta."},
-  {f:"JFCE_FLUXO_ACORDO", at:"ET1", go:["f_ini"], tg:["+[A] Proposta de acordo"]},
-  {f:"JFCE_FLUXO_ACORDO", at:"D1", go:["f_et"], q:"Está concluso para julgamento? (há movimento CNJ 51)", a:"SIM · está no gabinete", alt:"<b>NÃO</b> → intima direto o polo ativo via DJEN."},
-  {f:"JFCE_FLUXO_ACORDO", at:"N1", go:["f_d1sim"], sp:["p_n1"], also:["INT"], mv:["~11022 vista"], pf:["+JEF_INAUTJUNACORD · intimação","-Fluxo em que o processo estava"], t:"Gerar despacho de vista", d:"Não se pode simplesmente intimar: gera um despacho de vista sobre a proposta, lança o movimento 11022 (temporário, associado à minuta), junta o documento e manda intimar."},
-  {f:"JFCE_FLUXO_ACORDO", at:"ESP", go:["f_n1esp"], d:"As tarefas abertas foram encerradas: o processo espera no controle de prazo do acordo."},
-]},
-{ id:"anel", name:"Anel de espera", sub:"Sem manifestação, nova intimação e atalho do tipo 190", init:{tg:["[A] Proposta de acordo"], pf:["JFCE_FLUXO_ACORDO"]}, steps:[
-  {f:"JFCE_FLUXO_ACORDO", at:"ESP", t:"Processo na espera", d:"O polo ativo foi intimado e o processo aguarda."},
-  {f:"JFCE_FLUXO_ACORDO", at:"D2", go:["f_espd2"], q:"Por que acordou?", a:"Prazo vencido", alt:"<b>Chegou petição</b> → verifica o tipo do documento."},
-  {f:"JFCE_FLUXO_ACORDO", at:"TS", go:["f_d2nao"], d:"Ninguém se manifestou. A secretaria decide o próximo passo."},
-  {f:"JFCE_FLUXO_ACORDO", at:"N3", go:"M1530,255 L1570,255 L1570,536 L1620,536", sp:["p_n3"], also:["INT"], pf:["+JEF_INAUTJUNACORD · intimação"], q:"Encaminhamento escolhido", a:"Intimar polo passivo", alt:"Na tarefa <b>com</b> manifestação, a intimação oferecida é a da parte contrária."},
-  {f:"JFCE_FLUXO_ACORDO", at:"ESP", go:["f_n3esp"], t:"De volta à espera", d:"Esse é o anel: intimar → esperar → ler a manifestação → intimar de novo, quantas vezes a tramitação exigir."},
-  {f:"JFCE_FLUXO_ACORDO", at:"D2", go:["f_espd2"], q:"Por que acordou?", a:"Chegou petição"},
-  {f:"JFCE_FLUXO_ACORDO", at:"D3", go:["f_d2sim"], q:"A petição é do tipo 190?", a:"SIM"},
-  {f:"JFCE_FLUXO_ACORDO", at:"SENT", go:["f_d3sim"], pf:["+JFCE_SENTACORDO · homologação","-JFCE_FLUXO_ACORDO"], t:"Atalho para a homologação", d:"Com a petição do tipo 190, o fluxo vai direto gerar a sentença homologatória, sem passar pela tarefa de expediente."},
-]},
-{ id:"sem", name:"Sem acordo", sub:"Encerrar o fluxo sem deixar o processo órfão", init:{tg:["[A] Proposta de acordo"], pf:["JFCE_FLUXO_ACORDO"]}, steps:[
-  {f:"JFCE_FLUXO_ACORDO", at:"ESP", t:"O acordo não prospera", d:"A secretaria decide encerrar o fluxo de acordo."},
-  {f:"JFCE_FLUXO_ACORDO", at:"DESV", go:["f_espdesv"], d:"Pela tarefa de desvio, chega-se à “[JFCE] Proposta de acordo” — apesar do nome, não é a porta de entrada. Ela mostra o aviso “Cuidado ao movimentar processo no Fluxo de acordo!” e onde o processo está."},
-  {f:"JFCE_FLUXO_ACORDO", at:"D4", go:["f_desvd4"], q:"O processo tem outro fluxo aberto em paralelo?", a:"NÃO", alt:"<b>SIM</b> → o fluxo de acordo apenas termina; o processo segue intacto no outro fluxo."},
-  {f:"JFCE_FLUXO_ACORDO", at:"ANS", go:["f_d4nao"], pf:["+JEF_ANSECR · análise da secretaria","-JFCE_FLUXO_ACORDO"], t:"Evita o processo órfão", d:"Antes de terminar, o fluxo empurra o processo para a análise da secretaria (JEF_ANSECR), para que ele não fique sem nenhum fluxo."},
-]},
-{ id:"pend", name:"Pendência de intimação", sub:"Quando alguém não pôde ser intimado", init:{tg:["[A] Proposta de acordo"], pf:["JFCE_FLUXO_ACORDO","JEF_INAUTJUNACORD · intimação"]}, steps:[
-  {f:"JEF_INAUTJUNACORD", at:"INI", t:"Ramo paralelo de intimação"},
-  {f:"JEF_INAUTJUNACORD", at:"C2", go:["f_ini","f_c1"], pass:["C1"], d:"Documento criado e destinatários montados por polo."},
-  {f:"JEF_INAUTJUNACORD", at:"C3", go:["f_c2"], q:"A intimação se concretizou?", a:"NÃO", alt:"<b>SIM</b> → gera a certidão de intimação."},
-  {f:"JEF_INAUTJUNACORD", at:"C5", go:["f_c3nao"], d:"Lista as partes principais ativas do polo sem expediente aberto."},
-  {f:"JEF_INAUTJUNACORD", at:"PEND", go:["f_c5"], q:"Sobrou alguém sem intimar?", a:"SIM"},
-  {f:"JEF_INAUTJUNACORD", at:"TPEND", go:["f_sobrou"], d:"A secretaria resolve à mão, no miniPAC, com prazo sugerido de 5 dias — o único prazo fixado no fluxo de acordo."},
-  {f:"JEF_INAUTJUNACORD", at:"ANCOM", go:["f_ancom"], q:"Encaminhamento escolhido", a:"Análise de comunicação", alt:"Também disponível: término."},
-]},
-];
+};
 
 /* ================================================================ */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-
-// logos e ícones
 $$("img[data-logo]").forEach(i => i.src = LOGOS[i.dataset.logo]);
 const ICONS = {
-  chat:'<path d="M4 4h16v11H8l-4 4z"/>', tool:'<path d="M21 7.5 17.5 11 13 6.5 16.5 3a5 5 0 0 0-6.3 6.6L3 16.8V21h4.2l7.2-7.2A5 5 0 0 0 21 7.5z"/>',
-  hands:'<path d="M2 12l5-5 4 3 3-3 8 7-6 6-5-4-3 2z"/>', globe:'<circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="#fff" stroke-width="2"/>',
-  gear:'<circle cx="12" cy="12" r="3.5"/><path d="M12 2l2 3 3.5-.8.6 3.6L21 10l-1.6 3.2L21 16l-3 1.6-.6 3.4-3.4-.8L12 22l-2-2.8-3.4.8-.6-3.4L3 16l1.6-3L3 10l2.9-2.2.6-3.6L10 5z" fill="none" stroke="#fff" stroke-width="1.8"/>',
+  ear:'<circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0z"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 13.6A5.5 5.5 0 0 1 21.5 19h-4.2"/>',
+  flow:'<path d="M4 6h6v4H4zM14 14h6v4h-6zM7 10v4a2 2 0 0 0 2 2h5" fill="none" stroke="#fff" stroke-width="2.2"/>',
+  spark:'<path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z"/>',
   board:'<path d="M3 4h18v12H3zM8 20l4-4 4 4" fill="none" stroke="#fff" stroke-width="2"/><path d="M7 12l3-3 3 2 4-4" fill="none" stroke="#fff" stroke-width="2"/>',
-  code:'<path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="#fff" stroke-width="2.4"/>',
-  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="#fff" stroke-width="2.2"/>',
-  shield:'<path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/>',
-  scale:'<path d="M12 3v18M5 21h14M4 7h16M7 7l-3 6a3 3 0 0 0 6 0zM17 7l-3 6a3 3 0 0 0 6 0z" fill="none" stroke="#fff" stroke-width="2"/>',
-  check:'<path d="M4 12l5 5L20 6" fill="none" stroke="#fff" stroke-width="3"/>',
-  bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
-  collect:'<path d="M4 6h6M4 12h6M4 18h6M14 6l4 6-4 6" fill="none" stroke="#fff" stroke-width="2.4"/>',
-  loop:'<path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4" fill="none" stroke="#fff" stroke-width="2.4"/>',
-  fork:'<path d="M6 4v6a4 4 0 0 0 4 4h4a4 4 0 0 1 4 4v2M6 4v16M18 4v4" fill="none" stroke="#fff" stroke-width="2.4"/>'
+  shield:'<path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/>'
 };
 $$("[data-icon]").forEach(e => e.innerHTML = `<svg viewBox="0 0 24 24" fill="#fff">${ICONS[e.dataset.icon]}</svg>`);
 
-/* ---------------- navegação de slides ---------------- */
+/* ---------------- simulador (um diagrama, uma tela) ---------------- */
+const ICO = {
+  restart:'<path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/>', prev:'<path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/>',
+  play:'<path d="M8 5v14l11-7z"/>', pause:'<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>', next:'<path d="M10 6 8.6 7.4 13.2 12l-4.6 4.6L10 18l6-6z"/>'
+};
+const KIND = { task:"Tarefa humana", sub:"Fluxo paralelo", auto:"Automático · PJe", gw:"Decisão automática" };
+
+function makeSim(root, flowKey, sc) {
+  const NS = "http://www.w3.org/2000/svg", q = s => root.querySelector(s);
+  root.insertAdjacentHTML("beforeend", `<div class="sim-main"><div class="canvas"><div class="svgbox"></div>
+    <div class="ctrl"><button data-a="restart" title="Recomeçar (Home)"><svg viewBox="0 0 24 24">${ICO.restart}</svg></button>
+    <button data-a="prev" title="Passo anterior (←)"><svg viewBox="0 0 24 24">${ICO.prev}</svg></button>
+    <button data-a="play" class="play" title="Reproduzir / pausar (P)"><svg viewBox="0 0 24 24" class="playIco">${ICO.play}</svg></button>
+    <button data-a="next" title="Próximo passo (→)"><svg viewBox="0 0 24 24">${ICO.next}</svg></button>
+    <button data-a="spd" class="spd" title="Velocidade (S)">1×</button></div></div>
+    <aside class="panel"><div class="pstep"></div><div class="pbar"><i></i></div><div class="pbody"></div><div class="state"></div></aside></div>`);
+  const box = q(".svgbox");
+  box.innerHTML = FLOWS[flowKey].svg;
+  const svg = box.querySelector("svg");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  const ov = document.createElementNS(NS, "g"); svg.appendChild(ov);
+  let idx = 0, playing = false, timer = null, anim = null, speed = 1, busy = false, queued = 0;
+
+  const find = n => svg.querySelector(`[data-name="${n}"]`);
+  const pathD = go => go ? go.map((g, k) => { const d = find(g).getAttribute("d"); return k ? d.replace(/^M/, "L") : d; }).join(" ") : null;
+  const addPath = (d, cls) => { const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("class", cls); ov.appendChild(p); return p; };
+  const endOf = d => { const p = addPath(d, ""); const pt = p.getPointAtLength(p.getTotalLength()); p.remove(); return pt; };
+  const mkTok = cls => { const g = document.createElementNS(NS, "g"); g.setAttribute("class", cls); g.innerHTML = '<circle r="12"/>'; ov.appendChild(g); return g; };
+  const place = (t, pt) => t.setAttribute("transform", `translate(${pt.x},${pt.y})`);
+  function rest(el, d) {
+    if (d) return endOf(d);
+    const b = el.getBBox(); return el.tagName === "rect" ? { x: b.x, y: b.y + b.height / 2 } : { x: b.x + b.width / 2, y: b.y + b.height / 2 };
+  }
+  function mark(st, final) {
+    (st.pass || []).forEach(n => find(n).classList.add("vis"));
+    const d = pathD(st.go); if (d) addPath(d, "trailp");
+    (st.sp || []).forEach(g => { const x = pathD([g]); addPath(x, "trailp par2"); place(mkTok("tok2"), endOf(x)); });
+    [st.at, ...(st.also || [])].forEach(n => find(n).classList.add(final ? "act" : "vis"));
+  }
+
+  // estado do processo
+  function stateAt(i) {
+    const S = { tg: [...(sc.init.tg || [])], pf: [...(sc.init.pf || [])], mv: [] };
+    const set = (a, o) => o[0] === "+" ? (a.includes(o.slice(1)) ? a : [...a, o.slice(1)]) : a.filter(x => x !== o.slice(1));
+    for (let k = 0; k <= i; k++) { const st = sc.steps[k];
+      (st.tg || []).forEach(o => S.tg = set(S.tg, o)); (st.pf || []).forEach(o => S.pf = set(S.pf, o));
+      (st.mv || []).forEach(m => { const op = m[0], body = m.slice(1), c = body.split(" ")[0], ex = S.mv.find(v => v.c === c);
+        if (op === "!") { if (ex) ex.tmp = false; } else if (!ex) S.mv.push({ c, l: body.slice(c.length).trim(), tmp: op === "~" }); }); }
+    return S;
+  }
+  function state() {
+    const S = stateAt(idx), P = idx ? stateAt(idx - 1) : S;
+    const list = (a, b) => [...a.map(t => ({ t, c: "" })), ...b.filter(t => !a.includes(t)).map(t => ({ t, c: "gone" }))];
+    let h = "";
+    if (S.tg.length || P.tg.length) h += `<h5>Etiquetas</h5><div class="row2">${list(S.tg, P.tg).map(x => `<span class="tag ${x.c}">${x.t}</span>`).join("")}</div>`;
+    if (S.mv.length) h += `<h5>Movimentos</h5><div class="row2">${S.mv.map(m => `<span class="mv ${m.tmp ? "tmp" : ""}">${m.c}${m.l ? ` <small>${m.l}</small>` : ""}${m.tmp ? " <small>· temporário</small>" : ""}</span>`).join("")}</div>`;
+    if (S.pf.length || P.pf.length) h += `<h5>O processo está em</h5><div class="pfl">${list(S.pf, P.pf).map(x => `<span class="pf ${x.c}"><i></i>${x.t}</span>`).join("")}</div>`;
+    q(".state").innerHTML = h;
+  }
+  function panel(st, el) {
+    const k = el.dataset.k;
+    let h = `<span class="kind k-${k}"><i></i>${KIND[k] || ""}</span><div class="ptitle">${st.t || ""}</div>`;
+    if (st.d) h += `<p class="ptext">${st.d}</p>`;
+    if (st.q) h += `<div class="dec"><div class="q">${st.q}</div><div class="a">✓ ${st.a}</div>${st.alt ? `<div class="alt">${st.alt}</div>` : ""}</div>`;
+    q(".pbody").innerHTML = h;
+    q(".pstep").textContent = `PASSO ${idx + 1} DE ${sc.steps.length}`;
+    q(".pbar i").style.width = `${(idx + 1) / sc.steps.length * 100}%`;
+  }
+
+  async function render(animate) {
+    if (anim) cancelAnimationFrame(anim);
+    const st = sc.steps[idx];
+    svg.querySelectorAll(".act,.vis").forEach(e => e.classList.remove("act", "vis"));
+    ov.innerHTML = "";
+    for (let k = 0; k < idx; k++) mark(sc.steps[k], false);
+    const el = find(st.at), d = pathD(st.go);
+    panel(st, el); state();
+    const tok = mkTok("tok");
+    if (!animate || !d) { mark(st, true); ov.appendChild(tok); place(tok, rest(el, d)); return; }
+    (st.pass || []).forEach(n => find(n).classList.add("vis"));
+    const p = addPath(d, "trailp hot"), len = p.getTotalLength();
+    p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+    const sps = (st.sp || []).map(g => { const x = addPath(pathD([g]), "trailp par2"), L = x.getTotalLength(); x.style.strokeDasharray = L; x.style.strokeDashoffset = L; return { x, L, t: mkTok("tok2") }; });
+    ov.appendChild(tok);
+    const dur = Math.min(1600, Math.max(500, len * 1.6)) / speed, t0 = performance.now();
+    await new Promise(res => { (function f(t) {
+      const k = Math.min(1, (t - t0) / dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      place(tok, p.getPointAtLength(len * e)); p.style.strokeDashoffset = len * (1 - e);
+      sps.forEach(o => { place(o.t, o.x.getPointAtLength(o.L * e)); o.x.style.strokeDashoffset = o.L * (1 - e); });
+      if (k < 1) anim = requestAnimationFrame(f); else res(); })(t0); });
+    p.classList.remove("hot"); p.style.strokeDasharray = p.style.strokeDashoffset = "";
+    sps.forEach(o => { o.x.style.strokeDasharray = o.x.style.strokeDashoffset = ""; });
+    [st.at, ...(st.also || [])].forEach(n => find(n).classList.add("act"));
+  }
+
+  function setBusy(v) { busy = v; box.dataset.busy = v ? "1" : ""; }
+  async function next() {
+    if (busy) { if (idx + queued < sc.steps.length - 1) { queued++; return true; } return false; }
+    if (idx >= sc.steps.length - 1) return false;
+    setBusy(true); idx++; await render(true); setBusy(false);
+    if (queued) { queued--; next(); }
+    return true;
+  }
+  async function prev() { if (busy) return true; if (idx <= 0) return false; idx--; await render(false); return true; }
+  function stop() { queued = 0; playing = false; clearTimeout(timer); q(".playIco").innerHTML = ICO.play; }
+  async function loop() { if (!playing) return; if (!(await next())) { stop(); return; } timer = setTimeout(loop, 1400 / speed); }
+  function play() {
+    if (playing) { stop(); return; }
+    if (idx >= sc.steps.length - 1) { idx = 0; render(false); }
+    playing = true; q(".playIco").innerHTML = ICO.pause; timer = setTimeout(loop, 300);
+  }
+  function restart() { stop(); idx = 0; render(false); }
+  function cycleSpeed() { speed = speed === 1 ? 1.6 : speed === 1.6 ? 0.6 : 1; q('[data-a="spd"]').textContent = String(speed).replace(".", ",") + "×"; }
+  const ACT = { restart, prev: () => { stop(); prev(); }, next: () => { stop(); next(); }, play, spd: cycleSpeed };
+  root.querySelectorAll(".ctrl button").forEach(b => b.addEventListener("click", () => ACT[b.dataset.a]()));
+  render(false);
+
+  return {
+    pause: stop,
+    async key(e) {
+      switch (e.key) {
+        case "ArrowRight": case "PageDown": case " ": stop(); return await next();
+        case "ArrowLeft": case "PageUp": stop(); return await prev();
+        case "p": case "P": case "Enter": play(); return true;
+        case "s": case "S": cycleSpeed(); return true;
+        case "Home": restart(); return true;
+      }
+      return false;
+    }
+  };
+}
+
+/* ---------------- navegação ---------------- */
 const stage = $("#stage"), slides = $$(".slide");
+const SIMS = {};
+$$(".slide.sim").forEach(sl => { SIMS[slides.indexOf(sl)] = makeSim(sl, sl.dataset.flow, SCEN[sl.dataset.scen]); });
 let cur = 0, started = null;
 function fit() { const s = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transform = `translate(-50%,-50%) scale(${s})`; }
 function go(i) {
@@ -797,360 +546,9 @@ function go(i) {
   $("#ntitle").textContent = `Slide ${i + 1}`; $("#nbody").innerHTML = n ? n.innerHTML : "";
   try { history.replaceState(null, "", "#" + (i + 1)); } catch (e) {}
   if (i > 0 && !started) started = Date.now();
-  $$("[data-count]", slides[i]).forEach(countUp);
-  Object.entries(SIMS).forEach(([k, sim]) => +k === i ? sim.enter() : sim.pause());
+  Object.entries(SIMS).forEach(([k, s]) => { if (+k !== i) s.pause(); });
 }
-function countUp(el) {
-  const to = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now(), dur = 1400;
-  (function tick(t) { const p = Math.min(1, (t - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - p, 3)));
-    el.textContent = v.toLocaleString("pt-BR") + suf; if (p < 1) requestAnimationFrame(tick); })(t0);
-}
-
-/* ---------------- mapa do MS ---------------- */
-(function buildMap() {
-  const svg = $("#msmap"), NS = "http://www.w3.org/2000/svg";
-  const W = 290, H = 92;
-  const B = {
-    "MS_ANLIN":[20,80,1,"Análise da inicial"], "MS_INTAUTIMPET":[345,80,2,"Notificação da autoridade"], "MS_CONTRPRAZ":[670,80,3,"Controle de prazo"],
-    "MS_ANMANFEST":[995,80,4,"Análise de manifestação"], "MS_INTMPF":[1350,20,5,"Intimação do MPF"], "MS_INTIMPRET":[1350,140,6,"Perda do objeto"],
-    "ELSENT":[995,330,7,"Elaboração de sentença"], "MS_CONTRPRAZREC-1":[670,330,8,"Prazo recursal"], "MS_CONTRPRAZREC-2":[345,330,9,"Roteamento recursal"],
-    "MS_CONTRPRAZCONTREMB":[345,500,10,"Contrarrazões aos embargos",345], "CONTRPRAZ":[1030,560,11,"Controle de prazo geral"], "CONTRDEVEXP":[1350,560,12,"Devolução de expediente"],
-  };
-  const EXT = { "REMTRF5":[20,280,"Remessa ao TRF5"], "CERTTRANSJULG":[20,410,"Certificação do trânsito"] };
-  const pt = (k, side, off = 0) => { const [x, y] = B[k] || EXT[k];
-    return side === "r" ? [x + W, y + H / 2 + off] : side === "l" ? [x, y + H / 2 + off] : side === "b" ? [x + W / 2 + off, y + H] : [x + W / 2 + off, y]; };
-  const el = (tag, attrs, txt) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (txt) e.textContent = txt; svg.appendChild(e); return e; };
-  const line = (a, b, main, curve) => { const [x1, y1] = a, [x2, y2] = b;
-    const d = curve === "h" ? `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}` : `M${x1},${y1} L${x2},${y2}`;
-    el("path", { d, class: main ? "lk flow" : "lk" }); };
-  el("text", { x: 20, y: 46, class: "zone" }, "FASE DE CONHECIMENTO");
-  el("text", { x: 20, y: 262, class: "zone" }, "SENTENÇA E FASE RECURSAL");
-  el("text", { x: 1030, y: 540, class: "zone" }, "REDE DE PROTEÇÃO · FLUXOS GERAIS");
-  el("text", { x: 1030, y: 685, class: "lbl" }, "devolvem o processo de MS ao trilho próprio");
-  line(pt("MS_ANLIN", "r"), [345 - 6, 126], true);
-  line(pt("MS_INTAUTIMPET", "r"), [670 - 6, 126], true);
-  line(pt("MS_CONTRPRAZ", "r", -14), [995 - 6, 112], true);
-  line([995, 140], [960 + 6, 140], false);
-  line(pt("MS_ANMANFEST", "r", -14), [1350 - 6, 66], true, "h");
-  line(pt("MS_ANMANFEST", "r", 14), [1350 - 6, 186], false, "h");
-  el("path", { d: "M1495,20 C1495,-8 830,-8 815,74", class: "lk flow" });
-  el("text", { x: 1060, y: 50, class: "lbl" }, "volta ao controle de prazo");
-  line(pt("MS_ANMANFEST", "b"), [1140, 330 - 6], true); el("text", { x: 1152, y: 250, class: "lbl" }, "conclusão p/ julgamento");
-  line(pt("ELSENT", "l"), [960 + 6, 376], true);
-  line(pt("MS_CONTRPRAZREC-1", "l"), [635 + 6, 376], true);
-  line(pt("MS_CONTRPRAZREC-2", "l", -14), [310 + 6, 326], true, "h");
-  line(pt("MS_CONTRPRAZREC-2", "l", 14), [310 + 6, 456], false, "h");
-  line(pt("MS_CONTRPRAZREC-2", "b"), [490, 500 - 6], false);
-  el("path", { d: "M690,546 C930,546 1140,520 1140,428", class: "lk" }); el("text", { x: 760, y: 534, class: "lbl" }, "julga os embargos");
-  for (const [k, [x, y, n, name, bw = W]] of Object.entries(B)) {
-    const g = el("g", { class: "box" + (n >= 11 ? " alt" : "") });
-    g.innerHTML = `<rect x="${x}" y="${y}" width="${bw}" height="${H}"/><circle cx="${x + 28}" cy="${y + 30}" r="16" fill="${n >= 11 ? "#5B6B7A" : n >= 7 ? "#2BB5E0" : "#00699F"}"/>
-      <text class="num" x="${x + 28}" y="${y + 36}" text-anchor="middle">${n}</text>
-      <text class="code" x="${x + 54}" y="${y + 36}">${k.replace("-1", " 1/2").replace("-2", " 2/2")}</text>
-      <text class="name" x="${x + 20}" y="${y + 72}">${name}</text>`;
-    g.addEventListener("click", () => openLightbox(k));
-  }
-  for (const [k, [x, y, name]] of Object.entries(EXT)) {
-    const g = el("g", { class: "box ext" });
-    g.innerHTML = `<rect x="${x}" y="${y}" width="${W}" height="${H}"/><text class="code" x="${x + 20}" y="${y + 36}" style="fill:#5B6B7A">${k}</text><text class="name" x="${x + 20}" y="${y + 70}">${name}</text>`;
-  }
-})();
-
-function openLightbox(k) {
-  $("#lbcode").textContent = k; $("#lbname").textContent = FLOWS[k].title;
-  $("#lbbody").innerHTML = FLOWS[k].svg; $("#lightbox").classList.add("on");
-}
-$$(".fc[data-flow]").forEach(c => c.addEventListener("click", () => openLightbox(c.dataset.flow)));
-$("#lightbox").addEventListener("click", () => $("#lightbox").classList.remove("on"));
-
-/* ---------------- simulador ---------------- */
-const ICO = {
-  restart: '<path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/>',
-  prev: '<path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/>',
-  play: '<path d="M8 5v14l11-7z"/>', pause: '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>',
-  next: '<path d="M10 6 8.6 7.4 13.2 12l-4.6 4.6L10 18l6-6z"/>',
-  fit: '<path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM4 15h2v3h3v2H4zm14 3v-3h2v5h-5v-2z"/>'
-};
-const simMarkup = title => `
-  <div class="sim-head"><div><div class="k">04 · Simulação</div><h2>${title}</h2></div><div class="scen"></div></div>
-  <div class="ribbon"></div>
-  <div class="sim-main">
-    <div class="canvas">
-      <div class="ftitle"><b class="fcode"></b><span class="fname"></span></div>
-      <div class="svgbox"></div>
-      <div class="banner"><small>Entra no fluxo</small><b class="bcode"></b><span class="bname"></span><p class="bdesc"></p></div>
-      <div class="ctrl">
-        <button data-a="restart" title="Recomeçar (Home)"><svg viewBox="0 0 24 24">${ICO.restart}</svg></button>
-        <button data-a="prev" title="Passo anterior (←)"><svg viewBox="0 0 24 24">${ICO.prev}</svg></button>
-        <button data-a="play" class="play" title="Reproduzir / pausar (P)"><svg viewBox="0 0 24 24" class="playIco">${ICO.play}</svg></button>
-        <button data-a="next" title="Próximo passo (→)"><svg viewBox="0 0 24 24">${ICO.next}</svg></button>
-        <button data-a="fit" title="Ver diagrama inteiro (V)"><svg viewBox="0 0 24 24">${ICO.fit}</svg></button>
-        <button data-a="spd" class="spd" title="Velocidade (S)">1×</button>
-      </div>
-    </div>
-    <aside class="panel">
-      <div class="prog"><span class="pstep"></span><span class="pscen"></span></div>
-      <div class="pbar"><i></i></div>
-      <div class="pbody"></div>
-      <div class="state"></div>
-      <div class="trail"><h4>Trilha percorrida</h4><ol></ol></div>
-    </aside>
-  </div>`;
-
-const fcode = f => f.replace("-1", " · 1/2").replace("-2", " · 2/2");
-
-function makeSim(root, SC) {
-  const NS = "http://www.w3.org/2000/svg";
-  const q = sel => root.querySelector(sel), qa = sel => Array.from(root.querySelectorAll(sel));
-  const box = q(".svgbox");
-  let sc = SC[0], idx = 0, playing = false, timer = null, anim = null, speed = 1, svg = null, flow = null,
-      entered = false, vbNow = null, busy = false, queued = 0;
-  const KIND = { task: "Tarefa humana", sub: "Subprocesso · fluxo paralelo", auto: "Automático · Sistema", gw: "Decisão automática", ev: "Evento", link: "Continuação" };
-
-  q(".scen").innerHTML = SC.map((s, k) => `<button data-id="${s.id}" title="Tecla ${k + 1}">${s.name}</button>`).join("");
-  qa(".scen button").forEach(b => b.addEventListener("click", () => choose(b.dataset.id)));
-
-  function choose(id) {
-    sc = SC.find(s => s.id === id); idx = 0; stop(); flow = null;
-    qa(".scen button").forEach(b => b.classList.toggle("on", b.dataset.id === id));
-    render(true);
-  }
-
-  // ---- diagrama
-  const find = id => svg.querySelector(`#${CSS.escape(flow + "-" + id)}`) || svg.querySelector(`[data-name="${id}"]`);
-  const ov = () => svg.querySelector(".ov");
-  function pathD(go) {
-    if (!go) return null;
-    const arr = typeof go === "string" ? [go] : go;
-    return arr.map((g, k) => { const d = /^M/.test(g) ? g : find(g).getAttribute("d"); return k ? d.replace(/^M/, "L") : d; }).join(" ");
-  }
-  function addPath(d, cls) { const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("class", cls); ov().appendChild(p); return p; }
-  function measure(d) { const p = addPath(d, ""); const b = p.getBBox(), L = p.getTotalLength(), end = p.getPointAtLength(L); p.remove(); return { b, end }; }
-  function load(f) {
-    flow = f; box.innerHTML = FLOWS[f].svg; svg = box.querySelector("svg");
-    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    const g = document.createElementNS(NS, "g"); g.setAttribute("class", "ov"); svg.appendChild(g);
-    q(".fcode").textContent = fcode(f); q(".fname").textContent = FLOWS[f].title;
-  }
-  function labelOf(el) {
-    if (!el) return "";
-    const b = el.getBBox(), out = [];
-    svg.querySelectorAll("text.tt").forEach(t => {
-      const x = +t.getAttribute("x"), y = +t.getAttribute("y");
-      if (x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height) out.push(t.textContent);
-    });
-    return out.join(" ").replace(/\s+—\s*/g, " — ");
-  }
-
-  // ---- câmera
-  const full = () => FLOWS[flow].vb.slice();
-  function setVB(v) { vbNow = v; svg.setAttribute("viewBox", v.join(" ")); }
-  function focusBox(els, extra) {
-    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-    const add = b => { x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.width); y1 = Math.max(y1, b.y + b.height); };
-    els.filter(Boolean).forEach(e => add(e.getBBox())); (extra || []).forEach(add);
-    const F = full(), cw = box.clientWidth || 1340, ch = box.clientHeight || 860, ar = cw / ch;
-    let w = Math.max(x1 - x0 + 260, 760), h = Math.max(y1 - y0 + 220, 420);
-    if (w / h > ar) h = w / ar; else w = h * ar;
-    if (w >= F[2] && h >= F[3]) return F;
-    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2 + 10;
-    let x = Math.max(F[0], Math.min(cx - w / 2, F[0] + F[2] - w)), y = Math.max(F[1], Math.min(cy - h / 2, F[1] + F[3] - h));
-    if (w > F[2]) x = F[0] + (F[2] - w) / 2; if (h > F[3]) y = F[1] + (F[3] - h) / 2;
-    return [x, y, w, h];
-  }
-  function tweenVB(to, dur) {
-    const from = vbNow || full(), t0 = performance.now();
-    return new Promise(res => {
-      (function f(t) { const p = Math.min(1, (t - t0) / dur), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-        setVB(from.map((v, i) => v + (to[i] - v) * e)); if (p < 1) anim = requestAnimationFrame(f); else res(); })(t0);
-    });
-  }
-
-  // ---- marcadores
-  function mkTok(cls) { const t = document.createElementNS(NS, "g"); t.setAttribute("class", cls); t.innerHTML = '<circle class="r" r="10"/><circle class="o" r="10"/>'; ov().appendChild(t); return t; }
-  const place = (t, pt) => t.setAttribute("transform", `translate(${pt.x},${pt.y})`);
-  function token(at) { let t = svg.querySelector(".tok"); if (!t) t = mkTok("tok"); else ov().appendChild(t); if (at) place(t, at); return t; }
-  function center(el) { const b = el.getBBox(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }
-  function rest(el, d) {
-    if (d) return measure(d).end;
-    const b = el.getBBox(); return el.tagName === "rect" ? { x: b.x, y: b.y + b.height / 2 } : center(el);
-  }
-  function mark(step, final) {
-    (step.pass || []).forEach(n => { const e = find(n); e && e.classList.add("vis"); });
-    const d = pathD(step.go); if (d) addPath(d, "trailp");
-    (step.sp || []).forEach(g => { const x = pathD([g]); addPath(x, "trailp par2"); place(mkTok("tok2"), measure(x).end); });
-    [step.at, ...(step.also || [])].forEach(n => { const e = find(n); e && e.classList.add(final ? "act" : "vis"); });
-  }
-
-  // ---- estado do processo (etiquetas, movimentos, fluxos)
-  function applyMv(S, m) {
-    const op = m[0], body = m.slice(1), code = body.split(" ")[0], label = body.slice(code.length).trim();
-    const ex = S.mv.find(v => v.c === code);
-    if (op === "!") { if (ex) ex.tmp = false; return; }
-    if (ex) { ex.tmp = op === "~"; return; }
-    S.mv.push({ c: code, l: label, tmp: op === "~" });
-  }
-  function stateAt(i) {
-    const init = sc.init || {}, S = { tg: [...(init.tg || [])], pf: [...(init.pf || [])], mv: [] };
-    (init.mv || []).forEach(m => applyMv(S, m));
-    const set = (arr, o) => o[0] === "+" ? (arr.includes(o.slice(1)) ? arr : [...arr, o.slice(1)]) : arr.filter(x => x !== o.slice(1));
-    for (let k = 0; k <= i; k++) { const st = sc.steps[k];
-      (st.tg || []).forEach(o => S.tg = set(S.tg, o)); (st.pf || []).forEach(o => S.pf = set(S.pf, o)); (st.mv || []).forEach(m => applyMv(S, m)); }
-    return S;
-  }
-  function state() {
-    const S = stateAt(idx), P = idx > 0 ? stateAt(idx - 1) : { tg: [...((sc.init || {}).tg || [])], pf: [...((sc.init || {}).pf || [])], mv: [] };
-    const diff = (a, b) => [...a.map(t => ({ t, c: b.includes(t) ? "" : "new" })), ...b.filter(t => !a.includes(t)).map(t => ({ t, c: "gone" }))];
-    const tgs = diff(S.tg, P.tg), pfs = diff(S.pf, P.pf);
-    const mvs = S.mv.map(m => { const pm = P.mv.find(x => x.c === m.c); return { ...m, n: !pm || pm.tmp !== m.tmp ? "new" : "" }; });
-    let h = "";
-    if (tgs.length) h += `<h5>Etiquetas</h5><div class="row2">${tgs.map(x => `<span class="tag ${x.c}">${x.t}</span>`).join("")}</div>`;
-    if (mvs.length) h += `<h5>Movimentos</h5><div class="row2">${mvs.map(m => `<span class="mv ${m.tmp ? "tmp" : ""} ${m.n}">${m.c}${m.l ? ` <small>${m.l}</small>` : ""}${m.tmp ? " <small>· temporário</small>" : ""}</span>`).join("")}</div>`;
-    if (pfs.length) h += `<h5>O processo está em</h5><div class="pfl">${pfs.map(x => `<span class="pf ${x.c}"><i></i>${x.t}</span>`).join("")}</div>`;
-    const st = q(".state"); st.innerHTML = h; st.classList.toggle("on", !!h);
-  }
-
-  // ---- passo
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  function stopAnim() { if (anim) cancelAnimationFrame(anim); anim = null; }
-  async function banner(f) {
-    q(".bcode").textContent = fcode(f); q(".bname").textContent = FLOWS[f].title; q(".bdesc").textContent = FLOWS[f].desc;
-    const b = q(".banner"); b.classList.add("on"); await wait(1500 / speed); b.classList.remove("on"); await wait(250);
-  }
-  async function render(animate) {
-    stopAnim();
-    const step = sc.steps[idx];
-    const changed = flow !== step.f || !step.go;
-    if (changed) {
-      if (animate && flow) { box.classList.add("fade"); await wait(350); }
-      load(step.f); setVB(full());
-    } else { svg.querySelectorAll(".act,.vis").forEach(e => e.classList.remove("act", "vis")); ov().innerHTML = ""; }
-    let s0 = idx; while (s0 > 0 && sc.steps[s0].go && sc.steps[s0 - 1].f === step.f) s0--;
-    for (let k = s0; k < idx; k++) mark(sc.steps[k], false);
-    const el = find(step.at), prevEl = idx > s0 ? find(sc.steps[idx - 1].at) : null;
-    panel(step, el); ribbon(); state();
-    if (changed) {
-      box.classList.remove("fade");
-      if (animate) await banner(step.f);
-      mark(step, true); token(rest(el)); setVB(full());
-      return;
-    }
-    const d = pathD(step.go), spD = (step.sp || []).map(g => pathD([g]));
-    const extra = [d, ...spD].filter(Boolean).map(x => measure(x).b);
-    const target = focusBox([el, prevEl, ...(step.also || []).map(find)], extra);
-    if (!animate || !d) { mark(step, true); token(rest(el, d)); setVB(target); return; }
-    const cam = tweenVB(target, 650);
-    (step.pass || []).forEach(n => { const e = find(n); e && e.classList.add("vis"); });
-    const p = addPath(d, "trailp hot"), len = p.getTotalLength();
-    p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
-    const sps = spD.map(x => { const sp = addPath(x, "trailp par2"), L = sp.getTotalLength(); sp.style.strokeDasharray = L; sp.style.strokeDashoffset = L; return { sp, L, t2: mkTok("tok2") }; });
-    const tok = token();
-    sps.forEach(o => place(o.t2, o.sp.getPointAtLength(0)));
-    await cam;
-    const dur = Math.min(1900, Math.max(550, len * 2.1)) / speed, t0 = performance.now();
-    await new Promise(res => { (function f(t) {
-      const k = Math.min(1, (t - t0) / dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-      place(tok, p.getPointAtLength(len * e)); p.style.strokeDashoffset = len * (1 - e);
-      sps.forEach(o => { place(o.t2, o.sp.getPointAtLength(o.L * e)); o.sp.style.strokeDashoffset = o.L * (1 - e); });
-      if (k < 1) anim = requestAnimationFrame(f); else res(); })(t0); });
-    p.classList.remove("hot"); p.style.strokeDasharray = ""; p.style.strokeDashoffset = "";
-    sps.forEach(o => { o.sp.style.strokeDasharray = ""; o.sp.style.strokeDashoffset = ""; });
-    if (prevEl) { prevEl.classList.remove("act"); prevEl.classList.add("vis"); }
-    [step.at, ...(step.also || [])].forEach(n => { const e = find(n); e && e.classList.add("act"); });
-    place(tok, rest(el, d));
-  }
-
-  // ---- painel
-  const DOCS = {};
-  function srcLabel(s) {
-    const doc = DOCS[s.f] || (DOCS[s.f] = new DOMParser().parseFromString(FLOWS[s.f].svg, "image/svg+xml"));
-    const e = doc.getElementById(`${s.f}-${s.at}`) || doc.querySelector(`[data-name="${s.at}"]`);
-    if (!e || e.tagName !== "rect") return s.f;
-    const [x, y, w, h] = ["x", "y", "width", "height"].map(a => +e.getAttribute(a));
-    const out = Array.from(doc.querySelectorAll("text.tt")).filter(t => { const tx = +t.getAttribute("x"), ty = +t.getAttribute("y"); return tx >= x && tx <= x + w && ty >= y && ty <= y + h; }).map(t => t.textContent);
-    return out.join(" ").replace(/\s+—\s*/g, " — ") || s.f;
-  }
-  function trailLabel(s) {
-    if (s.t) return s.t;
-    if (s.q) { let t = s.q.replace(/\s*\(.*?\)/g, "").replace(/\?$/, ""); if (t.length > 34) t = t.slice(0, 32) + "…"; return `${t}: <b>${s.a}</b>`; }
-    return srcLabel(s);
-  }
-  function panel(step, el) {
-    const k = el ? el.dataset.k : "ev";
-    let h = `<div class="pin"><span class="kind k-${k}"><i></i>${KIND[k] || ""}</span>
-      <div class="ptitle">${step.t || labelOf(el) || ""}</div><div class="pcode">${fcode(flow)} · ${FLOWS[flow].title}</div>`;
-    if (step.d) h += `<p class="ptext">${step.d}</p>`;
-    if (step.q) h += `<div class="dec"><div class="q">${step.q}</div><div class="a">✓ ${step.a}</div>${step.alt ? `<div class="alt">${step.alt}</div>` : ""}</div>`;
-    q(".pbody").innerHTML = h + "</div>";
-    q(".pstep").textContent = `PASSO ${idx + 1} DE ${sc.steps.length}`;
-    q(".pscen").textContent = sc.sub;
-    q(".pbar i").style.width = `${(idx + 1) / sc.steps.length * 100}%`;
-    const items = [];
-    for (let i = Math.max(0, idx - 3); i <= idx; i++) items.push(`<li><em>${i + 1}</em><span>${trailLabel(sc.steps[i])}</span></li>`);
-    q(".trail ol").innerHTML = items.join("");
-  }
-  function ribbon() {
-    const seq = []; sc.steps.forEach((s, i) => { if (!seq.length || seq[seq.length - 1].f !== s.f || !s.go) seq.push({ f: s.f, i }); });
-    let cur = 0; seq.forEach((s, k) => { if (s.i <= idx) cur = k; });
-    const r = q(".ribbon");
-    r.innerHTML = seq.map((s, k) => `${k ? '<span class="ar">›</span>' : ""}<span class="chip ${k < cur ? "done" : k === cur ? "cur" : ""}">${fcode(s.f).replace(" · ", " ")}</span>`).join("");
-    const c = r.querySelector(".chip.cur"); if (c) r.scrollLeft = c.offsetLeft - r.clientWidth / 2;
-  }
-
-  // ---- controles
-  function setBusy(v) { busy = v; box.dataset.busy = v ? "1" : ""; }
-  async function next() {
-    if (busy) { if (idx + queued < sc.steps.length - 1) { queued++; return true; } return false; }
-    if (idx >= sc.steps.length - 1) return false;
-    setBusy(true); idx++; await render(true); setBusy(false);
-    if (queued) { queued--; next(); }
-    return true;
-  }
-  async function prev() { if (busy) return true; if (idx <= 0) return false; setBusy(true); idx--; await render(false); setBusy(false); return true; }
-  function stop() { queued = 0; playing = false; clearTimeout(timer); q(".playIco").innerHTML = ICO.play; }
-  async function loop() { if (!playing) return; const ok = await next(); if (!ok) { stop(); return; } timer = setTimeout(loop, 1300 / speed); }
-  function play() {
-    if (playing) { stop(); return; }
-    if (idx >= sc.steps.length - 1) { idx = 0; flow = null; render(false); }
-    playing = true; q(".playIco").innerHTML = ICO.pause; timer = setTimeout(loop, 400);
-  }
-  function cycleSpeed() { speed = speed === 1 ? 1.6 : speed === 1.6 ? 0.6 : 1; q('[data-a="spd"]').textContent = String(speed).replace(".", ",") + "×"; }
-  async function overview() {
-    if (!svg) return; const F = full(), isFull = vbNow && Math.abs(vbNow[2] - F[2]) < 2 && Math.abs(vbNow[3] - F[3]) < 2;
-    await tweenVB(isFull ? focusBox([find(sc.steps[idx].at)]) : F, 700);
-  }
-  function restart() { stop(); idx = 0; flow = null; render(true); }
-  const ACT = { restart, prev: () => { stop(); prev(); }, next: () => { stop(); next(); }, play, fit: overview, spd: cycleSpeed };
-  qa(".ctrl button").forEach(b => b.addEventListener("click", () => ACT[b.dataset.a]()));
-
-  return {
-    enter() { if (!entered) { entered = true; choose(SC[0].id); } },
-    pause: stop,
-    // devolve false no fim/início do cenário: a navegação segue para o slide vizinho
-    async key(e) {
-      switch (e.key) {
-        case "ArrowRight": case "PageDown": case " ": stop(); return await next();
-        case "ArrowLeft": case "PageUp": stop(); return await prev();
-        case "p": case "P": case "Enter": play(); return true;
-        case "v": case "V": overview(); return true;
-        case "s": case "S": cycleSpeed(); return true;
-        case "Home": restart(); return true;
-      }
-      if (/^[1-9]$/.test(e.key) && SC[+e.key - 1]) { choose(SC[+e.key - 1].id); return true; }
-      return false;
-    }
-  };
-}
-
-const SIMS = {};
-$$(".slide.sim").forEach(sl => {
-  sl.insertAdjacentHTML("afterbegin", simMarkup(sl.dataset.title));
-  SIMS[slides.indexOf(sl)] = makeSim(sl, sl.dataset.sim === "acordo" ? SCEN_ACORDO : SCEN_MS);
-});
-
-/* ---------------- teclado ---------------- */
 document.addEventListener("keydown", async e => {
-  if ($("#lightbox").classList.contains("on")) { if (e.key === "Escape" || e.key === " ") { $("#lightbox").classList.remove("on"); e.preventDefault(); } return; }
   if (e.key === "n" || e.key === "N") { $("#notes").classList.toggle("on"); return; }
   if (e.key === "f" || e.key === "F") { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); return; }
   if (e.key === "r" || e.key === "R") { started = Date.now(); return; }

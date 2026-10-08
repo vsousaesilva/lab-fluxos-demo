@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 1060" width="1560" height="1060" font-family="Segoe UI, Arial, sans-serif">
+  <text x="24" y="20" font-size="16" font-weight="700" fill="#111">Proposta de acordo — resumo</text>
+  <rect class="lane" x="24" y="30" width="1516" height="140"/>
+  <rect class="lanealt" x="24" y="170" width="1516" height="310"/>
+  <rect class="lane" x="24" y="480" width="1516" height="240"/>
+  <rect class="lanealt" x="24" y="720" width="1516" height="160"/>
+  <rect class="lane" x="24" y="880" width="1516" height="160"/>
+  <rect class="lanealt" x="24" y="30" width="40" height="140"/>
+  <text class="lanelbl" transform="translate(50,125) rotate(-90)">PARTE</text>
+  <rect class="lane" x="24" y="170" width="40" height="310"/>
+  <text class="lanelbl" transform="translate(50,395) rotate(-90)">PJE AUTOMÁTICO</text>
+  <rect class="lanealt" x="24" y="480" width="40" height="240"/>
+  <text class="lanelbl" transform="translate(50,650) rotate(-90)">SECRETARIA</text>
+  <rect class="lane" x="24" y="720" width="40" height="160"/>
+  <text class="lanelbl" transform="translate(50,850) rotate(-90)">MAGISTRADO</text>
+  <rect class="lanealt" x="24" y="880" width="40" height="160"/>
+  <text class="lanelbl" transform="translate(50,1020) rotate(-90)">NOVOS FLUXOS</text>
+  <rect class="task" data-name="P0" x="90" y="55" width="240" height="90"/>
+  <text x="210" y="97" class="tt" text-anchor="middle">Advogado protocola</text>
+  <text x="210" y="118" class="ts" text-anchor="middle">proposta de acordo (tipo 40)</text>
+  <rect class="task" data-name="P1" x="690" y="55" width="260" height="90"/>
+  <text x="820" y="97" class="tt" text-anchor="middle">A parte se manifesta</text>
+  <text x="820" y="118" class="ts" text-anchor="middle">nova petição juntada</text>
+  <rect class="auto" data-name="SJP" x="90" y="220" width="240" height="100"/>
+  <text x="210" y="258.5" class="tt" text-anchor="middle">PJe reconhece a proposta</text>
+  <text x="210" y="279.5" class="ts" text-anchor="middle">cria o fluxo de acordo</text>
+  <text x="210" y="296.5" class="ts" text-anchor="middle">[A] Proposta de acordo</text>
+  <path class="gw" data-name="D1" d="M430,224 L477,270 L430,316 L383,270 z"/>
+  <rect x="380" y="330" width="87.4" height="23" fill="#fff" rx="4"/>
+  <text x="384" y="345" class="gl" text-anchor="start">Concluso?</text>
+  <rect class="auto" data-name="N2" x="520" y="220" width="230" height="100"/>
+  <text x="635" y="258.5" class="tt" text-anchor="middle">Intima a parte</text>
+  <text x="635" y="279.5" class="ts" text-anchor="middle">e recolhe o processo</text>
+  <text x="635" y="296.5" class="ts" text-anchor="middle">para o fluxo de acordo</text>
+  <rect class="sub" data-name="INT" x="520" y="380" width="230" height="80"/>
+  <text x="635" y="417" class="tt" text-anchor="middle">Intimação em paralelo</text>
+  <text x="635" y="438" class="ts" text-anchor="middle">certidão e pendências</text>
+  <path class="gw" data-name="D2" d="M1010,224 L1057,270 L1010,316 L963,270 z"/>
+  <rect x="1018" y="327" width="78.8" height="42" fill="#fff" rx="4"/>
+  <text x="1022" y="342" class="gl" text-anchor="start">Chegou</text>
+  <text x="1022" y="361" class="gl" text-anchor="start">petição?</text>
+  <path class="gw" data-name="D3" d="M1150,224 L1197,270 L1150,316 L1103,270 z"/>
+  <rect x="1108" y="192" width="87.4" height="23" fill="#fff" rx="4"/>
+  <text x="1112" y="207" class="gl" text-anchor="start">Tipo 190?</text>
+  <rect class="auto" data-name="SENT" x="1250" y="220" width="270" height="100"/>
+  <text x="1385" y="258.5" class="tt" text-anchor="middle">Sentença homologatória</text>
+  <text x="1385" y="279.5" class="ts" text-anchor="middle">cria o fluxo de homologação</text>
+  <text x="1385" y="296.5" class="ts" text-anchor="middle">[A] Homologar acordo</text>
+  <rect class="auto" data-name="HOM" x="80" y="380" width="210" height="80"/>
+  <text x="185" y="417" class="tt" text-anchor="middle">Homologa o 466</text>
+  <text x="185" y="438" class="ts" text-anchor="middle">movimento definitivo</text>
+  <rect class="auto" data-name="TRA" x="320" y="380" width="190" height="80"/>
+  <text x="415" y="417" class="tt" text-anchor="middle">Trânsito em julgado</text>
+  <text x="415" y="438" class="ts" text-anchor="middle">[A] Acordo homologado</text>
+  <path class="gw" data-name="FORK" d="M415,914 L462,960 L415,1006 L368,960 z"/>
+  <rect x="296" y="950" width="44.4" height="23" fill="#fff" rx="4"/>
+  <text x="300" y="965" class="gl" text-anchor="start">Fork</text>
+  <rect class="task" data-name="ESP" x="690" y="530" width="260" height="110"/>
+  <text x="820" y="573.5" class="tt" text-anchor="middle">Controle de prazo</text>
+  <text x="820" y="594.5" class="ts" text-anchor="middle">espera petição, prazo</text>
+  <text x="820" y="611.5" class="ts" text-anchor="middle">ou expediente fechado</text>
+  <rect class="task" data-name="TC" x="1040" y="530" width="200" height="110"/>
+  <text x="1140" y="582" class="tt" text-anchor="middle">Lê a manifestação</text>
+  <text x="1140" y="603" class="ts" text-anchor="middle">e decide o caminho</text>
+  <rect class="task" data-name="MIN" x="1260" y="530" width="240" height="110"/>
+  <text x="1380" y="573.5" class="tt" text-anchor="middle">Minuta da sentença</text>
+  <text x="1380" y="594.5" class="ts" text-anchor="middle">pronta pelo sistema</text>
+  <text x="1380" y="611.5" class="ts" text-anchor="middle">466 temporário</text>
+  <rect class="task" data-name="MAG" x="1260" y="755" width="240" height="90"/>
+  <text x="1380" y="797" class="tt" text-anchor="middle">Juiz assina</text>
+  <text x="1380" y="818" class="ts" text-anchor="middle">a sentença de acordo</text>
+  <rect class="auto" data-name="CUM" x="520" y="920" width="250" height="80"/>
+  <text x="645" y="965.5" class="tt" text-anchor="middle">Cumprimento de sentença</text>
+  <rect class="auto" data-name="OBR" x="800" y="920" width="230" height="80"/>
+  <text x="915" y="965.5" class="tt" text-anchor="middle">Obrigação de fazer</text>
+  <path class="flow" data-name="e_p0" d="M210,145 L210,220"/>
+  <rect x="214" y="176" width="61.8" height="19" fill="#fff" rx="4"/>
+  <text x="218" y="190" class="el">juntada</text>
+  <path class="flow" data-name="e_d1" d="M330,270 L383,270"/>
+  <path class="flow" data-name="e_n2" d="M477,270 L520,270"/>
+  <rect x="478" y="246" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="482" y="260" class="el">NÃO</text>
+  <path class="par" data-name="p_int" d="M635,320 L635,380"/>
+  <path class="flow" data-name="e_esp" d="M750,290 L800,290 L800,530"/>
+  <path class="par" data-name="p_sig" d="M880,145 L880,530"/>
+  <rect x="884" y="186" width="165.4" height="19" fill="#fff" rx="4"/>
+  <text x="888" y="200" class="el">sinal: chegou petição</text>
+  <path class="flow" data-name="e_acordou" d="M950,585 L1010,585 L1010,316"/>
+  <rect x="1014" y="456" width="61.8" height="19" fill="#fff" rx="4"/>
+  <text x="1018" y="470" class="el">acordou</text>
+  <path class="flow" data-name="e_d2" d="M1057,270 L1103,270"/>
+  <rect x="1058" y="246" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="1062" y="260" class="el">SIM</text>
+  <path class="flow" data-name="e_tc" d="M1150,316 L1150,350 L1120,350 L1120,530"/>
+  <rect x="1124" y="386" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="1128" y="400" class="el">NÃO</text>
+  <path class="flow" data-name="e_atalho" d="M1197,270 L1250,270"/>
+  <rect x="1200" y="246" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="1204" y="260" class="el">SIM</text>
+  <path class="flow" data-name="e_anel" d="M1040,615 L950,615"/>
+  <rect x="886" y="654" width="121" height="19" fill="#fff" rx="4"/>
+  <text x="890" y="668" class="el">intimar de novo</text>
+  <path class="flow" data-name="e_homolog" d="M1180,530 L1180,500 L1300,500 L1300,320"/>
+  <path class="flow" data-name="e_min" d="M1440,320 L1440,345 L1515,345 L1515,585 L1500,585"/>
+  <path class="flow" data-name="e_mag" d="M1380,640 L1380,755"/>
+  <path class="flow" data-name="e_ass" d="M1260,800 L185,800 L185,460"/>
+  <rect x="1096" y="776" width="69.2" height="19" fill="#fff" rx="4"/>
+  <text x="1100" y="790" class="el">assinada</text>
+  <path class="flow" data-name="e_tra" d="M290,420 L320,420"/>
+  <path class="flow" data-name="e_fork" d="M415,460 L415,914"/>
+  <path class="flow" data-name="e_cum" d="M462,960 L520,960"/>
+  <path class="flow" data-name="e_obr" d="M415,1006 L415,1025 L915,1025 L915,1000"/>
+</svg>

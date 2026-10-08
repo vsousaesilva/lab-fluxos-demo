@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 1000" width="1560" height="1000" font-family="Segoe UI, Arial, sans-serif">
+  <text x="24" y="20" font-size="16" font-weight="700" fill="#111">Mandado de Segurança — resumo</text>
+  <rect class="lane" x="24" y="30" width="1516" height="200"/>
+  <rect class="lanealt" x="24" y="230" width="1516" height="330"/>
+  <rect class="lane" x="24" y="560" width="1516" height="160"/>
+  <rect class="lanealt" x="24" y="720" width="1516" height="180"/>
+  <rect class="lanealt" x="24" y="30" width="40" height="200"/>
+  <text class="lanelbl" transform="translate(50,180) rotate(-90)">SECRETARIA</text>
+  <rect class="lane" x="24" y="230" width="40" height="330"/>
+  <text class="lanelbl" transform="translate(50,465) rotate(-90)">PJE AUTOMÁTICO</text>
+  <rect class="lanealt" x="24" y="560" width="40" height="160"/>
+  <text class="lanelbl" transform="translate(50,690) rotate(-90)">MAGISTRADO</text>
+  <rect class="lane" x="24" y="720" width="40" height="180"/>
+  <text class="lanelbl" transform="translate(50,850) rotate(-90)">DESTINOS</text>
+  <rect class="task" data-name="T1" x="270" y="75" width="230" height="100"/>
+  <text x="385" y="122" class="tt" text-anchor="middle">Analisa a inicial</text>
+  <text x="385" y="143" class="ts" text-anchor="middle">e escolhe o caminho</text>
+  <rect class="task" data-name="CP" x="760" y="70" width="260" height="120"/>
+  <text x="890" y="118.5" class="tt" text-anchor="middle">Controle de prazo</text>
+  <text x="890" y="139.5" class="ts" text-anchor="middle">só libera quando todos</text>
+  <text x="890" y="156.5" class="ts" text-anchor="middle">os expedientes fecham</text>
+  <rect class="task" data-name="T2" x="1080" y="75" width="230" height="100"/>
+  <text x="1195" y="122" class="tt" text-anchor="middle">Analisa a manifestação</text>
+  <text x="1195" y="143" class="ts" text-anchor="middle">e escolhe o caminho</text>
+  <rect class="auto" data-name="A1" x="80" y="290" width="200" height="110"/>
+  <text x="180" y="333.5" class="tt" text-anchor="middle">Inicial de MS</text>
+  <text x="180" y="354.5" class="ts" text-anchor="middle">etiqueta da classe</text>
+  <text x="180" y="371.5" class="ts" text-anchor="middle">aplicada sozinha</text>
+  <path class="gw" data-name="G1" d="M365,299 L412,345 L365,391 L318,345 z"/>
+  <rect x="316" y="405" width="87.4" height="42" fill="#fff" rx="4"/>
+  <text x="320" y="420" class="gl" text-anchor="start">Liminar</text>
+  <text x="320" y="439" class="gl" text-anchor="start">pendente?</text>
+  <rect class="auto" data-name="A2" x="450" y="290" width="220" height="110"/>
+  <text x="560" y="342" class="tt" text-anchor="middle">Notifica a autoridade</text>
+  <text x="560" y="363" class="ts" text-anchor="middle">coatora · 10 dias</text>
+  <path class="gw" data-name="G2" d="M1110,299 L1157,345 L1110,391 L1063,345 z"/>
+  <rect x="942.2" y="405" width="121.8" height="42" fill="#fff" rx="4"/>
+  <text x="1060" y="420" class="gl" text-anchor="end">Houve</text>
+  <text x="1060" y="439" class="gl" text-anchor="end">manifestação?</text>
+  <rect class="auto" data-name="A4" x="1300" y="290" width="220" height="110"/>
+  <text x="1410" y="342" class="tt" text-anchor="middle">Intima o MPF</text>
+  <text x="1410" y="363" class="ts" text-anchor="middle">10 dias · automático</text>
+  <rect class="auto" data-name="A5" x="1300" y="445" width="220" height="90"/>
+  <text x="1410" y="487" class="tt" text-anchor="middle">Intima as partes</text>
+  <text x="1410" y="508" class="ts" text-anchor="middle">15 dias, em dobro</text>
+  <path class="gw" data-name="G4" d="M1180,444 L1227,490 L1180,536 L1133,490 z"/>
+  <rect x="1129" y="553" width="53" height="23" fill="#fff" rx="4"/>
+  <text x="1133" y="568" class="gl" text-anchor="start">É MS?</text>
+  <rect class="auto" data-name="A6" x="790" y="445" width="260" height="90"/>
+  <text x="920" y="487" class="tt" text-anchor="middle">Prazo recursal do MS</text>
+  <text x="920" y="508" class="ts" text-anchor="middle">identifica o tipo da sentença</text>
+  <path class="gw" data-name="G5" d="M670,444 L717,490 L670,536 L623,490 z"/>
+  <rect x="621" y="553" width="78.8" height="42" fill="#fff" rx="4"/>
+  <text x="625" y="568" class="gl" text-anchor="start">Houve</text>
+  <text x="625" y="587" class="gl" text-anchor="start">recurso?</text>
+  <path class="gw" data-name="G6" d="M470,444 L517,490 L470,536 L423,490 z"/>
+  <rect x="421" y="553" width="104.6" height="42" fill="#fff" rx="4"/>
+  <text x="425" y="568" class="gl" text-anchor="start">Sentença</text>
+  <text x="425" y="587" class="gl" text-anchor="start">concessiva?</text>
+  <rect class="task" data-name="SENT" x="1300" y="590" width="220" height="100"/>
+  <text x="1410" y="637" class="tt" text-anchor="middle">Juiz profere</text>
+  <text x="1410" y="658" class="ts" text-anchor="middle">a sentença</text>
+  <rect class="auto" data-name="REM" x="80" y="765" width="250" height="95"/>
+  <text x="205" y="809.5" class="tt" text-anchor="middle">Remessa necessária</text>
+  <text x="205" y="830.5" class="ts" text-anchor="middle">reexame no TRF5</text>
+  <rect class="auto" data-name="CERT" x="360" y="765" width="240" height="95"/>
+  <text x="480" y="809.5" class="tt" text-anchor="middle">Trânsito em julgado</text>
+  <text x="480" y="830.5" class="ts" text-anchor="middle">denegatória ou extinção</text>
+  <rect class="auto" data-name="EMB" x="630" y="765" width="240" height="95"/>
+  <text x="750" y="809.5" class="tt" text-anchor="middle">Embargos</text>
+  <text x="750" y="830.5" class="ts" text-anchor="middle">contrarrazões · 5 dias</text>
+  <rect class="auto" data-name="AP" x="900" y="765" width="240" height="95"/>
+  <text x="1020" y="809.5" class="tt" text-anchor="middle">Apelação</text>
+  <text x="1020" y="830.5" class="ts" text-anchor="middle">contrarrazões → TRF5</text>
+  <path class="flow" data-name="e1" d="M280,345 L318,345"/>
+  <path class="flow" data-name="e2" d="M365,299 L365,175"/>
+  <rect x="369" y="236" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="373" y="250" class="el">NÃO</text>
+  <path class="flow" data-name="e3" d="M450,175 L450,232 L560,232 L560,290"/>
+  <rect x="466" y="211" width="76.6" height="19" fill="#fff" rx="4"/>
+  <text x="470" y="225" class="el">notificar</text>
+  <path class="flow" data-name="e4" d="M670,345 L715,345 L715,130 L760,130"/>
+  <rect x="596" y="248" width="121" height="19" fill="#fff" rx="4"/>
+  <text x="600" y="262" class="el">todos intimados</text>
+  <path class="flow" data-name="e5" d="M1020,160 L1045,160 L1045,345 L1063,345"/>
+  <rect x="874" y="232" width="158" height="19" fill="#fff" rx="4"/>
+  <text x="878" y="246" class="el">expedientes fechados</text>
+  <path class="flow" data-name="e6" d="M1110,299 L1110,175"/>
+  <rect x="1114" y="236" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="1118" y="250" class="el">SIM</text>
+  <path class="flow" data-name="e7" d="M1310,125 L1410,125 L1410,290"/>
+  <rect x="1414" y="196" width="91.4" height="19" fill="#fff" rx="4"/>
+  <text x="1418" y="210" class="el">intimar MPF</text>
+  <path class="flow" data-name="e8" d="M1410,400 L1410,420 L830,420 L830,190"/>
+  <rect x="866" y="398" width="202.4" height="19" fill="#fff" rx="4"/>
+  <text x="870" y="412" class="el">volta ao controle de prazo</text>
+  <path class="flow" data-name="e9" d="M1310,150 L1530,150 L1530,640 L1520,640"/>
+  <rect x="1456" y="236" width="76.6" height="19" fill="#fff" rx="4"/>
+  <text x="1460" y="250" class="el">conclusão</text>
+  <path class="flow" data-name="e10" d="M1410,590 L1410,535"/>
+  <path class="flow" data-name="e11" d="M1300,490 L1227,490"/>
+  <path class="flow" data-name="e12" d="M1133,490 L1050,490"/>
+  <rect x="1066" y="466" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="1070" y="480" class="el">SIM</text>
+  <path class="flow" data-name="e13" d="M790,490 L717,490"/>
+  <path class="flow" data-name="e14" d="M623,490 L517,490"/>
+  <rect x="546" y="466" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="550" y="480" class="el">NÃO</text>
+  <path class="flow" data-name="e15" d="M423,490 L205,490 L205,765"/>
+  <rect x="209" y="626" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="213" y="640" class="el">SIM</text>
+  <path class="flow" data-name="e16" d="M470,536 L470,765"/>
+  <rect x="474" y="626" width="32.2" height="19" fill="#fff" rx="4"/>
+  <text x="478" y="640" class="el">NÃO</text>
+  <path class="flow" data-name="e17" d="M670,536 L670,640 L750,640 L750,765"/>
+  <rect x="686" y="616" width="69.2" height="19" fill="#fff" rx="4"/>
+  <text x="690" y="630" class="el">embargos</text>
+  <path class="flow" data-name="e18" d="M670,536 L670,640 L1020,640 L1020,765"/>
+  <rect x="896" y="616" width="69.2" height="19" fill="#fff" rx="4"/>
+  <text x="900" y="630" class="el">apelação</text>
+</svg>
