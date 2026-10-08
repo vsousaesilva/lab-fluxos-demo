@@ -63,7 +63,7 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
 /* proposta de valor */
 .lead{font-size:34px;line-height:1.4;color:var(--ink);max-width:1450px;margin-top:-14px}
 .lead b{color:var(--blue)}
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:60px}
+.pillars{display:grid;grid-template-columns:repeat(2,1fr);max-width:1300px;gap:34px;margin-top:60px}
 .pillar{background:var(--soft);border-radius:30px;padding:46px 44px}
 .pillar b{display:block;font-size:34px;color:var(--navy);margin-top:30px}
 .pillar span{display:block;font-size:23px;color:var(--muted);margin-top:12px;line-height:1.45}
@@ -100,7 +100,7 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
 .chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px}
 .chain span{background:rgba(255,255,255,.1);border-radius:10px;padding:8px 14px;font-size:19px;font-weight:700}
 .chain i{color:var(--orange);font-style:normal;font-weight:900}
-.nums{display:flex;gap:44px;margin-top:22px}
+.nums{display:flex;gap:34px;margin-top:22px}
 .nums b{display:block;font-size:52px;font-weight:900;color:var(--orange);line-height:1}
 .nums span{font-size:18px;color:#BFD3E2}
 .ia .claim{margin-top:20px;font-size:24px;font-weight:800}
@@ -220,13 +220,13 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
   <div class="kicker">Tudo começa com uma dor</div>
   <h1>Quem trabalha com o PJe <em>conhece esta sensação.</em></h1>
   <div class="pains">
-    <div>O processo parado na tarefa errada.</div>
-    <div>O prazo controlado de memória.</div>
+    <div>Processo parado aguardando intervenção humana.</div>
+    <div>Prazo sem sequência lógica e inteligente.</div>
     <div>O mesmo clique, repetido o dia inteiro.</div>
   </div>
   <p class="punch">E, do outro lado, <em>alguém esperando por justiça.</em></p>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="labw" alt=""></div>
-  <div class="notes"><b>~1 min.</b> Falar devagar, olhando para a plateia. Perguntar: "Quem aqui já procurou um processo que deveria estar numa tarefa e estava em outra?"
+  <div class="notes"><b>~1 min.</b> Falar devagar, olhando para a plateia. Perguntar: "Quem aqui já viu um processo parado só esperando alguém clicar?"
     Cada item é uma dor que todo usuário do PJe reconhece. A última frase é o gancho: o fluxo não é burocracia, é o tempo de alguém que espera.</div>
 </section>
 
@@ -234,15 +234,14 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
 <section class="slide">
   <div class="kicker">A nossa resposta</div>
   <h2>O <em>Laboratório de Fluxos</em></h2>
-  <p class="lead">Uma estrutura <b>contínua</b> — não um projeto pontual — criada para aliviar as dores do processo eletrônico e levar a <b>Inteligência Artificial</b> para o dia a dia do PJe.</p>
+  <p class="lead">Uma estrutura <b>contínua</b> — não um projeto pontual — criada para aliviar as dores do processo eletrônico e trazer <b>eficiência</b> para o dia a dia do PJe.</p>
   <div class="pillars">
     <div class="pillar"><div class="ico" style="background:var(--blue)" data-icon="ear"></div><b>Ouvir quem usa</b><span>As ideias nascem de quem vive o processo todos os dias.</span></div>
     <div class="pillar"><div class="ico" style="background:var(--sky)" data-icon="flow"></div><b>Redesenhar os fluxos</b><span>Melhorias e fluxos novos para toda a Justiça Federal da 5ª Região.</span></div>
-    <div class="pillar"><div class="ico" style="background:var(--orange)" data-icon="spark"></div><b>Impulsionar a IA</b><span>A inteligência artificial acelera cada etapa. Quem decide é a equipe.</span></div>
   </div>
   <p class="note"><b>●</b> Os fluxos que vou mostrar são demonstrações do que essa estrutura já entrega.</p>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~1 min 30 s.</b> Posicionar o Laboratório como estrutura permanente, não como projeto de um fluxo só. Três verbos: ouvir, redesenhar, impulsionar a IA.
+  <div class="notes"><b>~1 min 30 s.</b> Posicionar o Laboratório como estrutura permanente, não como projeto de um fluxo só. Dois verbos: ouvir quem usa e redesenhar os fluxos.
     Deixar claro que Acordo e MS são exemplos, não o objetivo final.</div>
 </section>
 
@@ -282,12 +281,13 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
       <div class="people" style="margin-top:20px">
         <div><i style="background:var(--blue)">IM</i>Italo Martins</div><div><i style="background:var(--red)">DL</i>Danielle Lira</div>
         <div><i style="background:var(--sky)">GS</i>Gabriela de Sousa</div><div><i style="background:var(--orange)">VS</i>Vinícius Sousa e Silva</div>
+        <div><i style="background:var(--navy)">TM</i>Dr. Thiago Mesquita</div><div><i style="background:var(--green)">AV</i>Dr. André Vieira</div>
       </div>
-      <p class="plus">+ equipe de desenvolvimento · <b>e novos servidores chegando</b></p></div>
-    <div class="box ia"><h4>Inteligência Artificial no método</h4>
+      <p class="plus">+ equipe de desenvolvimento</p></div>
+    <div class="box ia"><h4>Método de trabalho</h4>
       <div class="chain"><span>Demanda</span><i>›</i><span>Análise</span><i>›</i><span>História</span><i>›</i><span>Desenho</span><i>›</i><span>Fluxo PJe</span><i>›</i><span>Validação</span></div>
-      <div class="nums"><div><b>212</b><span>fluxos do PJe como base</span></div><div><b>2.713</b><span>expressões catalogadas</span></div></div>
-      <p class="claim">A IA acelera. A equipe decide.</p></div>
+      <div class="nums"><div><b>212</b><span>fluxos do PJe como base</span></div><div><b>2.713</b><span>expressões catalogadas</span></div><div><b>+20</b><span>servidores e magistrados que colaboram<br>como representantes do negócio</span></div></div>
+      <p class="claim">Participação de representantes de todas as Seções Judiciárias e do TRF5.</p></div>
     <div class="deliv">
       <div class="dv"><i style="background:var(--blue)"></i><div><b>Execução Fiscal</b><span>entregue à 5ª Região</span></div></div>
       <div class="dv"><i style="background:var(--green)"></i><div><b>Proposta de Acordo</b><span>em produção no TRF5</span></div></div>
@@ -295,8 +295,8 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
     </div>
   </div>
   <div class="foot"><span>PJe Summit · 10ª ExpoJud</span><img data-logo="lab" alt=""></div>
-  <div class="notes"><b>~2 min.</b> Hoje: coordenação executiva na JFCE, com entregas coordenadas pelo TRF5; equipe de negócio (citar os nomes), equipe de desenvolvimento e a chegada de novos servidores.
-    IA: cada etapa — da demanda ao fluxo pronto — tem apoio de IA, com 212 fluxos do PJe como base de consulta; mas nada avança sem aprovação humana.
+  <div class="notes"><b>~2 min.</b> Hoje: coordenação executiva na JFCE, com entregas coordenadas pelo TRF5; equipe de negócio (citar os nomes, incluindo Dr. Thiago Mesquita e Dr. André Vieira) e equipe de desenvolvimento.
+    Método: da demanda ao fluxo validado, com 212 fluxos do PJe como base de consulta, mais de 20 servidores e magistrados colaborando como representantes do negócio e participação de todas as Seções Judiciárias e do TRF5.
     Embaixo, as entregas. "Vou mostrar duas delas funcionando."</div>
 </section>
 
