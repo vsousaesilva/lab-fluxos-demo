@@ -234,7 +234,7 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
 <section class="slide">
   <div class="kicker">A nossa resposta</div>
   <h2>O <em>Laboratório de Fluxos</em></h2>
-  <p class="lead">Uma estrutura <b>contínua</b> — não um projeto pontual — criada para aliviar as dores do processo eletrônico e trazer <b>eficiência</b> para o dia a dia do PJe.</p>
+  <p class="lead">Uma estrutura <b>contínua</b> — não um projeto pontual — criada para aliviar as dores do usuário do PJe e trazer <b>eficiência</b> para o dia a dia das unidades judiciárias.</p>
   <div class="pillars">
     <div class="pillar"><div class="ico" style="background:var(--blue)" data-icon="ear"></div><b>Ouvir quem usa</b><span>As ideias nascem de quem vive o processo todos os dias.</span></div>
     <div class="pillar"><div class="ico" style="background:var(--sky)" data-icon="flow"></div><b>Redesenhar os fluxos</b><span>Melhorias e fluxos novos para toda a Justiça Federal da 5ª Região.</span></div>
@@ -289,7 +289,7 @@ h1 em,h2 em{font-style:normal;color:var(--blue)}
       <div class="nums"><div><b>212</b><span>fluxos do PJe como base</span></div><div><b>2.713</b><span>expressões catalogadas</span></div><div><b>+20</b><span>servidores e magistrados que colaboram<br>como representantes do negócio</span></div></div>
       <p class="claim">Participação de representantes de todas as Seções Judiciárias e do TRF5.</p></div>
     <div class="deliv">
-      <div class="dv"><i style="background:var(--blue)"></i><div><b>Execução Fiscal</b><span>entregue à 5ª Região</span></div></div>
+      <div class="dv"><i style="background:var(--green)"></i><div><b>Execução Fiscal</b><span>em produção no TRF5</span></div></div>
       <div class="dv"><i style="background:var(--green)"></i><div><b>Proposta de Acordo</b><span>em produção no TRF5</span></div></div>
       <div class="dv"><i style="background:var(--orange)"></i><div><b>Mandado de Segurança</b><span>validado pelo grupo regional · envio formal ao TRF5</span></div></div>
     </div>
@@ -346,7 +346,7 @@ const LOGOS = { lab: "{{LOGO_LAB}}", labw: "{{LOGO_LAB_W}}", jcp: "{{LOGO_JCP}}"
    ================================================================ */
 const SCEN = {
 acordo: { init:{pf:["Fluxo em que o processo estava"]}, steps:[
-  {at:"P0", t:"A proposta chega", d:"O advogado junta ao processo uma petição de proposta de acordo."},
+  {at:"P0", t:"A proposta chega", d:"A parte junta ao processo uma petição de proposta de acordo."},
   {at:"SJP", go:["e_p0"], tg:["+[A] Proposta de acordo"], pf:["+Fluxo de acordo"], t:"O PJe reconhece sozinho", d:"Pelo tipo do documento, o sistema cria o fluxo de acordo e etiqueta o processo. Ninguém na secretaria precisou perceber."},
   {at:"D1", go:["e_d1"], q:"O processo está concluso no gabinete?", a:"NÃO", alt:"<b>SIM</b> → antes de intimar, gera um despacho de vista sobre a proposta."},
   {at:"N2", go:["e_n2"], sp:["p_int"], also:["INT"], pf:["+Intimação · em paralelo","-Fluxo em que o processo estava"], t:"Intima e recolhe o processo", d:"As tarefas abertas são encerradas: o processo passa a tramitar só no fluxo de acordo. A intimação corre em paralelo."},

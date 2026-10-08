@@ -65,7 +65,7 @@ class Svg:
 # ------------------------------------------------------------- ACORDO
 s = Svg(1560, 1060, "Proposta de acordo — resumo")
 s.lanes([("PARTE", 30, 170), ("PJE AUTOMÁTICO", 170, 480), ("SECRETARIA", 480, 720), ("MAGISTRADO", 720, 880), ("NOVOS FLUXOS", 880, 1040)], 1540)
-s.box("P0", "task", 90, 55, 240, 90, "Advogado protocola", ["proposta de acordo (tipo 40)"])
+s.box("P0", "task", 90, 55, 240, 90, "Parte protocola", ["proposta de acordo (tipo 40)"])
 s.box("P1", "task", 690, 55, 260, 90, "A parte se manifesta", ["nova petição juntada"])
 s.box("SJP", "auto", 90, 220, 240, 100, "PJe reconhece a proposta", ["cria o fluxo de acordo", "[A] Proposta de acordo"])
 s.gw("D1", 430, 270, ["Concluso?"], 384, 345)

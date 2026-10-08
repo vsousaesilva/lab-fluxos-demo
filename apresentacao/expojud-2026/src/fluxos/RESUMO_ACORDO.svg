@@ -16,7 +16,7 @@
   <rect class="lanealt" x="24" y="880" width="40" height="160"/>
   <text class="lanelbl" transform="translate(50,1020) rotate(-90)">NOVOS FLUXOS</text>
   <rect class="task" data-name="P0" x="90" y="55" width="240" height="90"/>
-  <text x="210" y="97" class="tt" text-anchor="middle">Advogado protocola</text>
+  <text x="210" y="97" class="tt" text-anchor="middle">Parte protocola</text>
   <text x="210" y="118" class="ts" text-anchor="middle">proposta de acordo (tipo 40)</text>
   <rect class="task" data-name="P1" x="690" y="55" width="260" height="90"/>
   <text x="820" y="97" class="tt" text-anchor="middle">A parte se manifesta</text>
